@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+<ERREUR>
+  <XMLMALFORMATION>Texte de l'erreur en detail si on veut</XMLMALFORMATION>
+</ERREUR>
+</MSG>

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+java bourse.agent.Agent Turing &
+java bourse.agent.Agent Google &
+java bourse.agent.Agent PowerpointMan &
+java bourse.agent.Agent Jonc &
+java bourse.agent.Agent Protocoleman &
+java bourse.agent.Agent Poulpe &
+java bourse.agent.Agent AgentSmith &
+java bourse.agent.Agent Agent007 &
+java bourse.agent.Agent hal &
+java bourse.agent.Agent SkyNet &

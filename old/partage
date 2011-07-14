@@ -1,0 +1,3 @@
+#!/bin/bash
+
+chmod g+w -R /home/etud/lmi2/slemerdy/ElCurpillos 2> /dev/null

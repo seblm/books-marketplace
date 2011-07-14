@@ -1,0 +1,3 @@
+DELETE FROM pdms;
+DELETE FROM items;
+DELETE FROM agents;

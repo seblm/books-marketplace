@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+  <WELCOME>
+    <AGENT NOM="GoupeA-Magouilleur">Message de presentation</AGENT>
+  </WELCOME>
+</MSG>

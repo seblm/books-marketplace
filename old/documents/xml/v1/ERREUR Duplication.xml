@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+  <ERREUR NOM="Duplication">
+    <PDM NOM="va_à_la_niche" ADRESSE="localhost:1981">Nom de la PDM o� doit se connecter l'agent pour �tre accept� s'il a fait une erreur (nome de pdm pr�sent dans la bd)</PDM>
+  </ERREUR>
+</MSG>

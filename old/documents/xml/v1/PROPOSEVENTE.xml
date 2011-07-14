@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG >
+  <PROPOSEVENTE NOM="{Un des noms possibles}">
+    <LIVRE ID="Id du livre dans la table item">
+    </LIVRE>
+    <ENCHERE>
+    valeur en Float correspondant au prix de d�part d�sir�
+    </ENCHERE>
+  </PROPOSEVENTE>
+</MSG>

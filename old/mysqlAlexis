@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mysql -u guillon -h sqlhost -plmi2 bd_guillon < $*

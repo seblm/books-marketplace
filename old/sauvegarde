@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rm -f bourse/*/*/*.class
+rm -f bourse/*/*/*~
+rm -f bourse/*/*.class
+rm -f bourse/*/*~
+rm -f */*/*/.nbattrs
+rm -f */*/.nbattrs
+rm -f */.nbattrs
+rm -f .nbattrs
+tar -czvf ia.tar.gz *

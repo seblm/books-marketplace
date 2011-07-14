@@ -1,0 +1,180 @@
+<ul>
+<li><h3>A prendre ou à laisser</h3>
+<h4>Annonce</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;ENCHEREUN TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)" PRIX="(valeur en Float correspondant au prix proposé)"&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+  &lt;/ENCHEREUN&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Prendre</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;REPONSEENCHERE&gt;
+  &lt;UN&gt;Je le veux a tout prix&lt;/UN&gt;
+&lt;/REPONSEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résultat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;RESULTATENCHERE PRIX="prix d'achat"&gt;
+  &lt;RESULTATUN&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;AGENT NOM="Nom de l'acheteur en cas de vente, nom du précédent possesseur sinon"&gt;&lt;/AGENT&gt;
+  &lt;/RESULTATUN&gt;
+&lt;/RESULTATENCHERE&gt;
+&lt;/MSG&gt;</tt></li>
+<li><h4>Pli scellé</h4>
+<h3>Annonce</h3>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;ENCHEREDEUX TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)"&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+  &lt;/ENCHEREDEUX&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Mise</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;REPONSEENCHERE&gt;
+  &lt;DEUX MISE="(prix proposé)"&gt;&lt;/DEUX&gt;
+&lt;/REPONSEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résutat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;RESULTATENCHERE PRIX="(prix d'achat)"&gt;
+  &lt;RESULTATDEUX&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;AGENT NOM="Nom de l'acheteur"&gt;&lt;/AGENT&gt;
+  &lt;/RESULTATDEUX&gt;
+&lt;/RESULTATENCHERE&gt;
+&lt;/MSG&gt;</tt></li>
+<li><h3>Ascendante</h3>
+<h4>Annonce</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;ENCHERETROIS TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)" PAS="montant minimum d'une surenchère" PRIX="(prix initial)"&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+  &lt;/ENCHERETROIS&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Surenchère</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;REPONSEENCHERE&gt;
+  &lt;TROIS MISE="(prix proposé)"&gt;&lt;/TROIS&gt;
+&lt;/REPONSEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Nouveau prix</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;SURENCHERE&gt;
+   &lt;ENCHERETROIS TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)" PAS="montant minimum d'une surenchère" PRIX="prix actuel"&gt;
+    &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;/ENCHERETROIS&gt;
+   &lt;AGENT NOM="Nom de l'agent qui fait la meilleure offre"&gt;&lt;/AGENT&gt;
+  &lt;/SURENCHERE&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résultat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;RESULTATENCHERE PRIX="(prix d'achat)"&gt;
+  &lt;RESULTATTROIS&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;AGENT NOM="Nom de l'acheteur"&gt;&lt;/AGENT&gt;
+  &lt;/RESULTATTROIS&gt;
+&lt;/RESULTATENCHERE&gt;
+&lt;/MSG&gt;</tt></li>
+<li><h3>Descendante</h3>
+<h4>Annonce</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;ENCHEREQUATRE TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)" PAS="montant fixé par la pdm auquel le prix descend à chaque fois" PRIX="(prix initial)"&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+  &lt;/ENCHEREQUATRE&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Prendre</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;REPONSEENCHERE&gt;
+  &lt;QUATRE&gt;J'en veux, j'en veux, j'en veux&lt;/QUATRE&gt;
+&lt;/REPONSEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résultat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;SURENCHERE&gt;
+   &lt;ENCHEREQUATRE TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)" PAS="montant fixé par la pdm auquel le prix descend à chaque fois" PRIX="prix actuel"&gt;
+    &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;/ENCHEREQUATRE&gt;
+   &lt;AGENT NOM="Nom de l'agent qui fait la meilleure offre"&gt;&lt;/AGENT&gt;
+  &lt;/SURENCHERE&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résultat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;RESULTATENCHERE PRIX="(prix d'achat)"&gt;
+  &lt;RESULTATQUATRE&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;AGENT NOM="Nom de l'acheteur"&gt;&lt;/AGENT&gt;
+  &lt;/RESULTATQUATRE&gt;
+&lt;/RESULTATENCHERE&gt;
+&lt;/MSG&gt;</tt>
+</li>
+<li><h3>Vickrey</h3>
+<h4>Annonce</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;ANNONCEENCHERE NUMERO="(entre 1 et 100)"&gt;
+  &lt;ENCHERECINQ TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)"&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+  &lt;/ENCHERECINQ&gt;
+&lt;/ANNONCEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Mise</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;REPONSEENCHERE&gt;
+  &lt;CINQ MISE="(prix proposé)"&gt;&lt;/CINQ&gt;
+&lt;/REPONSEENCHERE&gt;
+&lt;/MSG&gt;</tt>
+<h4>Résultat</h4>
+<tt>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE MSG SYSTEM 'MSG.dtd'&gt;
+&lt;MSG&gt;
+&lt;RESULTATENCHERE PRIX="(prix d'achat)"&gt;
+  &lt;RESULTATCINQ&gt;
+   &lt;LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"&gt;&lt;/LIVRE&gt;
+   &lt;AGENT NOM="Nom de l'acheteur"&gt;&lt;/AGENT&gt;
+  &lt;/RESULTATCINQ&gt;
+&lt;/RESULTATENCHERE&gt;
+&lt;/MSG&gt;</tt>
+</li>
+</ul>

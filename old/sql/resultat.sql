@@ -1,0 +1,1 @@
+SELECT livres.categorie, id, titre, round( prixn * etat / prixachat, 2 ) points, argent FROM livres, items, agents WHERE livres.isbn = items.isbn AND proprio = nomAgent AND livres.categorie = agents.categorie AND nomagent = 'Groupe-E-Eric' ORDER BY points desc;

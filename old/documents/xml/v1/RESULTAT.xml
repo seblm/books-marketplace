@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+  <RESULTAT>
+      <AGENT NOM="Nom de l'acheteur en cas de vente, nom du precedent possesseur sinon"></AGENT >
+      <LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution" ISBN="ISBN" ID="ID"></LIVRE>
+      <ENCHERE>
+        prix d'achat
+      </ENCHERE>
+  </RESULTAT>
+</MSG>

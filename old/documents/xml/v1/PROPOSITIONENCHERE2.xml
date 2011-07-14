@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+  <PROPOSITIONENCHERE NUMERO="numero entre 1 et 100 repr�sentant le tour">
+    <ENCHERE>
+      mise � prix (peut-�tre nulle)
+    </ENCHERE>
+  </PROPOSITIONENCHERE>
+</MSG>

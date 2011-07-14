@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+<ANNONCEENCHERE NUMERO="(entre 1 et 100)">
+  <ENCHERECINQ TEMPSRESTANT="(temps en secondes dont disposent les agents pour répondre à l'offre)">
+   <LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution"></LIVRE>
+  </ENCHERECINQ>
+</ANNONCEENCHERE>
+</MSG>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+  <RESULTAGENTS>
+    <AGENT NOM="GoupeA-Magouilleur"></AGENT>
+    <AGENT NOM="GoupeB-toto"></AGENT>
+    <AGENT NOM="GoupeC-toto"></AGENT>
+    <AGENT NOM="GoupeD-toto"></AGENT>
+  </RESULTAGENTS>
+</MSG>

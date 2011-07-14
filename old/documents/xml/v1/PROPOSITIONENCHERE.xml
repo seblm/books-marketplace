@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG >
+  <PROPOSITIONENCHERE NOM="{Un des noms possibles}" NUMERO="numero entre 1 et 100 repr�sentant le tour" TEMPS="dur�e restante avant la cloture de ce tour (en seconde)" PAS="montant minimum a surencherir">
+    <LIVRE TITRE="titre" AUTEUR="auteur" CATEGORIE="categorie" FORMAT="format" EDITEUR="editeur" PRIX="prix neuf" ETAT="etat en float" DATEPAR="Date de parution" ISBN="ISBN" ID="ID de l'item" PROPRIETAIRE="nom du vendeur (agent ou pdm)">
+    </LIVRE>
+    <AGENT NOM="nom de l'agent ayant effectu� la plus grosse ench�re jusqu'ici, rien si c'est le premier tour (uniquement en cas d'enchere montante)">
+    </AGENT >
+    <ENCHERE>
+    valeur en Float correspondant au prix de d�part ou � la plus grosse ench�re
+    </ENCHERE>
+  </PROPOSITIONENCHERE>
+</MSG>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MSG SYSTEM 'MSG.dtd'>
+<MSG>
+ <LISTE>
+  <ENCHERE NUMERO="numéro du tour entre 1 et 100">
+   <ITEM TITRE="titre" CATEGORIE="categorie" PRIX="prix neuf" ETAT="etat en float"></ITEM>
+  </ENCHERE>
+  <ENCHERE NUMERO="numéro du tour entre 1 et 100">
+   <ITEM TITRE="titre" CATEGORIE="categorie" PRIX="prix neuf" ETAT="etat en float"></ITEM>
+  </ENCHERE>
+ </LISTE>
+</MSG>
