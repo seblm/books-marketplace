@@ -10,7 +10,7 @@ import org.xml.sax.SAXParseException;
 
 import java.io.ByteArrayInputStream;
 
-/** C'est le message envoyé à chaque étape d'enchère par la place de marché vers
+/** C'est le message envoyÃ© Ã  chaque Ã©tape d'enchÃ¨re par la place de marchÃ© vers
  * les agents. */
 public class PropositionEnchereP extends bourse.protocole.Protocole {
     
@@ -54,7 +54,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         this.nomagent="";
 
     }
-    /** A utiliser pour enchère un (à prendre ou à laisser) */
+    /** A utiliser pour enchÃ¨re un (Ã  prendre ou Ã  laisser) */
     public PropositionEnchereP(String nom,int numero, int temps,Livre livre,float enchere) {
         super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
@@ -90,12 +90,12 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         this.nomagent="";
     
     }
-    /** constructeur à partir du DOM*/
+    /** constructeur Ã  partir du DOM*/
     public PropositionEnchereP(Element type) {
         super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.toClass(type);
     }
-    /**permet le passage du DOM à la classe*/
+    /**permet le passage du DOM Ã  la classe*/
     protected void toClass(Element type) {
         this.nom = type.getAttribute("NOM");
         this.numero = Integer.parseInt(type.getAttribute("NUMERO"));
@@ -213,8 +213,8 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         System.out.println(p);
         Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'après le tutorial JAXP, ces variables fixées à true permettent à
-        // l'application de se concentrer sur l'analyse sémantique.
+        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
+        // l'application de se concentrer sur l'analyse sÃ©mantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -223,7 +223,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La définition de ErrorHandler est inspirée de
+            // La dÃ©finition de ErrorHandler est inspirÃ©e de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

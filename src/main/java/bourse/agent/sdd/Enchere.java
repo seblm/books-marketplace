@@ -2,7 +2,7 @@ package bourse.agent.sdd;
 
 import bourse.sdd.*;
 
-/** Cette classe stocke les données relatives à une enchère. */
+/** Cette classe stocke les donnÃ©es relatives Ã  une enchÃ¨re. */
 public class Enchere {
     /**le duree restante avant la cloture de ce tour*/
     private int temps;
@@ -10,7 +10,7 @@ public class Enchere {
     private float pas;
     /**le nom de l'enchere*/
     private int type;
-    /**le nom de l'agent ayant effectué la plus grosse enchere, rien sinon*/
+    /**le nom de l'agent ayant effectuÃ© la plus grosse enchere, rien sinon*/
     private String nomagent;
     /**numero representant le tour de l'enchere*/
     private int numeroEnchere;
@@ -18,16 +18,16 @@ public class Enchere {
     private Livre livre;
     /** La valeur de la derniere enchere, a deffaut le prix de depart. */
     private float valeurEnchere;
-    /** Le prix maximun évalué par l'agent. */
+    /** Le prix maximun Ã©valuÃ© par l'agent. */
     private float prixMaximum = 0;
         
     /** Constructeurs. */
-    /** Construit une enchère entièrement définie. */
+    /** Construit une enchÃ¨re entiÃ¨rement dÃ©finie. */
     public Enchere( int num, Livre li, float val, int tps, float pas, int type, String nomag) {
         this.numeroEnchere = num; this.livre = new Livre(li); this.valeurEnchere = val;
         this.type = type; this.nomagent = nomag; this.pas = pas; this.temps = tps;
     }
-    /** Constructeur par défaut. */
+    /** Constructeur par dÃ©faut. */
     public Enchere() {
         numeroEnchere = 1; valeurEnchere = (float)0; livre = new Livre();
     }
@@ -49,8 +49,8 @@ public class Enchere {
     public float getPas(){return this.pas;}
     public void setPrixMaximum(float _prixMaximum) { prixMaximum = _prixMaximum; }
     public float getPrixMaximum() { return prixMaximum; }
-    /** Méthodes. */    
-    /** Méthode d'affichage. */
+    /** MÃ©thodes. */    
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) { 
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
@@ -58,7 +58,7 @@ public class Enchere {
                    + ", type = " + this.type
                    + ", temps = " + this.temps
                    + ", pas = " + this.pas
-                   + ", enchérisseur = " + this.nomagent
+                   + ", enchÃ©risseur = " + this.nomagent
                    + ", prix = " + this.valeurEnchere
                    + ", prix maximum = " + this.prixMaximum
                    + ", livre = " + "\n" + this.livre.toString(decalage+1);
@@ -71,7 +71,7 @@ public class Enchere {
         else if (typeEnchere.equalsIgnoreCase("EnchereCinq")) return 5;
         else return 0;
     }
-    /** La méthode main de test. */
+    /** La mÃ©thode main de test. */
     public static void main(String[] argc) {
         bourse.sdd.Livre l1 = new bourse.sdd.Livre("l1", "a2", new bourse.protocole.Categorie(), "poche", "O'reilly", (float)50.65, (float)0.45, "2004-01-01", "222222222", 1, "Seb", (float)65);
         bourse.sdd.Livre l2 = new bourse.sdd.Livre("l2", "a1", new bourse.protocole.Categorie(), "poche", "Casterman", (float)40.75, (float)0.85, "1954-04-12", "222XX2254", 2, "protocoleman", (float)50);

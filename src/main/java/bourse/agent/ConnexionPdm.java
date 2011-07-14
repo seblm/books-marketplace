@@ -5,24 +5,24 @@ import java.io.*;
 import bourse.protocole.*;
 import bourse.agent.sdd.*;
 
-/* Gère la communication vers la Pdm : lance une connexion. */
+/* GÃ¨re la communication vers la Pdm : lance une connexion. */
 public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
-    /** Une ConnexionPdm doit connaître l'agent qui le contient. */
+    /** Une ConnexionPdm doit connaÃ®tre l'agent qui le contient. */
     private Agent papa;
-    /** Crée une nouvelle instance de ConnexionPdm */
+    /** CrÃ©e une nouvelle instance de ConnexionPdm */
     public ConnexionPdm(Agent pere, boolean verbose) throws IOException, java.util.MissingResourceException {
         super(new java.net.Socket(pere.getCurrentPdm().getAdresse().ipToString(), pere.getCurrentPdm().getAdresse().getPort()), Protocole.MOTIF_FIN_FICHIER_XML, verbose);
         this.papa = pere;
     }
-    /** Exécutée lorsque l'agent se connecte à une pdm. */
+    /** ExÃ©cutÃ©e lorsque l'agent se connecte Ã  une pdm. */
     public void run() {
-        if (getVerbose()) System.out.println("Démarrage d'une connexion " + this);
+        if (getVerbose()) System.out.println("DÃ©marrage d'une connexion " + this);
         super.run();
     }
-    /** Gestion/Traitement des messages reçus. */
+    /** Gestion/Traitement des messages reÃ§us. */
     protected synchronized void traiter(String message) {
         int etatEntrant = this.papa.getEtat();
-        // si le message n'est pas initialisé, c'est que la pdm a quitté "brutalement".
+        // si le message n'est pas initialisÃ©, c'est que la pdm a quittÃ© "brutalement".
         try {
             if (message == null) { throw new java.lang.NullPointerException("Perte de la connexion."); }
             else {
@@ -33,8 +33,8 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                         this.papa.getFenetre().addInputMessage("welcome agent");
                         if (this.papa.getEtat() == Etat.attenteRESULTWELCOME) {
                             this.papa.setEtatSuivant(Etat.pret);
-                            /** On vient d'être accepté chez une pdm, on place
-                             *  son compteur d'action réalisées à 0. */
+                            /** On vient d'Ãªtre acceptÃ© chez une pdm, on place
+                             *  son compteur d'action rÃ©alisÃ©es Ã  0. */
                             this.papa.getEnvironnement().setNombreActions(0);
                             this.papa.getCurrentPdm().setVisitee(true);
                             this.papa.setHote(this.papa.getCurrentPdm().getNom());
@@ -42,7 +42,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             this.papa.setCategorie(new Categorie(((ResultWelcome)msg).getCategorie()));
                             this.papa.synchroniser();
                         } else {
-                            String export = new bourse.protocole.Erreur("Inattendu", "désolé, je ne m'attendais pas à une confirmation de connexion de votre part...").toXML();
+                            String export = new bourse.protocole.Erreur("Inattendu", "dÃ©solÃ©, je ne m'attendais pas Ã  une confirmation de connexion de votre part...").toXML();
                             try {
                                 this.ecrire(export);
                                 this.papa.getFenetre().addOutputMessage("erreur (inattendu)");
@@ -54,12 +54,12 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                         this.papa.getFenetre().addInputMessage("result bye");
                         if (this.papa.getEtat() == 7) {
                             this.papa.setEtatSuivant(2);
-                            this.papa.getCurrentPdm().setVisitee(true); // mise à jour de la pdm qu'on vient de quitter.
+                            this.papa.getCurrentPdm().setVisitee(true); // mise Ã  jour de la pdm qu'on vient de quitter.
                             this.papa.getMemoire().getPdms().miseAJour(new ListePdm((ResultBye)msg));
                             this.papa.synchroniser();
                         }
                         else {
-                            String export = new bourse.protocole.Erreur("Inattendu", "désolé, je ne m'attendais pas à une confirmation de connexion de votre part...", "", "").toXML();
+                            String export = new bourse.protocole.Erreur("Inattendu", "dÃ©solÃ©, je ne m'attendais pas Ã  une confirmation de connexion de votre part...", "", "").toXML();
                             try {
                                 this.ecrire(export);
                                 this.papa.getFenetre().addOutputMessage("erreur (inattendu)");
@@ -83,21 +83,21 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                         } else if (this.papa.getEtat() == 10) {
                             if ((((Erreur)msg).getNom()).equals("Zerovente")) {
                                 if ((((Erreur)msg).getRaison()).equals("neutre")){
-                                    System.out.println("Vente refusée car la pdm est neutre.");
+                                    System.out.println("Vente refusÃ©e car la pdm est neutre.");
                                     this.papa.getCurrentPdm().setActive(false);
                                     this.papa.setEtatSuivant(6);
                                 }
                                 else if ((((Erreur)msg).getRaison()).equals("nonValide")){
-                                    System.out.println("Vente refusée par la pdm.");
+                                    System.out.println("Vente refusÃ©e par la pdm.");
                                     this.papa.setEtatSuivant(6);
                                 }
-                                else if ((((Erreur)msg).getRaison()).equals("nonImplémenté")){
-                                    System.out.println("Vente refusée car la pdm n'implémente pas ce type d'enchère.");
+                                else if ((((Erreur)msg).getRaison()).equals("nonImplÃ©mentÃ©")){
+                                    System.out.println("Vente refusÃ©e car la pdm n'implÃ©mente pas ce type d'enchÃ¨re.");
                                     this.papa.setEtatSuivant(6);
                                     this.papa.getCurrentPdm().setNonEnchereGeree(this.papa.getEnvironnement().getTypeDemande());
                                 }
                                 else if ((((Erreur)msg).getRaison()).equals("aute vendeur")){
-                                    System.out.println("Vente refusée car la pdm a déjà acceptée une autre vente pour le tour suivant.");
+                                    System.out.println("Vente refusÃ©e car la pdm a dÃ©jÃ  acceptÃ©e une autre vente pour le tour suivant.");
                                     this.papa.setEtatSuivant(6);
                                 }
                             }
@@ -107,7 +107,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                         this.papa.getFenetre().addInputMessage("result agent");
                         System.out.println("Transition : Recu un message result Agents.");
                         if (new Etat(etatEntrant).acceptAsynchronus()) {
-                            this.papa.getMemoire().getAgents().miseAJour(((ResultAgents)msg).getListeAgents()); // mise à jour de la liste d'agent.
+                            this.papa.getMemoire().getAgents().miseAJour(((ResultAgents)msg).getListeAgents()); // mise Ã  jour de la liste d'agent.
                         }
                         break;
                     case TypeMessage.TM_PROPOSITION_ENCHERE_P :
@@ -116,12 +116,12 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                         PropositionEnchereP m = (PropositionEnchereP)msg;
                         this.papa.getEnvironnement().setCourante(new Enchere(m.getNumeroEnchere(), m.getLivre(), m.getValeurEnchere(), m.getTemps(), m.getPas(), Enchere.enchereToCode(m.getNom()), m.getAgent()));
                         this.papa.getMemoire().getPdms().acceder(this.papa.getCurrentPdm().getNom()).setNumeroDernierTour(((PropositionEnchereP)msg).getNumeroEnchere());
-                        /** mettre à jour la moyenne */
+                        /** mettre Ã  jour la moyenne */
                         this.papa.getMemoire().refreshTemps();
                         this.papa.getMemoire().getPdms().refresh();
                         if (papa.getEnvironnement().getNombreActions() > 1) { // Dans le cas contraire, on ignore la proposition.
                             if (new Etat(etatEntrant).acceptAsynchronus()) {
-                                /** exceptions parmi les états connéctés. */
+                                /** exceptions parmi les Ã©tats connÃ©ctÃ©s. */
                                 if (this.papa.getEtat() == 7)
                                     this.papa.setEtatSuivant(7);
                                 else if (this.papa.getEtat() ==  10)
@@ -136,16 +136,16 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                                     if (this.papa.getEnvironnement().getCourante().getLivre().getProprietaire().equalsIgnoreCase(this.papa.getNom())) { // on est bien l'initiateur de la vente.
                                         this.papa.setEtatSuivant(13);
                                         this.papa.synchroniser();
-                                    } else // c'est une autre enchère qui débute.
+                                    } else // c'est une autre enchÃ¨re qui dÃ©bute.
                                         this.papa.setEtatSuivant(11);
-                                } else // si entre temps, on a déjà choisi ces actions, on a pas le droit de rentrer en enchère.
+                                } else // si entre temps, on a dÃ©jÃ  choisi ces actions, on a pas le droit de rentrer en enchÃ¨re.
                                     if (this.papa.getAction() != Action.migrer && this.papa.getAction() != Action.bilan)
-                                        this.papa.setEtatSuivant(12); /** comportement par défaut pour les états connéctés. */
+                                        this.papa.setEtatSuivant(12); /** comportement par dÃ©faut pour les Ã©tats connÃ©ctÃ©s. */
                             }
                         }   
                         break;
                     case TypeMessage.TM_RESULTAT :
-                        System.out.println("Transition : Recu un message de résutat d'enchère.");
+                        System.out.println("Transition : Recu un message de rÃ©sutat d'enchÃ¨re.");
                         this.papa.getFenetre().addInputMessage("resultat");
                         if (new Etat(etatEntrant).acceptAsynchronus()) {
                             if (this.papa.getEtat() == 13)  {
@@ -154,15 +154,15 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             }
                             /** Si on est l'acheteur d'un bouquin. */
                             if (((Resultat)msg).getAcheteur().equalsIgnoreCase(this.papa.getNom())) {
-                                /** on met à jour le solde de l'agent. */
+                                /** on met Ã  jour le solde de l'agent. */
                                 float f = this.papa.getWallet() - ((Resultat)msg).getEnchere();
                                 this.papa.setWallet(f);
                             }
-                            /** Si on est l'ancien propriétaire du bouquin. */
+                            /** Si on est l'ancien propriÃ©taire du bouquin. */
                             if (((Resultat)msg).getLivre().getProprietaire().equalsIgnoreCase(this.papa.getNom())) {
                                 /** Si on est pas l'acheteur du bouquin. */
                                 if (!(((Resultat)msg).getAcheteur().equalsIgnoreCase(this.papa.getNom()))) {
-                                    /** On vient de vendre son bouquin, donc il faut mettre à jour son solde. */
+                                    /** On vient de vendre son bouquin, donc il faut mettre Ã  jour son solde. */
                                     float f = this.papa.getWallet() + ((Resultat)msg).getEnchere();
                                     this.papa.setWallet(f);
                                 }
@@ -191,11 +191,11 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             this.papa.synchroniser();
                         }
                         break;
-                    /** Messages non gérés par l'agent. */
+                    /** Messages non gÃ©rÃ©s par l'agent. */
                     default:
                         this.papa.getFenetre().addInputMessage("Transition : NON GERE");
-                        System.out.println("Message non géré : " + msg.getType());
-                        String export = new bourse.protocole.Erreur("Inattendu", "désolé, en tant qu'agent, je ne gère pas cette requête.").toXML();
+                        System.out.println("Message non gÃ©rÃ© : " + msg.getType());
+                        String export = new bourse.protocole.Erreur("Inattendu", "dÃ©solÃ©, en tant qu'agent, je ne gÃ¨re pas cette requÃªte.").toXML();
                         try {
                             this.ecrire(export);
                             this.papa.getFenetre().addOutputMessage("erreur (inattendu)");
@@ -206,7 +206,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
         } catch (java.lang.NullPointerException e) { e.printStackTrace(System.err); this.papa.setEtatSuivant(Etat.connaitPdms); }
     }
     
-    /** ne jamais appeller de l'extérieur.  */
+    /** ne jamais appeller de l'extÃ©rieur.  */
     public void close() {
     }
     

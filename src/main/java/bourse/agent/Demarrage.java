@@ -3,7 +3,7 @@ package bourse.agent;
 /*
  * Demarrage.java
  *
- * Created on 3 février 2004, 17:40
+ * Created on 3 fÃ©vrier 2004, 17:40
  */
 
 /**
@@ -59,7 +59,7 @@ public class Demarrage extends javax.swing.JFrame {
         jLabelControleAgent.setText("Contr\u00f4le");
         jPanelAgent.add(jLabelControleAgent);
 
-        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "Aléatoire" }));
+        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "AlÃ©atoire" }));
         jPanelAgent.add(jComboBoxControleAgent);
 
         jCheckBoxVerbose.setText("mode verbeux");

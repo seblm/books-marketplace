@@ -2,7 +2,7 @@ package bourse.agent.sdd;
 
 import java.util.*;
 
-/** Donne toutes les encheres prévues par la pdm courante. */
+/** Donne toutes les encheres prÃ©vues par la pdm courante. */
 public class Encheres { 
 /** Variables d'instances. */
     /** donne la liste des encheres. */
@@ -12,19 +12,19 @@ public class Encheres {
     /** Construit une liste d' encheres vide. */
     public Encheres() { this.encheres = new LinkedList(); }
     
-    /** Méthodes. */
+    /** MÃ©thodes. */
     /** Ajouter une nouvelle enchere avec les valeurs essentielles. */
     public void ajouter(Enchere e) {
         this.encheres.add(new Enchere(e));
     }
-    /** Renvoie la p-ième enchere de la liste. */
+    /** Renvoie la p-iÃ¨me enchere de la liste. */
     public Enchere get(int index) throws IndexOutOfBoundsException { return ((Enchere)this.encheres.get(index)); }
     /** Nettoyer la liste = supprimer toutes les encheres. */
     public void nettoyer() {
         ListIterator parcours = this.encheres.listIterator();
         while (parcours.hasNext()) { parcours.remove(); }
     }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";

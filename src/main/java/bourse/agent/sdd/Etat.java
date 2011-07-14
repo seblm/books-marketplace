@@ -1,6 +1,6 @@
 package bourse.agent.sdd;
 
-/** Répertorie les états possibles. */
+/** RÃ©pertorie les Ã©tats possibles. */
 public class Etat {
     
     /** Variables d'instance. */
@@ -12,74 +12,74 @@ public class Etat {
     public static int connaitPdms = 2;
     /** 3 : Pdm choisie dans la liste des actives. */
     public static int pdmChoisie = 3;
-    /** 4 : Connexion physique effectuée. */
+    /** 4 : Connexion physique effectuÃ©e. */
     public static int connectePhysiquement = 4;
-    /** 5 : Attente d'une réponse au WELCOME. */
+    /** 5 : Attente d'une rÃ©ponse au WELCOME. */
     public static int attenteRESULTWELCOME = 5;
     /** 6 : Pret pour travailler. */
     public static int pret = 6 ;
-    /** 7 : Attente d'une réponse au BYE. */
+    /** 7 : Attente d'une rÃ©ponse au BYE. */
     public static int attenteRESULTBYE = 7;
-    /** 8 : Non connecté physiquement. */
+    /** 8 : Non connectÃ© physiquement. */
     public static int nonConnecte = 8;
     /** 9 : Action choisie. */
     public static int actionChoisie = 9;
-    /** 10 : Attente de réponse à la demande de vente. */
+    /** 10 : Attente de rÃ©ponse Ã  la demande de vente. */
     public static int attentePropositionEnchere = 10;
-    /** 11 : Attente du déclenchement de la vente. */
+    /** 11 : Attente du dÃ©clenchement de la vente. */
     public static int attenteDeclenchementEnchere = 11;
-    /** 12 : Debut du mode enchère. */
+    /** 12 : Debut du mode enchÃ¨re. */
     public static int modeEnchere = 12;
-    /** 13 : Attente du résultat de sa vente. */
+    /** 13 : Attente du rÃ©sultat de sa vente. */
     public static int attenteRESULTATdeSaVente = 13;
-    /** 14 : Enchère interessante. */
+    /** 14 : EnchÃ¨re interessante. */
     public static int enchereInteressante = 14;
-    /** 15 : L'enchere est une EnchèreUn. */
+    /** 15 : L'enchere est une EnchÃ¨reUn. */
     public static int enchereUnOuQuatre = 15;
-    /** 16 : L'enchere est une EnchèreDeux ou une enchère cinq car on gère de la meme facon. */
+    /** 16 : L'enchere est une EnchÃ¨reDeux ou une enchÃ¨re cinq car on gÃ¨re de la meme facon. */
     public static int enchereDeuxOuCinq = 16;
-    /** 17 : L'enchere est une EnchèreTrois. */
+    /** 17 : L'enchere est une EnchÃ¨reTrois. */
     public static int enchereTrois = 17;
-    /** L'état courant. */
+    /** L'Ã©tat courant. */
     private int etat;
     
     /** Constructeur. */
     public Etat(int etat) { this.etat = etat; }
     
-    /** Méthodes. */
-    /** Renvoie l'état codé sous forme d'entier. */
+    /** MÃ©thodes. */
+    /** Renvoie l'Ã©tat codÃ© sous forme d'entier. */
     public int getEtat() { return this.etat; }
-    /** Modifie la valeur de l'état. */
+    /** Modifie la valeur de l'Ã©tat. */
     public void setEtat(int etat) { this.etat = etat; }
-    /** Méthode d'affichage qui présente le code et la signification de l'état. */
+    /** MÃ©thode d'affichage qui prÃ©sente le code et la signification de l'Ã©tat. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
         String output = delta + String.valueOf(this.etat) + " (";
         switch (this.etat) {
             case 0: output += "quitter"; break;
-            case 1: output += "initialisé"; break;
+            case 1: output += "initialisÃ©"; break;
             case 2: output += "connait les pdms actives"; break;
             case 3: output += "pdm choisie dans la liste des actives"; break;
-            case 4: output += "connexion physique effectuée"; break;
-            case 5: output += "attente d'une réponse au WELCOME"; break;
+            case 4: output += "connexion physique effectuÃ©e"; break;
+            case 5: output += "attente d'une rÃ©ponse au WELCOME"; break;
             case 6: output += "pret pour travailler"; break;
-            case 7: output += "attente d'une réponse au BYE"; break;
-            case 8: output += "non connecté physiquement"; break;
+            case 7: output += "attente d'une rÃ©ponse au BYE"; break;
+            case 8: output += "non connectÃ© physiquement"; break;
             case 9: output += "action choisie"; break;            
-            case 10: output += "attente de réponse à la demande de vente"; break;  
-            case 11: output += "attente du déclenchement de la vente"; break;
-            case 12: output += "debut du mode enchère"; break;
-            case 13: output += "attente du résultat de sa vente"; break;
-            case 14: output += "enchère interessante"; break;
-            case 15: output += "enchère à prendre ou à laisser ou enchère descendante"; break;
-            case 16: output += "enchère à pli scellé ou enchère de Vickrey"; break;
-            case 17: output += "enchère ascendante"; break;
-            //case 18: output += "enchère descendante"; break;
-            default : output += "enchère non gérée"; break;
+            case 10: output += "attente de rÃ©ponse Ã  la demande de vente"; break;  
+            case 11: output += "attente du dÃ©clenchement de la vente"; break;
+            case 12: output += "debut du mode enchÃ¨re"; break;
+            case 13: output += "attente du rÃ©sultat de sa vente"; break;
+            case 14: output += "enchÃ¨re interessante"; break;
+            case 15: output += "enchÃ¨re Ã  prendre ou Ã  laisser ou enchÃ¨re descendante"; break;
+            case 16: output += "enchÃ¨re Ã  pli scellÃ© ou enchÃ¨re de Vickrey"; break;
+            case 17: output += "enchÃ¨re ascendante"; break;
+            //case 18: output += "enchÃ¨re descendante"; break;
+            default : output += "enchÃ¨re non gÃ©rÃ©e"; break;
         } return output + ")";
     }
-    /** Vrai si l'état nécessite une synchronisation. */
+    /** Vrai si l'Ã©tat nÃ©cessite une synchronisation. */
     public boolean isWaiting() {
         return (/*etat == pret
       || */etat == modeEnchere
@@ -89,7 +89,7 @@ public class Etat {
         || etat == enchereTrois
         || etat == actionChoisie);
     }
-    /** Renvoie vrai si l'état accepte les messages asynchrones c'est à dire
+    /** Renvoie vrai si l'Ã©tat accepte les messages asynchrones c'est Ã  dire
      *  les messages resultprogramme, resultagent et resultat.
      *  6 7 10 11 12 13 14 15 16 17 18 */
     public boolean acceptAsynchronus() {

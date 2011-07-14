@@ -16,7 +16,7 @@ public final class Admin extends bourse.protocole.Protocole {
     
     public int getTypeRequete() { return type; }
     
-    /** Crée une nouvelle instance du type de message Admin. */
+    /** CrÃ©e une nouvelle instance du type de message Admin. */
     public Admin(int type) {
         super(new TypeMessage(TypeMessage.TM_ADMIN));
         this.type = type;

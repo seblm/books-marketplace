@@ -2,18 +2,18 @@ package bourse.reseau;
 import java.net.*;
 import java.io.IOException;
 /**
- * Écoute les demandes de connexion physique au réseau
+ * Ã‰coute les demandes de connexion physique au rÃ©seau
  */
 public abstract class Serveur extends Thread {
-    /** Socket d'écoute du serveur. */
+    /** Socket d'Ã©coute du serveur. */
     private ServerSocket socketServeur;
-    /** Accès au socketServeur. */
+    /** AccÃ¨s au socketServeur. */
     public ServerSocket getSocketServeur() { return this.socketServeur; }
     /** Constructeur de serveur. */
     public Serveur(int port) throws java.net.PortUnreachableException {
         try { socketServeur = new ServerSocket(port); }
         catch (IOException e) {
-            throw new PortUnreachableException("Ne peut écouter le port " + port );
+            throw new PortUnreachableException("Ne peut Ã©couter le port " + port );
         }
     }
 }

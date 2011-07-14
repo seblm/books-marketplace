@@ -1,7 +1,7 @@
 package bourse.agent.sdd;
 
-/** Stocke les données relatives aux agents concurrents.
- *  Par exemple lors de la récupération de la liste des agents.*/
+/** Stocke les donnÃ©es relatives aux agents concurrents.
+ *  Par exemple lors de la rÃ©cupÃ©ration de la liste des agents.*/
 public class Agent {
     
     /** Variables d'instance. */
@@ -20,7 +20,7 @@ public class Agent {
         for (int i=0; i<decalage; i++) delta += " ";
         return delta + "nom = " + this.nom;
     }
-    /** Méthode de test de la classe. */
+    /** MÃ©thode de test de la classe. */
     public static void main(String argc[]) {
         Agent a = new Agent("Arnaud");
         System.out.println(a.toString(5));

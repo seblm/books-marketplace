@@ -3,7 +3,7 @@ package bourse.agent;
 import bourse.agent.sdd.*;
 import bourse.protocole.*;
 
-/** Répertorie toutes les informations utiles pour un agent de conserver. */
+/** RÃ©pertorie toutes les informations utiles pour un agent de conserver. */
 public class Memoire {
     private Agent pere;
     /** Pdms. */
@@ -12,16 +12,16 @@ public class Memoire {
     private ListeAgentMemoire agents;
     /** L'ensemble des transactions. */
     private Possessions possessions;
-    /** Stocke les statisiques intéressantes pour aider à la decision d'une vente. */
+    /** Stocke les statisiques intÃ©ressantes pour aider Ã  la decision d'une vente. */
     private AideDecisionVente stats;
     /** Stocke le temps comme la moyenne actuelle des tours de chaque pdm. entre
      *  1 et 100. */
     private int temps = 0;
-    /** Stocke l'id du livre qu'on a décidé de vendre. */
+    /** Stocke l'id du livre qu'on a dÃ©cidÃ© de vendre. */
     private int livreAVendre;
     
     /** Constructeurs. */
-    /** Par défaut. */
+    /** Par dÃ©faut. */
     public Memoire(bourse.agent.Agent _a, Visualisation fenetre) {
         this.pere = _a;
         this.pdms = new ListePdmMemoire(fenetre); 
@@ -31,7 +31,7 @@ public class Memoire {
         this.temps = 0;
     }
     
-    /** Méthodes. */
+    /** MÃ©thodes. */
     /** Renvoie la liste des pdm. */
     public ListePdmMemoire getPdms() { return this.pdms; }
     /** Renvoie la liste des livres. */
@@ -48,7 +48,7 @@ public class Memoire {
     public void setLivreAVendre(int _id) { livreAVendre = _id; }
     
     public AideDecisionVente getAideDecisionVente() { return stats; }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
@@ -68,7 +68,7 @@ public class Memoire {
         }
         temps = total / cpt; 
     }
-    /** Méthode de test. */
+    /** MÃ©thode de test. */
     public static void main(String argc[]) {
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
         visu.show();
@@ -87,7 +87,7 @@ public class Memoire {
         bourse.sdd.Livre l3 = new bourse.sdd.Livre("l2", "a1", new bourse.protocole.Categorie(), "poche", "Casterman", (float)40.75, (float)0.27, "1954-04-12", "222XX2254", 3, "arno", (float)12);
         
         AgentMemoire a1 = new AgentMemoire("Arnaud", new Categorie(Categorie.INFO), true);
-        AgentMemoire a2 = new AgentMemoire("Jerôme", new Categorie(Categorie.INFO), false);
+        AgentMemoire a2 = new AgentMemoire("JerÃ´me", new Categorie(Categorie.INFO), false);
         AgentMemoire a3 = new AgentMemoire("Eric", new Categorie(Categorie.BD), true);
         m.getAgents().ajouter(a1);
         m.getAgents().ajouter(a2);

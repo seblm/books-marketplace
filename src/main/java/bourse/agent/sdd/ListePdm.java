@@ -13,7 +13,7 @@ public class ListePdm {
     /** Constructeur. */
     /** Construit une liste de pdms vide. */
     public ListePdm() { this.liste = new HashMap(); }
-    /** Construit une liste à partir d'une requete bye. */
+    /** Construit une liste Ã  partir d'une requete bye. */
     public ListePdm(bourse.protocole.ResultBye msg) {
         this.liste = new HashMap();
         java.util.ListIterator parcours = msg.getListepdm().listIterator();
@@ -23,18 +23,18 @@ public class ListePdm {
         }
     }
     
-    /** Méthodes. */
+    /** MÃ©thodes. */
     /** Renvoie la liste. */
     protected HashMap getListe() { return this.liste; }
     /** Ajouter une pdm. */
     public void ajouter(Pdm pdm) { this.liste.put(pdm.getNom(), pdm); }
     /** Supprimer une pdm. */
     public void supprimer(Pdm pdm) { this.liste.remove(pdm.getNom()); }
-    /** Accès à une pdm de la liste à partir de son nom. */
+    /** AccÃ¨s Ã  une pdm de la liste Ã  partir de son nom. */
     public Pdm acceder(String nom) { return (Pdm)this.liste.get(nom); }
     /** Renvoie vrai si la liste est vide. */
     public boolean estVide() { return this.liste.isEmpty(); }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString() {
         String output = "[";
         Iterator parcours = this.liste.values().iterator();

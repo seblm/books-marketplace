@@ -5,42 +5,42 @@ import java.io.*;
 import bourse.protocole.*;
 import bourse.agent.sdd.*;
 
-/** Centralise les méthodes d'ia. */
+/** Centralise les mÃ©thodes d'ia. */
 public class Ia extends Decision {
     
-    /** Méthodes */
+    /** MÃ©thodes */
     /** Constructeur. */
     public Ia(bourse.agent.Agent appelant) { super(appelant); }
-    /** Renvoie le temps d'attente en millisecondes à paramétrer en fonction de
-     *  l'impatience. Il y aurait un net bénéfice à sauvegardr les temps moyens
-     *  de réponse d'une pdm pour pouvoir ajouster automatiquement ce timeout en
-     *  fonction de la pdm. On gagnerai en vitesse et donc en efficacité
-     *  générale. */
+    /** Renvoie le temps d'attente en millisecondes Ã  paramÃ©trer en fonction de
+     *  l'impatience. Il y aurait un net bÃ©nÃ©fice Ã  sauvegardr les temps moyens
+     *  de rÃ©ponse d'une pdm pour pouvoir ajouster automatiquement ce timeout en
+     *  fonction de la pdm. On gagnerai en vitesse et donc en efficacitÃ©
+     *  gÃ©nÃ©rale. */
     public long timeout() { return 10000; }
     /** Algorithme de choix d'une action. */
     public void choixAction() {
-        /** on s'informe en fonction du nombre d'actions passées sur la pdm. */
-        /** Si on vient d'arriver dans la pdm, on doit demander la liste des agents connectés. */
+        /** on s'informe en fonction du nombre d'actions passÃ©es sur la pdm. */
+        /** Si on vient d'arriver dans la pdm, on doit demander la liste des agents connectÃ©s. */
         if (pere.getEnvironnement().getNombreActions() == 0)
             pere.setAction(new Action(5));
-        /** C'est notre deuxième action, on télécharge le programme. */
+        /** C'est notre deuxiÃ¨me action, on tÃ©lÃ©charge le programme. */
         else if (pere.getEnvironnement().getNombreActions() == 1)
             pere.setAction(new Action(4));
-        /** si on a pas téléchargé la liste des agents depuis 5 secondes, on
+        /** si on a pas tÃ©lÃ©chargÃ© la liste des agents depuis 5 secondes, on
          *  redemande la liste des agents. */
         else if ((new java.util.Date().getTime() - pere.getEnvironnement().getDateListeAgent()) > 5000) {
             pere.setAction(new Action(5));
         }
-        /** si on a pas téléchargé la liste des programmes depuis 5 secondes, on
+        /** si on a pas tÃ©lÃ©chargÃ© la liste des programmes depuis 5 secondes, on
          *  redemande la liste des programmes. */
         else if ((new java.util.Date().getTime() - pere.getEnvironnement().getDateListeProgramme()) > 5000) {
             pere.setAction(new Action(4));
         }
-        /** si moins de deux agents sont connectés, on peut migrer. */
+        /** si moins de deux agents sont connectÃ©s, on peut migrer. */
         else if (this.pere.getMemoire().getAgents().taille() < 3)
             pere.setAction(new Action(Action.migrer));
 //            pere.setAction(new Action(6));
-        /* Test de la catégorie du premier livre du programme de la pdm n'est pas intéressante. */
+        /* Test de la catÃ©gorie du premier livre du programme de la pdm n'est pas intÃ©ressante. */
         else if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1).getLivre() != null) {
             if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1).getLivre().getCategorie().getCode() != pere.getCategorie().getCode())
                 pere.setAction(new Action(Action.migrer));
@@ -48,8 +48,8 @@ public class Ia extends Decision {
         } else
             pere.setAction(new Action(6));
     }
-    /** Si le livre est de notre catégorie, on fixe à 120 % du prix proposé,
-     *  sinon, on fixe à 80%. */
+    /** Si le livre est de notre catÃ©gorie, on fixe Ã  120 % du prix proposÃ©,
+     *  sinon, on fixe Ã  80%. */
     public float choixPrix() {
         return this.pere.getEnvironnement().getCourante().getPrixMaximum();
     }
@@ -57,25 +57,25 @@ public class Ia extends Decision {
     public float choixPrixMax(){
         return pere.getEnvironnement().getCourante().getLivre().getPrix();
     }
-    /** Dans une première approche, un livre est intéressant si il appartient à
-     *  la même catégorie que l'agent.
-     *  Sinon, une fois sur cinq, on le juge intéressant quand même. */
+    /** Dans une premiÃ¨re approche, un livre est intÃ©ressant si il appartient Ã 
+     *  la mÃªme catÃ©gorie que l'agent.
+     *  Sinon, une fois sur cinq, on le juge intÃ©ressant quand mÃªme. */
     public boolean livreInteressant(bourse.sdd.Livre l, int typeEnchere, float miseAPrix) {
         boolean reponse = false;
         float seuilBonneCategorie;
         float seuilAutreCategorie;
         float seuil;
-        /** si le livre est de la même catégorie que l'agent. */
+        /** si le livre est de la mÃªme catÃ©gorie que l'agent. */
         if (l.getCategorie().equals(pere.getCategorie())) {
-            seuilBonneCategorie = (float)0.5; // on est le seul à être de cette catégorie
-            seuilAutreCategorie = (float)1.1; // d'autes agents suceptibles d'être intéressés.
+            seuilBonneCategorie = (float)0.5; // on est le seul Ã  Ãªtre de cette catÃ©gorie
+            seuilAutreCategorie = (float)1.1; // d'autes agents suceptibles d'Ãªtre intÃ©ressÃ©s.
             seuil = 2;
         } else {
             seuil = (float)0.8;
             seuilBonneCategorie = (float)0.5;
             seuilAutreCategorie = (float)0.8;
         }
-        System.out.println("typeEnchère = " + typeEnchere);
+        System.out.println("typeEnchÃ¨re = " + typeEnchere);
         switch (typeEnchere) {
             case 1 :
             case 2 :
@@ -101,13 +101,13 @@ public class Ia extends Decision {
                     reponse = (miseAPrix < (float)(seuilBonneCategorie * prixDeBase));
                 else
                     reponse = (miseAPrix < (float)(seuilAutreCategorie * prixDeBase));
-                System.out.println("Le livre est-il intéressant ?\nMiseAPrix = " + miseAPrix + "\nprixDeBase = " + prixDeBase + "si il n'y a pas de concurrents : " +  (miseAPrix < (float)(seuilBonneCategorie * prixDeBase)) + "si il y a des concurrents dans la meme catégorie = " + (miseAPrix < (float)(seuilAutreCategorie * prixDeBase)));
+                System.out.println("Le livre est-il intÃ©ressant ?\nMiseAPrix = " + miseAPrix + "\nprixDeBase = " + prixDeBase + "si il n'y a pas de concurrents : " +  (miseAPrix < (float)(seuilBonneCategorie * prixDeBase)) + "si il y a des concurrents dans la meme catÃ©gorie = " + (miseAPrix < (float)(seuilAutreCategorie * prixDeBase)));
                 break;
         }
         return reponse;
     }
-    /** On donne en entrée la liste des livres que l'on possède, l'agorithme doit déterminer le livre à vendre.
-     *  on retourne un objet bourse.protocole.ProposeVente prêt à être exporté. */
+    /** On donne en entrÃ©e la liste des livres que l'on possÃ¨de, l'agorithme doit dÃ©terminer le livre Ã  vendre.
+     *  on retourne un objet bourse.protocole.ProposeVente prÃªt Ã  Ãªtre exportÃ©. */
     public bourse.protocole.ProposeVente choixLivreAVendre(ListeLivre l) {
         float prix = 0;
         int id = pere.getMemoire().getLivreAVendre();

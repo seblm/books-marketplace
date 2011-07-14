@@ -3,29 +3,29 @@ package bourse.agent.sdd;
 // pour l'iterator et le HashMap
 import java.util.*;
 
-/** Les livres possédés. */
+/** Les livres possÃ©dÃ©s. */
 public class ListeLivre {
     
     /** Variables d'instance. */
-    /** La liste de livres (indéxée par l'id du livre). */
+    /** La liste de livres (indÃ©xÃ©e par l'id du livre). */
     private java.util.HashMap liste;
     
     /** Constructeurs. */
     /** Construit une liste vide de livres. */
     public ListeLivre() { liste = new java.util.HashMap(); }
     
-    /** Méthodes. */
-    /** Renvoie l'ensemble des valeurs de la liste. Utile seulement pour instancier un itérateur. */
+    /** MÃ©thodes. */
+    /** Renvoie l'ensemble des valeurs de la liste. Utile seulement pour instancier un itÃ©rateur. */
     public Collection getValeurs() { return liste.values(); }
     /** Renvoie la liste des livres. */
     public java.util.HashMap getListe() { return this.liste; }
     /** Ajoute un nouveau livre. */
     public void ajouter(bourse.sdd.Livre l) { this.liste.put(new java.lang.Integer(l.getId()), l); }
-    /** Retire un livre d'après l'id du livre. */
+    /** Retire un livre d'aprÃ¨s l'id du livre. */
     public void supprimer(bourse.sdd.Livre l) { this.liste.remove(new java.lang.Integer(l.getId())); }
-    /** Retire un livre à partir de son id. */
+    /** Retire un livre Ã  partir de son id. */
     public void supprimer(int id) { this.liste.remove(new java.lang.Integer(id)); }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
@@ -35,7 +35,7 @@ public class ListeLivre {
         if (output.length() == 0) return output;
         else return output.substring(0, output.length()-1);
     }
-    /** Méthode de test. */
+    /** MÃ©thode de test. */
     public static void main(String argc[]) {
         ListeLivre l = new ListeLivre();
         bourse.sdd.Livre l1 = new bourse.sdd.Livre("l1", "a2", new bourse.protocole.Categorie(), "poche", "O'reilly", (float)50.65, (float)0.45, "2004-01-01", "222222222", 1, "Seb", (float)65);

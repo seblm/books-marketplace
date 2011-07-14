@@ -18,7 +18,7 @@ import java.util.ListIterator;
 
 public class Programme extends Protocole {
     
-    /** Une liste chaÓnÈe remplie de bourse.sdd.ProgrammePro */
+    /** Une liste cha√Æn√©e remplie de bourse.sdd.ProgrammePro */
     private LinkedList listeProgramme;
     
     public LinkedList getListeProgramme() { return this.listeProgramme; }
@@ -42,8 +42,8 @@ public class Programme extends Protocole {
         return resultat;
     }
 
-    /** Regarde si un agent peut proposer une vente (le livre n'est pas dÈj‡ en vente
-     * dans le programme et la taille de programme est cohÈrente). */
+    /** Regarde si un agent peut proposer une vente (le livre n'est pas d√©j√† en vente
+     * dans le programme et la taille de programme est coh√©rente). */
     public boolean insertionPossible(String nomPdm, int idLivre) {
         boolean bonneTaille = nbEncheresProposeesParAgents(nomPdm) < listeProgramme.size();
         if (bonneTaille) {
@@ -56,8 +56,8 @@ public class Programme extends Protocole {
             return false;
     }
     
-    /** InsËre une proposition de vente dans le programme.
-     * @return true si l'ajout a rÈussit, false sinon
+    /** Ins√®re une proposition de vente dans le programme.
+     * @return true si l'ajout a r√©ussit, false sinon
      */
     public boolean ajouterVente(Livre l, String nomPdm, int typeEnchere, float prixVente) {
         Object derniereEnchere = listeProgramme.removeLast();

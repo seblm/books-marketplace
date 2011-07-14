@@ -104,7 +104,7 @@ public class Visualisation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nom", "Adresse", "Active", "Visitée", "Enchères gérées", "Numero du tour"
+                "Nom", "Adresse", "Active", "VisitÃ©e", "EnchÃ¨res gÃ©rÃ©es", "Numero du tour"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -125,7 +125,7 @@ public class Visualisation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nom", "Catégorie", "Présent", "Fréquence catégorie"
+                "Nom", "CatÃ©gorie", "PrÃ©sent", "FrÃ©quence catÃ©gorie"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -146,7 +146,7 @@ public class Visualisation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Id", "Propriétaire", "Catégorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"
+                "Date", "Id", "PropriÃ©taire", "CatÃ©gorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -243,47 +243,47 @@ public class Visualisation extends javax.swing.JFrame {
         new Visualisation().show();
     }
     
-    /** Accéder au tableau d'affichage de la liste des pdms de la mémoire */
+    /** AccÃ©der au tableau d'affichage de la liste des pdms de la mÃ©moire */
     public javax.swing.JTable getTableauPdmMemoire() { return this.jTable1; }
-    /** Accéder au tableau d'affichage de la liste des agents de la mémoire */
+    /** AccÃ©der au tableau d'affichage de la liste des agents de la mÃ©moire */
     public javax.swing.JTable getTableauAgentMemoire() { return this.jTable2; }
-    /** Accéder au tableau d'affichage de la liste des possessions de la mémoire */
+    /** AccÃ©der au tableau d'affichage de la liste des possessions de la mÃ©moire */
     public javax.swing.JTable getTableauPossessionMemoire() { return this.jTable3; }
-    /** Accéder au conteneur de la liste des pdms de la mémoire.  */
+    /** AccÃ©der au conteneur de la liste des pdms de la mÃ©moire.  */
     public javax.swing.JScrollPane getJScrollPanePdmMemoire() { return this.jScrollPane1; }
-    /** Accéder au conteneur de la liste des agents de la mémoire.  */
+    /** AccÃ©der au conteneur de la liste des agents de la mÃ©moire.  */
     public javax.swing.JScrollPane getJScrollPaneAgentMemoire() { return this.jScrollPane4; }
-    /** Accéder au conteneur de la liste des possessions de la mémoire.  */
+    /** AccÃ©der au conteneur de la liste des possessions de la mÃ©moire.  */
     public javax.swing.JScrollPane getJScrollPanePossessionMemoire() { return this.jScrollPane5; }
     /** Modifie le nom. */
     public void setNom(String nom) { this.nom.setText(nom); }
     /** Modifie le solde. */
     public void setSolde(String solde) { this.solde.setText(solde); }
-    /** Modifie la catégorie. */
+    /** Modifie la catÃ©gorie. */
     public void setCategorie(String categorie) { this.categorie.setText(categorie); }
-    /** Modifie le nom de l'hôte. */
+    /** Modifie le nom de l'hÃ´te. */
     public void setHote(String hote) { this.hote.setText(hote); }
-    /** Modifie l'état. */
+    /** Modifie l'Ã©tat. */
     public void setEtat(String etat) { this.etat.setText(etat); }
     /** Modifie l'action. */
     public void setAction(String action) { this.action.setText(action); }
-    /** Modifie l'état de l'environnement. */
+    /** Modifie l'Ã©tat de l'environnement. */
     public void setEnvironnement(String env) { this.environnement.setText(env); }
-    /** Ajout d'un message entrant à la fenêtre du protocole. */
+    /** Ajout d'un message entrant Ã  la fenÃªtre du protocole. */
     public void addInputMessage(String m) {
         javax.swing.JLabel l = new javax.swing.JLabel(m + "\n");
         l.setForeground(java.awt.Color.BLUE);
         this.protocole.add(l);
         this.protocole.validate();
     }
-    /** Ajout d'un message sortant à la fenêtre de protocole. */
+    /** Ajout d'un message sortant Ã  la fenÃªtre de protocole. */
     public void addOutputMessage(String m) {
         javax.swing.JLabel l = new javax.swing.JLabel(m + "\n");
         l.setForeground(java.awt.Color.RED);
         this.protocole.add(l);
         this.protocole.validate();
     }
-    /** Affichage des résultats. */
+    /** Affichage des rÃ©sultats. */
     public void setResultat(String resultat) { this.resultat.setText(resultat); }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

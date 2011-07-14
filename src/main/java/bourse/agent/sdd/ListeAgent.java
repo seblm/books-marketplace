@@ -12,12 +12,12 @@ public class ListeAgent {
     /** Construit une liste d'agent vide. */
     public ListeAgent() { this.liste = new HashMap(); }
     
-    /** Méthodes. */
+    /** MÃ©thodes. */
     /** Ajouter un agent concurrent. */
     public void ajouter(Agent a) { this.liste.put(a.getNom(), a); }
-    /** Vrai si la liste contient un agent nommé nom. */
+    /** Vrai si la liste contient un agent nommÃ© nom. */
     public boolean contient(String nom) { return this.liste.containsKey(nom); }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta ="";
         for (int i=0; i<decalage; i++) delta += " ";

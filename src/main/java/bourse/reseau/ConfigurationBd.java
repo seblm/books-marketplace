@@ -171,12 +171,12 @@ public class ConfigurationBd extends javax.swing.JFrame {
                 bd.requete("DELETE FROM pdms WHERE nom = '" + nomPlaceDeMarche + "'") +
                 bd.requete("DELETE FROM items WHERE Proprio = '" + nomPlaceDeMarche + "'")
             ) == 0) {
-                // La requete a échouée
+                // La requete a Ã©chouÃ©e
                 jLabelStatut.setForeground(Color.red);
                 jLabelStatut.setText(jTextFieldNomPdm.getText() + " n'existait pas dans la base");
             } else {
                 jLabelStatut.setForeground(Color.black);
-                jLabelStatut.setText(jTextFieldNomPdm.getText() + " a été supprimée");
+                jLabelStatut.setText(jTextFieldNomPdm.getText() + " a Ã©tÃ© supprimÃ©e");
             }
             bd.deconnexion();
         } catch (Exception e) {
@@ -189,7 +189,7 @@ public class ConfigurationBd extends javax.swing.JFrame {
         try {
             new bourse.reseau.Bd(false);
             jLabelStatut.setForeground(Color.black);
-            jLabelStatut.setText("Les paramètres sont corrects");
+            jLabelStatut.setText("Les paramÃ¨tres sont corrects");
         } catch (Exception e) {
             jLabelStatut.setForeground(Color.red);
             jLabelStatut.setText(e.toString());
@@ -199,7 +199,7 @@ public class ConfigurationBd extends javax.swing.JFrame {
     private void jButtonRechargerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRechargerMouseClicked
         initialiserParametres();
         jLabelStatut.setForeground(Color.black);
-        jLabelStatut.setText("Paramètres rechargés");
+        jLabelStatut.setText("ParamÃ¨tres rechargÃ©s");
     }//GEN-LAST:event_jButtonRechargerMouseClicked
 
     public void initialiserParametres() {
@@ -221,11 +221,11 @@ public class ConfigurationBd extends javax.swing.JFrame {
             );
             Protocole.parametresBd.sauvegarde();
             jLabelStatut.setForeground(Color.black);
-            jLabelStatut.setText("Paramètres sauvegardés");
+            jLabelStatut.setText("ParamÃ¨tres sauvegardÃ©s");
         } catch (NumberFormatException e) {
-            // L'utilisateur n'a pas rentré un entier pour le port.
+            // L'utilisateur n'a pas rentrÃ© un entier pour le port.
             jLabelStatut.setForeground(Color.red);
-            jLabelStatut.setText("Le port doit-être un entier.");
+            jLabelStatut.setText("Le port doit-Ãªtre un entier.");
         }
 
     }//GEN-LAST:event_jButtonEnregistrerMouseClicked

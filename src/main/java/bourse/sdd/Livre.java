@@ -38,25 +38,25 @@ public class Livre {
         this.prixAchat = livre.getPrixAchat();
     }
     
-    /** Constructeur initialisant les paramètres d'un livre, excepté le propriétaire
-     * et le prix d'achat qui sont arbitrairement fixés respectivement à la chaîne
-     * vide et à 0.
-     * @deprecated Ce constructeur est déprécié car il fixe des valeurs arbitraires pour les
-     * données qu'il ne connait pas.
+    /** Constructeur initialisant les paramÃ¨tres d'un livre, exceptÃ© le propriÃ©taire
+     * et le prix d'achat qui sont arbitrairement fixÃ©s respectivement Ã  la chaÃ®ne
+     * vide et Ã  0.
+     * @deprecated Ce constructeur est dÃ©prÃ©ciÃ© car il fixe des valeurs arbitraires pour les
+     * donnÃ©es qu'il ne connait pas.
      */
 /*    public Livre(String titre,String auteur,String categorie,String format,String editeur,float prix,float etat,String dateParu,String isbn,int id) {
         this(titre, auteur, categorie, format, editeur, prix, etat, dateParu, isbn, id, "", (float)0.0);
     }*/
     
-    /** Constructeur par défaut.
-     * @deprecated Ce constructeur fixe toutes les valeurs d'un livre à des valeurs arbitraires.
-     * Elles ne reflètent pas l'existance d'un livre propre et l'instanciation d'un livre par
-     * ce constructeur est par conséquent vivement déconseillé. */
+    /** Constructeur par dÃ©faut.
+     * @deprecated Ce constructeur fixe toutes les valeurs d'un livre Ã  des valeurs arbitraires.
+     * Elles ne reflÃ¨tent pas l'existance d'un livre propre et l'instanciation d'un livre par
+     * ce constructeur est par consÃ©quent vivement dÃ©conseillÃ©. */
     public Livre() {
         this("", "", new Categorie(), "", "", (float)0.0, (float)0.0, "", "", 0, "", (float)0.0);
     }
     
-    /** Constructeur initialisant tous les paramètres d'un livre. */
+    /** Constructeur initialisant tous les paramÃ¨tres d'un livre. */
     public Livre(String titre,String auteur,Categorie categorie,String format,String editeur,float prix,float etat,String dateParu,String isbn,int id, String proprietaire, float prixAchat) {
         this.titre =titre;
         this.auteur =auteur;
@@ -72,11 +72,11 @@ public class Livre {
         this.prixAchat =prixAchat;
     }
     
-    /** Constructeur initialisant livre à partir de l'élément DOM livre. */
+    /** Constructeur initialisant livre Ã  partir de l'Ã©lÃ©ment DOM livre. */
     public Livre(Element livre) { setLivre(livre); }
     
-    /** Rempli l'objet livre à l'aide du pointeur vers la strucuture du document
-     * xml représentant l'élément livre. */
+    /** Rempli l'objet livre Ã  l'aide du pointeur vers la strucuture du document
+     * xml reprÃ©sentant l'Ã©lÃ©ment livre. */
     public void setLivre(Element livre){
         this.titre=livre.getAttribute("TITRE");
         this.auteur=livre.getAttribute("AUTEUR");
@@ -96,10 +96,10 @@ public class Livre {
             catch (NumberFormatException e) { prixAchat = (float)0.0; }
     }
     
-    /** Ajoute à la structure du document xml la balise livre et ses attributs,
-     * conformément au type de message à envoyer.
-     * @param typeMessage suivant ce type, la balise livre ne possèdera pas les
-     * mêmes attributs. Ce type peut-être bourse.protocole.TypeMessage.TM_PROGRAMME,
+    /** Ajoute Ã  la structure du document xml la balise livre et ses attributs,
+     * conformÃ©ment au type de message Ã  envoyer.
+     * @param typeMessage suivant ce type, la balise livre ne possÃ¨dera pas les
+     * mÃªmes attributs. Ce type peut-Ãªtre bourse.protocole.TypeMessage.TM_PROGRAMME,
      * TM_PROPOSITION_ENCHERE_P, TM_RESULTAT, TM_PROPOSE_VENTE ou TM_RESULT_PROPOSE_VENTE.
      */
     public void addElement(Node root, TypeMessage typeMessage){
@@ -109,14 +109,14 @@ public class Livre {
             switch (typeMessage.getValue()) {
                 case TypeMessage.TM_PROPOSE_VENTE :
                 case TypeMessage.TM_RESULT_PROPOSE_VENTE :
-                    // Attribut nécessaire : ID.
+                    // Attribut nÃ©cessaire : ID.
                     livre.setAttribute("ID", String.valueOf(id));
                     break;
                 case TypeMessage.TM_PROPOSITION_ENCHERE_P :
-                    // Attribut nécessaire supplémentaire : PROPRIETAIRE
+                    // Attribut nÃ©cessaire supplÃ©mentaire : PROPRIETAIRE
                     
                 case TypeMessage.TM_RESULTAT :
-                    // Attributs nécessaires supplémentaires : AUTEUR, FORMAT, EDITEUR, DATEPAR, ID, ISBN
+                    // Attributs nÃ©cessaires supplÃ©mentaires : AUTEUR, FORMAT, EDITEUR, DATEPAR, ID, ISBN
                     livre.setAttribute("PROPRIETAIRE", proprietaire);
                     livre.setAttribute("AUTEUR", auteur);
                     livre.setAttribute("FORMAT", format);
@@ -125,7 +125,7 @@ public class Livre {
                     livre.setAttribute("ID", String.valueOf(id));
                     livre.setAttribute("ISBN", isbn);
                 case TypeMessage.TM_PROGRAMME :
-                    // Attributs nécessaires : TITRE, CATEGORIE, PRIX, ETAT
+                    // Attributs nÃ©cessaires : TITRE, CATEGORIE, PRIX, ETAT
                     livre.setAttribute("TITRE",  titre);
                     livre.setAttribute("CATEGORIE", categorie.toString());
                     livre.setAttribute("PRIX", String.valueOf(prix));
@@ -134,7 +134,7 @@ public class Livre {
                     // Si on ne vise aucun message particulier, on ne rend aucun attribut.
             }
             root.appendChild(livre);
-            //changer en donnant le node pour rajouter à un document
+            //changer en donnant le node pour rajouter Ã  un document
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
@@ -212,12 +212,12 @@ public class Livre {
     public void setPrixAchat(float p) {
         this.prixAchat = p; }
     
-    /** Méthode d'affichage. le décalage sert à "indenter" l'affichage. */
+    /** MÃ©thode d'affichage. le dÃ©calage sert Ã  "indenter" l'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
         return delta + ((auteur.length() == 0)?"":"Auteur = ") + this.auteur
-           + ((categorie.getCode() == new Categorie(Categorie.AUCUNE).getCode())?"":", Catégorie = ") + this.categorie
+           + ((categorie.getCode() == new Categorie(Categorie.AUCUNE).getCode())?"":", CatÃ©gorie = ") + this.categorie
            + ((dateParu.length() == 0)?"":", Date Parution = ") + this.dateParu
            + ((editeur.length() == 0)?"":", Editeur = ") + this.editeur
            + ((etat == (float)0.0)?"":", Etat = " + this.etat)
@@ -231,16 +231,16 @@ public class Livre {
     }
     
     public String toString() {
-        String affichage = "Livre n°" + id + " : " + titre + " d'une valeur de <b>" + Math.round(prix*etat) + " Euros</b>";
+        String affichage = "Livre nÂ°" + id + " : " + titre + " d'une valeur de <b>" + Math.round(prix*etat) + " Euros</b>";
         if (proprietaire.length() != 0)
-            affichage += ", détenu par " + proprietaire + "";
+            affichage += ", dÃ©tenu par " + proprietaire + "";
         if (prixAchat != (float)0.0)
-            affichage += ", acheté " + prixAchat + "Euros";
+            affichage += ", achetÃ© " + prixAchat + "Euros";
         affichage += ".";
         return affichage;
     }
     public String toHtml() {
-        String affichage = "Livre n°" + id + " : <i>" + titre + "</i> d'une valeur de <b>" + Math.round(prix*etat*100)/100 + " Euros</b>";
+        String affichage = "Livre nÂ°" + id + " : <i>" + titre + "</i> d'une valeur de <b>" + Math.round(prix*etat*100)/100 + " Euros</b>";
         if (proprietaire.length() != 0)
             affichage += ", d&eacute;tenu par <b>" + proprietaire + "</b>";
         if (prixAchat != (float)0.0)
