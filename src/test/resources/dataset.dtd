@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT dataset (livres*, agents*, pdms*, items*)>
+<!ELEMENT livres EMPTY>
+<!ATTLIST livres
+    Categorie CDATA #IMPLIED
+    Titre CDATA #IMPLIED
+    Auteur CDATA #IMPLIED
+    DatePar CDATA #IMPLIED
+    Editeur CDATA #IMPLIED
+    Format CDATA #IMPLIED
+    PrixN CDATA #IMPLIED
+    ISBN CDATA #REQUIRED
+>
+<!ELEMENT agents EMPTY>
+<!ATTLIST agents
+    nomPDM CDATA #IMPLIED
+    nomAgent CDATA #REQUIRED
+    argent CDATA #IMPLIED
+    categorie CDATA #IMPLIED
+>
+<!ELEMENT pdms EMPTY>
+<!ATTLIST pdms
+    nom CDATA #REQUIRED
+    adresse CDATA ""
+>
+<!ELEMENT items EMPTY>
+<!ATTLIST items
+    ID CDATA #REQUIRED
+    ISBN CDATA #IMPLIED
+    Etat CDATA #IMPLIED
+    Proprio CDATA #IMPLIED
+    PrixAchat CDATA #IMPLIED
+>

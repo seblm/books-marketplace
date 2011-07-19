@@ -1,0 +1,103 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+    <livres Categorie="Science fiction" Titre="Neuromancien" Auteur="William Gibson" DatePar="2001-01-11" Editeur="J\'ai lu" Format="Poche" PrixN="5.8" ISBN="229030820X" />
+    <livres Categorie="Science fiction" Titre="Le grand livre des robots" Auteur="Isaac Asimov" DatePar="1999-09-12" Editeur="Presses de la Cité" Format="Broché" PrixN="32.47" ISBN="2258032903" />
+    <livres Categorie="Science fiction" Titre="Le meilleur des mondes" Auteur="Aldous Huxley" DatePar="1988-01-01" Editeur="Pocket" Format="Poche" PrixN="4.2" ISBN="2266023101" />
+    <livres Categorie="Science fiction" Titre="1984" Auteur="George Orwell" DatePar="1994-01-25" Editeur="Gallimard" Format="Broché" PrixN="8.4" ISBN="2070386686" />
+    <livres Categorie="Science fiction" Titre="La guerre des mondes" Auteur="H. G. Wells" DatePar="1998-03-24" Editeur="Gallimard" Format="Poche" PrixN="11.1" ISBN="2070403343" />
+    <livres Categorie="Science" Titre="Maths DEUG MIAS, SM. Tout le premier semestre ! 2ème Édition" Auteur="Valérie Collet" DatePar="2002-04-01" Editeur="Ellipses Marketing" Format="Broché" PrixN="14.5" ISBN="2729811230" />
+    <livres Categorie="Science" Titre="Leçons sur la gravitation" Auteur="Richard Feynman" DatePar="2001-10-25" Editeur="Odile Jacob" Format="Broché" PrixN="69" ISBN="273811038X" />
+    <livres Categorie="Science" Titre="Réactions chimiques dangereuses" Auteur="Jacques Leleu, Jérôme Triolet" DatePar="2003-09-01" Editeur="Inrs" Format="Broché" PrixN="50.82" ISBN="285599778X" />
+    <livres Categorie="Science" Titre="Poussières d\'étoiles" Auteur="Hubert Reeves" DatePar="1998-05-01" Editeur="Seuil" Format="Poche" PrixN="8.5" ISBN="2020224070" />
+    <livres Categorie="Science" Titre="La double hélice" Auteur="Watson" DatePar="1999-04-07" Editeur="Hachette Littérature" Format="Poche" PrixN="9.2" ISBN="2012789757" />
+    <livres Categorie="Informatique" Titre="JAVA 2 - Plate-forme" Auteur="Rogers Cadenhead" DatePar="2000-09-30" Editeur="Campus Press" Format="Broché" PrixN="9.45" ISBN="2744006971" />
+    <livres Categorie="Informatique" Titre="XML et Java" Auteur="Nicholas Chase" DatePar="2001-07-15" Editeur="CampusPress" Format="Broché" PrixN="25.76" ISBN="2744011665" />
+    <livres Categorie="Informatique" Titre="SVG : Production orientée XML de graphiques vectoriels" Auteur="J.David Eisenberg" DatePar="2003-03-20" Editeur="O\'Reilly" Format="Broché" PrixN="76" ISBN="2841772284" />
+    <livres Categorie="Informatique" Titre="Programmer en Prolog" Auteur="Nigel Ford" DatePar="1993-02-08" Editeur="Dunod" Format="Broché" PrixN="32.5" ISBN="204019827X" />
+    <livres Categorie="Informatique" Titre="L\'intelligence des réseaux" Auteur="Derrick de Kerckhove" DatePar="2000-10-01" Editeur="Odile Jacob" Format="Broché" PrixN="22.87" ISBN="2738108962" />
+    <livres Categorie="Roman" Titre="Dix petits nègres" Auteur="Agatha Christie" DatePar="2002-11-06" Editeur="LGF" Format="Poche" PrixN="5.2" ISBN="2253003964" />
+    <livres Categorie="Romans Policiers" Titre="Tokyo chaos" Auteur="Tokyo chaos" DatePar="2004-01-15" Editeur="Pocket" Format="Poche" PrixN="6.5" ISBN="2266108239" />
+    <livres Categorie="Romans Policiers" Titre="Chair et sang" Auteur="Jonathan Kellerman" DatePar="2003-05-06" Editeur="Seuil" Format="Broché" PrixN="20.0" ISBN="2020525240" />
+    <livres Categorie="Romans Policiers" Titre="Les Egouts de Los Angeles" Auteur="Michael Connelly" DatePar="1998-01-01" Editeur="Points" Format="Poche" PrixN="13.45" ISBN="2020235250" />
+    <livres Categorie="Romans Policiers" Titre="Le Tueur des ombres" Auteur="Val McDermid" DatePar="2003-03-01" Editeur="J\'ai lu" Format="Poche" PrixN="16" ISBN="2290324787" />
+    <livres Categorie="Bandes dessinées" Titre="Akira, tome 9 : Visions" Auteur="Katsumimo Otomo" DatePar="1993-05-21" Editeur="Glénat" Format="Cartonné" PrixN="14.99" ISBN="272341552X" />
+    <livres Categorie="Bandes dessinées" Titre="Love Hina, tome 8" Auteur="Akamatsu" DatePar="2003-03-26" Editeur="Pika" Format="Poche" PrixN="13.9" ISBN="2845992254" />
+    <livres Categorie="Bandes dessinées" Titre="Alpha, tome 7 : Snow White, 30 secondes !" Auteur="Mythic" DatePar="2003-10-25" Editeur="Le Lombard" Format="Cartonné" PrixN="9.45" ISBN="2803618354" />
+    <livres Categorie="Bandes dessinées" Titre="Witchblade, tome 3" Auteur="Michael Turner" DatePar="2000-06-13" Editeur="USA Editions" Format="Cartonné" PrixN="11.5" ISBN="2911033418" />
+    <livres Categorie="Bandes dessinées" Titre="Nomad, tome 5 : Mémoire cachée" Auteur="Jean-David Morvan" DatePar="2000-09-12" Editeur="Glénat" Format="Cartonné" PrixN="14.99" ISBN="2723426890" />
+    <livres Categorie="Science fiction" Titre="Le Seigneur des anneaux" Auteur="John Ronald Reuel Tolkien" DatePar="2003-10-08" Editeur="Christian Bourgois" Format="Broché" PrixN="24.7" ISBN="2267013169" />
+    <livres Categorie="Science fiction" Titre="La cité des permutants" Auteur="Greg Egan" DatePar="1999-12-01" Editeur="LGF - Livre de Poche" Format="Poche" PrixN="12.8" ISBN="2253072249" />
+    <livres Categorie="Science fiction" Titre="Tous à Zanzibar" Auteur="John Brunner" DatePar="1995-01-01" Editeur="LGF - Livre de Poche" Format="Poche" PrixN="14.72" ISBN="2253071803" />
+    <livres Categorie="Science fiction" Titre="La fin du a" Auteur="Van Vogt a.E." DatePar="2001-08-13" Editeur="J\'ai lu" Format="Poche" PrixN="9.0" ISBN="2290313149" />
+    <livres Categorie="Science fiction" Titre="Le monde des a" Auteur=" Van Vogt a.E." DatePar="2001-04-25" Editeur="J\'ai lu" Format="Poche" PrixN="9.0" ISBN="2290312983" />
+    <livres Categorie="Science" Titre="15 semaines de kholles en chimie : MPSI-PCSI, PTSI-BCPST, classes prépas integrées" Auteur="Andrée Baumy" DatePar="2001-07-13" Editeur="Ellipses Marketing" Format="Broché" PrixN="30.00" ISBN="272980353X" />
+    <livres Categorie="Science" Titre="Problèmes corrigés de biologie posés aux concours de agro-véto : INA-ENSA, ENV, ENSG Nancy, Archimèd" Auteur="Agnès Lefranc" DatePar="2000-01-01" Editeur="Ellipses Marketing" Format="Broché" PrixN="17.00" ISBN="272980420X" />
+    <livres Categorie="Science" Titre="Liberté et neurobiologie" Auteur="John R. Searle" DatePar="2004-01-14" Editeur="Grasset" Format="Broché" PrixN="12.00" ISBN="2246640318" />
+    <livres Categorie="Science" Titre="La Gestion Electronique Documentaire" Auteur="Larcher" DatePar="2004-01-15" Editeur="Dunod - 01 Informatique" Format="Broché" PrixN="35.00" ISBN="2100078917" />
+    <livres Categorie="Science" Titre="La théorie du chaos : Vers une nouvelle science" Auteur="James Gleick" DatePar="1999-01-04" Editeur="Champs Flammarion Sciences" Format="Poche" PrixN="10.00" ISBN="208081219X" />
+    <livres Categorie="Informatique" Titre="Pratique de MySQL et PHP" Auteur="Philippe Rigaux" DatePar="2003-01-23" Editeur="O\'Reilly" Format="Broché" PrixN="33.00" ISBN="2841772373" />
+    <livres Categorie="Informatique" Titre="Linux en concentré" Auteur="Ellen Siever" DatePar="2003-11-27" Editeur="O\'Reilly" Format="Broché" PrixN="58.00" ISBN="2841772772" />
+    <livres Categorie="Informatique" Titre="Introduction à Java" Auteur="Patrick Niemeyer" DatePar="2002-12-01" Editeur="O\'Reilly" Format="Broché" PrixN="49.00" ISBN="2841772349" />
+    <livres Categorie="Informatique" Titre="HTML et XHTML : La Référence" Auteur="Chuck Musciano" DatePar="2001-02-14" Editeur="O\'Reilly" Format="Broché" PrixN="41.00" ISBN="2841771326" />
+    <livres Categorie="Informatique" Titre="JavaScript en action" Auteur="Jerry Bradenbaugh" DatePar="2001-11-07" Editeur="O\'Reilly" Format="Broché" PrixN="38.00" ISBN="2841771350" />
+    <livres Categorie="Romans Policiers" Titre="L.A. confidential" Auteur="James Ellroy" DatePar="1988-06-02" Editeur="Arrow" Format="Broché" PrixN="11.43" ISBN="0099366711" />
+    <livres Categorie="Romans Policiers" Titre="La Proie" Auteur="Michael Crichton" DatePar="2003-10-09" Editeur="Robert Laffont" Format="Broché" PrixN="22.00" ISBN="2221097890" />
+    <livres Categorie="Romans Policiers" Titre="L\'Empire des loups" Auteur="Jean-Christophe Grangé" DatePar="2003-01-08" Editeur="Albin Michel" Format="Broché" PrixN="22.00" ISBN="222613624X" />
+    <livres Categorie="Romans Policiers" Titre="In Tenebris" Auteur="Maxime Chattam" DatePar="2003-03-06" Editeur="Michel Lafon" Format="Broché" PrixN="20.00" ISBN="2840989042" />
+    <livres Categorie="Romans Policiers" Titre="Les Rivières pourpres" Auteur="Jean-Christophe Grangé" DatePar="2001-02-07" Editeur="Le Livre de Poche" Format="Broché" PrixN="6.10" ISBN="2253171670" />
+    <livres Categorie="Bandes dessinées" Titre="Titeuf, tome 8 : Le préau atomique" Auteur="Shirley Anguerrand" DatePar="2003-07-02" Editeur="Hachette Jeunesse" Format="Cartonné" PrixN="4.50" ISBN="2012007945" />
+    <livres Categorie="Bandes dessinées" Titre="Astérix le Gaulois (version luxe)" Auteur="Albert Uderzo" DatePar="1999-11-09" Editeur="Albert René" Format="Cartonné" PrixN="22.71" ISBN="2864971348" />
+    <livres Categorie="Bandes dessinées" Titre="Love Hina, tome 11" Auteur="Akamatsu" DatePar="2003-10-21" Editeur="Pika" Format="Broché" PrixN="6.95" ISBN="2845992742" />
+    <livres Categorie="Bandes dessinées" Titre="Kimengumi : collège Fou Fou Fou" Auteur="Motoci Shinzawa" DatePar="1999-08-11" Editeur="Tonkam" Format="Poche" PrixN="9.00" ISBN="2845801173" />
+    <livres Categorie="Bandes dessinées" Titre="Nausicaä de la vallée du vent, tome 1" Auteur="Hayao Miyazaki" DatePar="2000-08-16" Editeur="Glénat" Format="Broché" PrixN="10.55" ISBN="2723432971" />
+    <livres Categorie="Science fiction" Titre="Le Livre du voyage" Auteur="Bernard Werber" DatePar="2001-03-01" Editeur="LGF - Livre de Poche" Format="Broche - 160 pages" PrixN="8.98" ISBN="2253150185" />
+    <livres Categorie="Science fiction" Titre="Encyclopedie du savoir relatif et absolu" Auteur="Bernard Werber" DatePar="2001-09-17" Editeur="LGF - Livre de Poche" Format="Poche - 270 pages" PrixN="16.63" ISBN="2253155306" />
+    <livres Categorie="Science fiction" Titre="Le Silmarillion" Auteur="J.R.R. Tolkien" DatePar="2002-10-16" Editeur="Christian Bourgois" Format="Broche - 826 pages" PrixN="25.24" ISBN="2267011700" />
+    <livres Categorie="Science fiction" Titre="Nos amis les humains" Auteur="Bernard Werber" DatePar="2001-10-01" Editeur="Albin Michel" Format="Broche - 130 pages" PrixN="16.63" ISBN="2226137939" />
+    <livres Categorie="Science fiction" Titre="Le Seigneur des Anneaux" Auteur="J.R.R. Tolkien" DatePar="2002-11-07" Editeur="Press Pocket" Format="Poche - 698 pages" PrixN="10.46" ISBN="2266128043" />
+    <livres Categorie="Science" Titre="Guide familial de l\'homeopathie" Auteur="Alain Horvilleur" DatePar="2003-02-26" Editeur="Le Livre De Poche" Format="Poche" PrixN="34.20" ISBN="2253030767" />
+    <livres Categorie="Science" Titre="Casseroles et eprouvettes " Auteur="Herve This" DatePar="2002-03-06" Editeur="Belin" Format="Broche" PrixN="35.05" ISBN="2842450396" />
+    <livres Categorie="Science" Titre="Propagandes silencieuses" Auteur="Ignacio Ramonet" DatePar="2002-10-01" Editeur="Gallimard" Format="Poche" PrixN="11.97" ISBN="2070421309" />
+    <livres Categorie="Science" Titre="Une breve histoire du temps" Auteur="Stephen W. Hawking" DatePar="2000-07-05" Editeur="J\'ai lu" Format="Poche" PrixN="8.08" ISBN="2290307114" />
+    <livres Categorie="Science" Titre="Mysteres des chiffres" Auteur="Marc-Alain Ouaknin" DatePar="2003-11-04" Editeur="Assouline" Format="Broche" PrixN="49.17" ISBN="2843235308" />
+    <livres Categorie="Informatique" Titre="Promouvoir son site Web" Auteur="Emmanuel Fraysse" DatePar="2001-09-26" Editeur="Dunod" Format="broché - 300 pages" PrixN="28.32" ISBN="284082888X" />
+    <livres Categorie="Informatique" Titre="La musique sur Internet" Auteur="Daniel Ichbiah" DatePar="2000-12-13" Editeur="Dunod" Format="Poche - 386 pages" PrixN="12.13" ISBN="2840828790 " />
+    <livres Categorie="Informatique" Titre="La Logistique globale : Enjeux - Principes -Exemples" Auteur=" Philippe-Pierre Dornier" DatePar="2001-04-04" Editeur="Editions d\'Organisation" Format="Broché - 463 pages" PrixN="73.72" ISBN=" 2708125370" />
+    <livres Categorie="Informatique" Titre="Savoir investir en bourse avec Internet" Auteur="Rodolphe Vialles" DatePar="2002-02-25" Editeur="Vuibert" Format="Broché - 192 pages" PrixN="38.76" ISBN="2711787532" />
+    <livres Categorie="Informatique" Titre="Office XP" Auteur="Joe Kraynak" DatePar="2001-07-21" Editeur="CampusPress" Format="Broché - 450 pages" PrixN="5.60" ISBN="2744012092 " />
+    <livres Categorie="Romans Policiers" Titre="Cul-de-sac" Auteur="Douglas Kennedy" DatePar="2002-08-29" Editeur="Gallimard" Format="Poche - 260 pages" PrixN="7.27" ISBN="2070424774 " />
+    <livres Categorie="Romans Policiers" Titre="Un peu plus loin sur la droite" Auteur="Fred Vargas" DatePar="2000-10-24" Editeur="J\'ai lu" Format="broché - 253 pages" PrixN="5.51" ISBN="2290304557" />
+    <livres Categorie="Romans Policiers" Titre="Ne le dis a personne" Auteur="Harlan Coben" DatePar="2003-01-02" Editeur="Pocket" Format=" Poche" PrixN="25.65" ISBN="226612515X" />
+    <livres Categorie="Romans Policiers" Titre="Et si c\'etait vrai" Auteur="Marc Levy" DatePar="2001-06-07" Editeur="Pocket" Format="Poche" PrixN="10.93" ISBN="2266104535" />
+    <livres Categorie="Romans Policiers" Titre="Sans feu ni lieu" Auteur="Fred Vargas" DatePar="2001-09-30" Editeur="J\'ai lu" Format="Poche" PrixN="11.21" ISBN="2290312584" />
+    <livres Categorie="Bandes dessinées" Titre="Les Bidochon, tome 1 : Roman d\'amour" Auteur="Binet" DatePar="2003-03-01" Editeur=" J\'ai lu" Format="Poche" PrixN="1.9" ISBN="2290332348" />
+    <livres Categorie="Bandes dessinées" Titre="Joe Bar Team, tome 5" Auteur="Christian Debarre" DatePar="2003-11-05" Editeur="Vents d\'Ouest" Format="Cartonné" PrixN="8.5" ISBN=" 2869679939" />
+    <livres Categorie="Bandes dessinées" Titre="Astérix et la rentrée gauloise" Auteur="Albert Uderzo" DatePar="2003-09-29" Editeur="Albert René" Format="Cartonné" PrixN="5.6" ISBN="2864971534" />
+    <livres Categorie="Bandes dessinées" Titre="Atalante, tome 3 : Les Mysteres de Samothrace" Auteur="D. Crisse" DatePar="2003-11-19" Editeur="Soleil" Format="Cartonne" PrixN="23.76" ISBN="2845656890" />
+    <livres Categorie="Bandes dessinées" Titre="Titeuf, tome 1 : Meme po mal" Auteur="Zep" DatePar="2000-05-01" Editeur=" Hachette Jeunesse" Format=" Cartonne" PrixN="8.28" ISBN=" 2012005217" />
+    <livres Categorie="Science fiction" Titre="Dieu porte-t-il des lunettes noires ? et autres nouvelles" Auteur="Maurice-G Dantec" DatePar="2001-11-10" Editeur="J\'ai lu" Format="Poche" PrixN="9.41" ISBN="2290337382" />
+    <livres Categorie="Science fiction" Titre="La Ferme des Animaux" Auteur="George Orwell" DatePar="1984-01-04" Editeur="Gallimard," Format="Poche" PrixN="8.93" ISBN="2070375161" />
+    <livres Categorie="Science fiction" Titre="Les Aventures de Tom Bombadil" Auteur="Tolkien" DatePar="2003-11-13" Editeur="Pocket" Format="Broche" PrixN="8.94" ISBN="226607086X" />
+    <livres Categorie="Science fiction" Titre="Le Dernier magicien" Auteur="Sylvie Denis" DatePar="2003-11-26" Editeur="Mnemos" Format="Broche" PrixN="39.43" ISBN="2915159114" />
+    <livres Categorie="Science fiction" Titre="Empire des Anges" Auteur="Bernard Werber" DatePar="2001-12-20" Editeur="Livre de Poche" Format="Poche" PrixN="10.75" ISBN="2253152072" />
+    <livres Categorie="Science" Titre="Un peu de science pour tout le monde" Auteur="Claude Allegre" DatePar="2003-09-03" Editeur="Fayard" Format="Broche" PrixN="34.2" ISBN="2213614970" />
+    <livres Categorie="Science" Titre="Spinoza avait raison : Le Cerveau des emotions" Auteur="Antonio R. Damasio" DatePar="2003-05-14" Editeur="Odile Jacob" Format="Broche" PrixN="32.30" ISBN="2738112641" />
+    <livres Categorie="Science" Titre="Coureurs des mers" Auteur="Olivier Poivre d\'Arvor" DatePar="2003-11-06" Editeur="Place des Victoires" Format="Broche" PrixN="58.76" ISBN="2844590586" />
+    <livres Categorie="Science" Titre="Effets speciaux : Un siecle d\'histoires" Auteur="Pascal Pinteau" DatePar="2003-10-01" Editeur="Minerva" Format="Relie" PrixN="69.35" ISBN="2830706838" />
+    <livres Categorie="Science" Titre="Fondations et Soubassements" Auteur="Henri Renaud" DatePar="2002-07-03" Editeur="Eyrolles" Format="Broche" PrixN="12.36" ISBN="221211124X" />
+    <livres Categorie="Informatique" Titre="Java 2 pour les nuls" Auteur="Barry Burd" DatePar="2002-05-02" Editeur="First" Format="Poche" PrixN="9.9" ISBN="2844273173" />
+    <livres Categorie="Informatique" Titre="Réseaux de neurones : la physique à la psychologie" Auteur="Jean-Pierre Nadal" DatePar="1997-04-04" Editeur="Dunod" Format="Broché" PrixN="20.6" ISBN="2200211708" />
+    <livres Categorie="Informatique" Titre="Réseaux sans fil amateurs : Installation et mise en oeuvre" Auteur="Rob Flickenger" DatePar="2003-02-01" Editeur="O\'Reilly" Format="Broché" PrixN="19.0" ISBN="284177239X" />
+    <livres Categorie="Informatique" Titre="Wireless Hacks" Auteur="Rob Flickenger" DatePar="2003-10-26" Editeur="O\'Reilly" Format="Broché" PrixN="24.0" ISBN="0596005598" />
+    <livres Categorie="Informatique" Titre="Le Noyau Linux" Auteur="Daniel P. Bovet" DatePar="2001-07-04" Editeur="O\'Reilly" Format="Broché" PrixN="53.0" ISBN="2841771415" />
+    <livres Categorie="Romans Policiers" Titre="L\'Homme a l\'envers" Auteur="Fred Vargas" DatePar="2002-05-20" Editeur="J\'ai lu" Format="Poche" PrixN="10.27" ISBN="2290318701" />
+    <livres Categorie="Romans Policiers" Titre="Au bonheur des ogres" Auteur="Daniel Pennac" DatePar="1997-10-03" Editeur="Gallimard" Format="Poche" PrixN="4.6" ISBN="2070403696" />
+    <livres Categorie="Romans Policiers" Titre="Le Jugement dernier" Auteur="Iain Pears" DatePar="2003-12-04" Editeur="10/18" Format="Poche" PrixN="13.88" ISBN="2264032812" />
+    <livres Categorie="Romans Policiers" Titre="Les Desarrois de Ned Allen" Auteur="Douglas Kennedy" DatePar="2000-06-08" Editeur="Pocket" Format="Poche" PrixN="12.36" ISBN="2266100289" />
+    <livres Categorie="Romans Policiers" Titre="Les Piliers de la terre" Auteur="Ken Follett" DatePar="1992-01-01" Editeur="LGF - Livre de Poche" Format="Broche" PrixN="15.93" ISBN="2253059536" />
+    <livres Categorie="Bandes dessinées" Titre="Le Decalogue, tome 11 : Le XIeme commandement" Auteur="Frank Giroud" DatePar="2003-10-12" Editeur="Glénat" Format="Cartonne" PrixN="27.54" ISBN="2723444791" />
+    <livres Categorie="Bandes dessinées" Titre="Naruto, tome 9" Auteur="Masashi Kishimoto" DatePar="2004-01-10" Editeur="Kana" Format="Poche" PrixN="11.54" ISBN="2871295999" />
+    <livres Categorie="Bandes dessinées" Titre="Le Troisieme Testament, tome 1 : Marc ou le reveil du lion" Auteur="Alex Alice" DatePar="1997-01-01" Editeur="Grafica" Format="Cartonne" PrixN="24.68" ISBN="2723423255" />
+    <livres Categorie="Bandes dessinées" Titre="Marlysa, tome 5 : Le Thaumaturge" Auteur="Jean-Charles Gaudin" DatePar="2004-01-14" Editeur="Soleil" Format="Cartonne" PrixN="11.88" ISBN="2845655681" />
+    <livres Categorie="Bandes dessinées" Titre="Asterix chez les Bretons" Auteur="Albert Uderzo" DatePar="1998-10-16" Editeur="Hachette" Format="Cartonne" PrixN="8.15" ISBN="2012100082" />
+</dataset>
