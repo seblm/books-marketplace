@@ -1,28 +1,29 @@
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import bourse.sdd.*;
-
-//import  javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
+import java.util.List;
 
- 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import bourse.sdd.PDMPro;
 
 public class ResultBye extends Protocole {
-    
   
    private LinkedList listepdm;
-   /** Retourne une liste chainée remplie de PDMPro. */
-   public LinkedList getListepdm() { return this.listepdm; }
-    
-    
+   
+   	/**
+     * Retourne une liste remplie de PDMPro.
+	 */
+	 @SuppressWarnings("unchecked")
+	public List<PDMPro> getListepdm() {
+		 return this.listepdm;
+	 }
     
     /** Instancie un nouveau message de fin de session en envoyant la liste des
      * places de marché présentes sur la base de données.

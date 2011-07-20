@@ -1,17 +1,18 @@
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import bourse.sdd.*;
-
-//import  javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
  
 
@@ -20,7 +21,11 @@ public class ResultAgents extends Protocole {
     /** Une liste chaînée remplie de chaînes de caractères stoquant des nom d'agents. */
     private LinkedList listeAgents;
     
-    public LinkedList getListeAgents() { return this.listeAgents; }
+    @SuppressWarnings("unchecked")
+	public List<String> getListeAgents() {
+    	return this.listeAgents;
+    }
+    
     public void setListeAgents(LinkedList listeAgents) { this.listeAgents = listeAgents; }
     
     public ResultAgents(LinkedList liste) {

@@ -15,12 +15,14 @@ public class MemoireTest {
 	private Memoire memoire;
 
 	@Before
+	@Ignore
 	public void initMemoire() {
 		Visualisation visu = new Visualisation();
 		memoire = new Memoire(new Agent("test"), visu);
 	}
 
 	@Test
+	@Ignore
 	public void testMemoire() {
 		assertThat(memoire.getAgents()).isNotNull();
 		assertThat(memoire.getAideDecisionVente()).isNotNull();
@@ -32,6 +34,7 @@ public class MemoireTest {
 		assertThat(memoire.getLivreAVendre()).isEqualTo(3);
 	}
 
+	@Ignore
 	public void testCalculTemps() {
 		memoire.getPdms().ajouter(new PdmMemoire(null, null, true, true, null, 1));
 		memoire.getPdms().ajouter(new PdmMemoire(null, null, false, true, null, 10));
@@ -53,6 +56,7 @@ public class MemoireTest {
 	}
 
 	@After
+	@Ignore
 	public void removeMemoire() {
 		memoire = null;
 	}

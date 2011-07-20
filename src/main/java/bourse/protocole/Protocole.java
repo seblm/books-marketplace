@@ -1,25 +1,20 @@
 package bourse.protocole;
 
 // inclusion de l'API JAXP
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-// utilisé pour exporter du xml
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.dom.DOMSource;
 
-// nécessaire pour la méthode Transformer.transform()...
-import java.io.StringWriter;
-import java.io.ByteArrayInputStream;
-
-// la définition d'un DOM par le w3c
-import org.w3c.dom.*;
-
-// les exceptions levées lors de la validation
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -49,8 +44,6 @@ public abstract class Protocole {
     public static final String MOTIF_FIN_FICHIER_XML = "</MSG";
     public static final String BASE_DTD = "file://" + new java.io.File("").getAbsolutePath() + "/";
     public static final String URI_DTD = "MSG.dtd";
-    /** Classe sérialisée et commune pour tout les utilisateurs de Bd. */
-    public static final bourse.reseau.ParametresBd parametresBd = new bourse.reseau.ParametresBd();
 
     // Constructeurs (inutiles car la classe est abstract mais appellées par les classes filles - super(...); )
     protected Protocole(TypeMessage type) { this.type = type; }

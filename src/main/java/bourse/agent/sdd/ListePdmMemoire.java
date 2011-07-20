@@ -1,26 +1,42 @@
 package bourse.agent.sdd;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
 
-/** Donne toutes les pdms que l'agent connait */
+import bourse.agent.Visualisation;
+
+/**
+ * Donne toutes les pdms que l'agent connait
+ */
 public class ListePdmMemoire {
     
-    /** Variables d'instances. */
-    /** Liste des pdms. */
-    private HashMap liste;
-    /** Lien vers la fenetre centrale. */
+    /**
+     * Liste des pdms.
+     */
+    private Map<String, PdmMemoire> liste;
+    
+    /**
+     * Lien vers la fenetre centrale.
+     */
     private bourse.agent.Visualisation fenetre;
     
-    /** Constructeur. */
-    /** Construit une liste de pdms vide. */
-    public ListePdmMemoire(bourse.agent.Visualisation fenetre) {
-        this.liste = new HashMap();
+    /**
+     * Construit une liste de pdms vide.
+     */
+    public ListePdmMemoire(Visualisation fenetre) {
+        liste = new HashMap<String, PdmMemoire>();
         this.fenetre = fenetre;
     }
     
-    /** Méthodes. */
-    /** Retourne la liste. */
-    public HashMap getListe() { return this.liste; }
+    /**
+     * Retourne la liste.
+     */
+    public Map<String, PdmMemoire> getListe() {
+    	return liste;
+    }
+    
     /** Rafraichir l'affichage de la liste. */
     public void refresh() {
         int numeroLigne = 0;
