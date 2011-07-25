@@ -50,7 +50,6 @@ public class Agent {
         setNom(nom);
         setCategorie(new Categorie(Categorie.AUCUNE));
         Memoire m = new Memoire(this, fenetre);
-        Possessions p = new Possessions(fenetre, m);
         setMemoire(m);
         setEnvironnement(new Environnement());
         setEtat(Etat.initial);
@@ -96,13 +95,13 @@ public class Agent {
     /** Modifie le nom de la pdm actuelle. */
     public void setHote(String nom) { this.hote = nom; this.fenetre.setHote(nom); }
     /** Modifie le nom de l'agent. */
-    public void setNom(String nom) { this.nom = this.groupe + "-" + nom; this.fenetre.setNom(this.nom); }
+    public void setNom(String nom) { this.nom = Agent.groupe + "-" + nom; this.fenetre.setNom(this.nom); }
     /** Renvoie le nom de l'agent sous la forme Groupe-E-xxx où xxx est le prénom de l'agent. */
     public String getNom() { return this.nom; }
     /** Renvoie la fenêtre. */
     public Visualisation getFenetre() { return this.fenetre; }
     /** Modifie lengthmode verbeux. */
-    public void setVerbose(boolean verbose) { this.verbose = verbose; }
+    public void setVerbose(boolean verbose) { Agent.verbose = verbose; }
     public void setDecision(bourse.agent.ia.Decision _decision) { this.decision = _decision; }
     public Decision getDecision() { return decision; }
         
@@ -343,7 +342,7 @@ public class Agent {
                     decision.choixAction();
                     /** Dès qu'on fait une action, on doit incrémenter le compteur d'action courante. */
                     environnement.setNombreActions(environnement.getNombreActions() + 1);
-                    if (this.getAction() == action.aucune) { /** on ne fait rien */ }
+                    if (this.getAction() == Action.aucune) { } // on ne fait rien
                     else if (this.getAction() == Action.bilan || this.getAction() == Action.migrer) byePdm();
                  // else if (this.getAction() == Action.vendre) this.proposeVente();
                     else if (this.getAction() == Action.programme) this.demandeProgramme();
@@ -449,7 +448,7 @@ public class Agent {
     public static void main(String arg[]) {
         /** initialisation */
         final bourse.agent.Agent a = new bourse.agent.Agent("");
-        a.fenetre.show();
+        a.fenetre.setVisible(true);
         /** on crée la fenetre de dialogue parente à l'agent et bloquante (modale). */
         final javax.swing.JDialog demarrage = new javax.swing.JDialog(a.fenetre, true);
         
@@ -528,7 +527,7 @@ public class Agent {
         demarrage.pack();
         if (arg.length == 0) {
             /** on affiche la fenêtre bloquante de choix du nom. */
-            demarrage.show();
+            demarrage.setVisible(true);
             /** lorsque la fenêtre rend la main, (l'utilisateur a voulu démarrer
              *  l'agent), on lance l'agent. */
         } else {

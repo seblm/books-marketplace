@@ -1,9 +1,10 @@
 package bourse.placeDeMarche.enchere;
 
-import bourse.sdd.*;
-import bourse.protocole.*;
-import bourse.placeDeMarche.*;
 import java.util.Random;
+
+import bourse.protocole.PropositionEnchereP;
+import bourse.protocole.Resultat;
+import bourse.sdd.Livre;
 
 public abstract class Enchere {
     

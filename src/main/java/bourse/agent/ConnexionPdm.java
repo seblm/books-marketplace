@@ -1,9 +1,23 @@
 package bourse.agent;
 
-import java.net.*;
-import java.io.*;
-import bourse.protocole.*;
-import bourse.agent.sdd.*;
+import java.io.IOException;
+
+import bourse.agent.sdd.Action;
+import bourse.agent.sdd.Enchere;
+import bourse.agent.sdd.Etat;
+import bourse.agent.sdd.ListePdm;
+import bourse.agent.sdd.ListeProgramme;
+import bourse.protocole.Categorie;
+import bourse.protocole.Erreur;
+import bourse.protocole.Programme;
+import bourse.protocole.PropositionEnchereP;
+import bourse.protocole.Protocole;
+import bourse.protocole.ResultAgents;
+import bourse.protocole.ResultBye;
+import bourse.protocole.ResultProposeVente;
+import bourse.protocole.ResultWelcome;
+import bourse.protocole.Resultat;
+import bourse.protocole.TypeMessage;
 
 /* Gère la communication vers la Pdm : lance une connexion. */
 public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {

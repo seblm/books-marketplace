@@ -1,18 +1,18 @@
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import bourse.sdd.*;
-
-//import  javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.ListIterator;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import bourse.sdd.Livre;
+import bourse.sdd.ProgrammePro;
 
  
 

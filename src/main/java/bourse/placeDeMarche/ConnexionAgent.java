@@ -1,13 +1,27 @@
 package bourse.placeDeMarche;
 
-import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.Socket;
-import bourse.protocole.*;
-import bourse.sdd.*;
-import bourse.placeDeMarche.enchere.*;
+
+import bourse.placeDeMarche.enchere.Enchere;
+import bourse.placeDeMarche.enchere.EnchereReponseBoucle;
+import bourse.placeDeMarche.enchere.EnchereReponseMultiple;
+import bourse.placeDeMarche.enchere.EnchereReponseUnique;
+import bourse.protocole.Admin;
+import bourse.protocole.Categorie;
+import bourse.protocole.Erreur;
+import bourse.protocole.Programme;
+import bourse.protocole.ProposeVente;
+import bourse.protocole.PropositionEnchereA;
+import bourse.protocole.Protocole;
+import bourse.protocole.ResultAgents;
+import bourse.protocole.ResultBye;
+import bourse.protocole.ResultProposeVente;
+import bourse.protocole.ResultWelcome;
+import bourse.protocole.TypeMessage;
+import bourse.protocole.Welcome;
+import bourse.sdd.Livre;
+import bourse.sdd.ProgrammePro;
 
 /** Gère une connexion de la place de marché vers l'agent. */
 public class ConnexionAgent extends bourse.reseau.ManagerConnexion {

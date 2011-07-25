@@ -1,5 +1,7 @@
 package bourse.agent;
 
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Visualisation.java
  *
@@ -12,7 +14,11 @@ package bourse.agent;
  */
 public class Visualisation extends javax.swing.JFrame {
     
-    /** Creates new form Visualisation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8333803126410382931L;
+	/** Creates new form Visualisation */
     public Visualisation() {
         initComponents();
     }
@@ -99,7 +105,7 @@ public class Visualisation extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.GridLayout(3, 1));
 
         jScrollPane1.setBorder(new javax.swing.border.TitledBorder("Places de march\u00e9"));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -107,7 +113,8 @@ public class Visualisation extends javax.swing.JFrame {
                 "Nom", "Adresse", "Active", "Visitée", "Enchères gérées", "Numero du tour"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            private static final long serialVersionUID = -4357019175145813446L;
+			boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -128,7 +135,8 @@ public class Visualisation extends javax.swing.JFrame {
                 "Nom", "Catégorie", "Présent", "Fréquence catégorie"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            private static final long serialVersionUID = -6002953943034809280L;
+			boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -149,7 +157,8 @@ public class Visualisation extends javax.swing.JFrame {
                 "Date", "Id", "Propriétaire", "Catégorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            private static final long serialVersionUID = 1271997920689289961L;
+			boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -240,7 +249,7 @@ public class Visualisation extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        new Visualisation().show();
+        new Visualisation().setVisible(true);
     }
     
     /** Accéder au tableau d'affichage de la liste des pdms de la mémoire */

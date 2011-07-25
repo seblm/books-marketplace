@@ -1,11 +1,14 @@
 package bourse.sdd;
 
-import java.util.*;
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-import bourse.protocole.TypeMessage;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import bourse.protocole.Categorie;
+import bourse.protocole.TypeMessage;
 
 public class Livre {
     

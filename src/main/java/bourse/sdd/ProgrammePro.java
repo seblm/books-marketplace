@@ -6,7 +6,7 @@
 
 package bourse.sdd;
 
-import bourse.sdd.*;
+import bourse.placeDeMarche.enchere.Enchere;
 
 /**
  *
@@ -21,15 +21,15 @@ public class ProgrammePro {
     /** Creates a new instance of ProgrammePro */
     
     /** Constructeur appelé lorsque le type de l'enchère n'est pas connue. */
-    public ProgrammePro(int num,bourse.sdd.Livre livre) {
+    public ProgrammePro(int num, Livre livre) {
         this.numEnchere=num;
         this.livre=livre;
-        this.typeEnchere = bourse.placeDeMarche.enchere.Enchere.ENCHERE_INCONNUE;
+        this.typeEnchere = Enchere.ENCHERE_INCONNUE;
         this.prixVente = (float)0;
     }
     
     /** Constructeur appelé lorsque l'agent propose une vente. */
-    public ProgrammePro(int num,bourse.sdd.Livre livre, int typeEnchere, float prixVente) {
+    public ProgrammePro(int num, Livre livre, int typeEnchere, float prixVente) {
         this.numEnchere=num;
         this.livre=livre;
         this.typeEnchere = typeEnchere;
@@ -48,11 +48,11 @@ public class ProgrammePro {
         return this.typeEnchere;
     }
     
-    public bourse.sdd.Livre getLivre(){
+    public Livre getLivre(){
         return this.livre;
     }
     
-    public void setLivre(bourse.sdd.Livre livre){
+    public void setLivre(Livre livre){
         this.livre=livre;
     }
     
@@ -69,7 +69,7 @@ public class ProgrammePro {
     }
     /** Programme principale. */
     public static void main(String argc[]) {
-        bourse.sdd.Livre l1 = new bourse.sdd.Livre("l1", "a2", new bourse.protocole.Categorie(), "poche", "O'reilly", (float)50.65, (float)0.45, "2004-01-01", "222222222", 1, "", (float)0.0);
+        Livre l1 = new Livre("l1", "a2", new bourse.protocole.Categorie(), "poche", "O'reilly", (float)50.65, (float)0.45, "2004-01-01", "222222222", 1, "", (float)0.0);
         ProgrammePro p = new ProgrammePro(34, l1);
         System.out.println(p.toString(5));
     }

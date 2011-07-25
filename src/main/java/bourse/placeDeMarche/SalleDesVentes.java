@@ -2,7 +2,6 @@ package bourse.placeDeMarche;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.io.IOException;
 
 /** Gère l'enregistrement et le départ des agents. */
 public class SalleDesVentes {

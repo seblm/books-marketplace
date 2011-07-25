@@ -1,7 +1,6 @@
 package bourse.agent.sdd;
 
-import bourse.sdd.*;
-import java.util.*;
+import bourse.sdd.Livre;
 
 /** Cette classe stocke les données relatives aux possessions. */
 public class Possession {
@@ -57,9 +56,8 @@ public class Possession {
     }
     /** La méthode main de test. */
     public static void main(String[] argc) {
-        java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
-        visu.show();
+        visu.setVisible(true);
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
             new String [] {"Date", "Id", "Propriétaire", "Catégorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"},
             3

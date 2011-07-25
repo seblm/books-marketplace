@@ -21,7 +21,8 @@ public class PdmMemoire extends Pdm {
         this.visitee = visitee;
         this.active = active;
         this.programme = programme;
-        this.dernier_numero_tour = num;    }
+        this.dernier_numero_tour = num;
+    }
     /** Constructeur de PdmMemoire à partir d'une Pdm */
     public PdmMemoire(Pdm pdm) {
         super(pdm.getNom(), pdm.getAdresse().toString());
@@ -71,7 +72,7 @@ public class PdmMemoire extends Pdm {
     /** Programme principal. */
     public static void main(String[] argc) {
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
-        visu.show();
+        visu.setVisible(true);
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
             new String [] {"Nom", "Adresse", "Active", "Visitée", "Enchères gérées", "Numero du tour" },
             4

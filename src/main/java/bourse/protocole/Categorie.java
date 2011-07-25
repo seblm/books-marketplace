@@ -36,7 +36,7 @@ public class Categorie {
         else if ((c.startsWith("s") || c.startsWith("S")) && c.length() < 11) this.categorie = 2;
         else if (c.startsWith("r") || c.startsWith("R")) this.categorie = 3;
         else if (c.startsWith("i") || c.startsWith("I")) this.categorie = 4;
-        else if (c.equalsIgnoreCase(this.AUCUNE)) this.categorie = 5;
+        else if (c.equalsIgnoreCase(AUCUNE)) this.categorie = 5;
         else this.categorie = 5;
     }
     /** Construit une catégorie à partir d'une autre catégorie (constructeur par
@@ -60,13 +60,13 @@ public class Categorie {
     public String getCategorie() {
         String output;
         switch (this.categorie) {
-            case 0: output = this.SF; break;
-            case 1: output = this.BD; break;
-            case 2: output = this.SCIENCE; break;
-            case 3: output = this.ROMAN; break;
-            case 4: output = this.INFO; break;
-            case 5: output = this.AUCUNE; break;
-            default: output = this.AUCUNE; break;
+            case 0: output = SF; break;
+            case 1: output = BD; break;
+            case 2: output = SCIENCE; break;
+            case 3: output = ROMAN; break;
+            case 4: output = INFO; break;
+            case 5: output = AUCUNE; break;
+            default: output = AUCUNE; break;
         } return output;
     }
     /** Modifier la catégorie en donnant une string. */
@@ -95,7 +95,7 @@ public class Categorie {
     public static void main(String argc[]) {
         Categorie c = new Categorie();
         System.out.println(c.getCategorie());
-        c.setCategorie(c.INFO);
+        c.setCategorie(INFO);
         System.out.println(c.toString(0));
         System.out.println(c.getCategorie());
         c.setCategorie(2);

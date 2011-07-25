@@ -1,9 +1,6 @@
 package bourse.placeDeMarche;
 
-import java.sql.*;
-import java.io.*;
-import java.net.*;
-import java.util.LinkedList;
+import java.net.Socket;
 
 public class PlaceDeMarche {
     

@@ -6,10 +6,12 @@
 
 package bourse.placeDeMarche.enchere;
 
-import bourse.sdd.*;
-import bourse.protocole.*;
-import java.util.TreeMap;
 import java.util.Random;
+
+import bourse.protocole.PropositionEnchereA;
+import bourse.protocole.PropositionEnchereP;
+import bourse.protocole.Resultat;
+import bourse.sdd.Livre;
 
 /**
  *

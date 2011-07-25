@@ -1,5 +1,7 @@
 package bourse.agent;
 
+import javax.swing.JFrame;
+
 /*
  * Demarrage.java
  *
@@ -7,12 +9,13 @@ package bourse.agent;
  */
 
 /**
- *
  * @author  eric
  */
-public class Demarrage extends javax.swing.JFrame {
+public class Demarrage extends JFrame {
     
-    /** Creates new form Demarrage */
+	private static final long serialVersionUID = 1249724060048822103L;
+
+	/** Creates new form Demarrage */
     public Demarrage() {
         initComponents();
     }
@@ -112,7 +115,7 @@ public class Demarrage extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        new Demarrage().show();
+        new Demarrage().setVisible(true);
     }
     
     

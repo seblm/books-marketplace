@@ -155,7 +155,7 @@ public class CommissairePriseur extends Thread {
             attendsDesPropositions = true;
             while (message == null && enchereCourante.getPrixCourant() > 0.15*enchereCourante.getPrixDepart()) {
                 // Dès que je reçois une proposition, j'arrete d'attendre
-                try { wait(((EnchereReponseBoucle)enchereCourante).TIMEOUT * 1000); } catch (InterruptedException e) { }
+                try { wait(EnchereReponseBoucle.TIMEOUT * 1000); } catch (InterruptedException e) { }
                 if (message == null) { // On est arrivé au TIMEOUT
                     if (placeDeMarche.getVerbose()) System.out.println("OUT PROPOSITIONENCHEREP");
                     placeDeMarche.getSalleDesVentes().envoyerIdentifies(((EnchereQuatre)enchereCourante).actualiser().toXML());

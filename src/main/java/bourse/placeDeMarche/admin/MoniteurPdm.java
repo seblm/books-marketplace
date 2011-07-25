@@ -6,13 +6,17 @@
 
 package bourse.placeDeMarche.admin;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author  slemerdy
  */
-public class MoniteurPdm extends javax.swing.JFrame {
+public class MoniteurPdm extends JFrame {
     
-    /** Creates new form moniteurPdm */
+	private static final long serialVersionUID = -7386357483798723582L;
+	
+	/** Creates new form moniteurPdm */
     public MoniteurPdm() throws java.io.IOException {
         initComponents();
     }
@@ -178,7 +182,7 @@ public class MoniteurPdm extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            new MoniteurPdm().show();
+            new MoniteurPdm().setVisible(true);
         } catch (java.io.IOException e) {
             System.err.println(e);
         }

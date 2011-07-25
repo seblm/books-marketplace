@@ -52,7 +52,7 @@ public class AgentMemoire extends Agent {
     /** Méthode de test de la classe. */
     public static void main(String argc[]) {
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
-        visu.show();
+        visu.setVisible(true);
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
             new String [] {"Nom", "Categorie", "Présent", "Fréquence des Catégories"},
             4
