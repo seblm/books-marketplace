@@ -122,7 +122,7 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
                         if ((proposeVente.getPrix() > 0.0 && (proposeVente.getNom() == 3 || proposeVente.getNom() == 4)) && livreAgent.getProprietaire().equalsIgnoreCase(agent.getNomAgent())) // La mise à prix n'est pas nulle
                             if (pdm.getCommissairePriseur().getEnchereCourante().getLivre().getId() != proposeVente.getId() && pdm.getCommissairePriseur().getProgramme().insertionPossible(pdm.getNom(), proposeVente.getId())) {
                                 reponse = new ResultProposeVente(proposeVente.getId());
-                                pdm.getRequetes().supprimerDerniereEnchere(((ProgrammePro)pdm.getCommissairePriseur().getProgramme().getListeProgramme().getLast()).getLivre());
+                                pdm.getRequetes().supprimerDerniereEnchere(((ProgrammePro)pdm.getCommissairePriseur().getProgramme().getLast()).getLivre());
                                 pdm.getCommissairePriseur().getProgramme().ajouterVente(livreAgent, pdm.getNom(), proposeVente.getNom(), proposeVente.getPrix());
                             } else
                                 reponse = new Erreur("Zerovente", "Désolé mais il n'y a vraiment plus de place dans le programme (pourtant, notre pdm gère l'insertion d'enchère sur tout le programme !).", "autreVendeur");

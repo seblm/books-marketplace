@@ -41,16 +41,6 @@ public class Livre {
         this.prixAchat = livre.getPrixAchat();
     }
     
-    /** Constructeur initialisant les paramètres d'un livre, excepté le propriétaire
-     * et le prix d'achat qui sont arbitrairement fixés respectivement à la chaîne
-     * vide et à 0.
-     * @deprecated Ce constructeur est déprécié car il fixe des valeurs arbitraires pour les
-     * données qu'il ne connait pas.
-     */
-/*    public Livre(String titre,String auteur,String categorie,String format,String editeur,float prix,float etat,String dateParu,String isbn,int id) {
-        this(titre, auteur, categorie, format, editeur, prix, etat, dateParu, isbn, id, "", (float)0.0);
-    }*/
-    
     /** Constructeur par défaut.
      * @deprecated Ce constructeur fixe toutes les valeurs d'un livre à des valeurs arbitraires.
      * Elles ne reflètent pas l'existance d'un livre propre et l'instanciation d'un livre par
@@ -80,7 +70,7 @@ public class Livre {
     
     /** Rempli l'objet livre à l'aide du pointeur vers la strucuture du document
      * xml représentant l'élément livre. */
-    public void setLivre(Element livre){
+    private void setLivre(Element livre){
         this.titre=livre.getAttribute("TITRE");
         this.auteur=livre.getAttribute("AUTEUR");
         this.categorie=new Categorie(livre.getAttribute("CATEGORIE"));
@@ -252,6 +242,33 @@ public class Livre {
         return affichage;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj == null || !(obj instanceof Livre)) {
+    		return false;
+    	}
+    	final Livre livre = (Livre) obj;
+    	return isbn == livre.isbn && id == livre.id;
+    }
+    
+    @Override
+    public int hashCode() {
+    	int hash = 7;
+    	hash = 31 * hash + (null == titre ? 0 : titre.hashCode());
+    	hash = 31 * hash + (null == auteur ? 0 : auteur.hashCode());
+    	hash = 31 * hash + (null == categorie ? 0 : categorie.hashCode());
+    	hash = 31 * hash + (null == format ? 0 : format.hashCode());
+    	hash = 31 * hash + (null == editeur ? 0 : editeur.hashCode());
+    	hash = 31 * hash + new Float(prix).hashCode();
+    	hash = 31 * hash + new Float(etat).hashCode();
+    	hash = 31 * hash + (null == dateParu ? 0 : dateParu.hashCode());
+    	hash = 31 * hash + (null == isbn ? 0 : isbn.hashCode());
+    	hash = 31 * hash + id;
+    	hash = 31 * hash + (null == proprietaire ? 0 : proprietaire.hashCode());
+    	hash = 31 * hash + new Float(prixAchat).hashCode();
+    	return hash;
+    }
+
     public static void main(String args[]) {
         int i=12;
         float pr=153;

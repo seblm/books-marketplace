@@ -36,6 +36,27 @@ public class TypeMessage {
         this.type = i;
     }
     
-    public int getValue() { return this.type; }
-    public String toString() { return message[this.type]; }
+    public int getValue() {
+    	return this.type;
+    }
+    
+    @Override
+    public String toString() {
+    	return message[this.type];
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj == null) {
+    		return type < 1 || type > 17;
+    	}
+    	if (obj instanceof Integer) {
+    		return type == (Integer) obj;
+    	}
+    	if (obj instanceof TypeMessage) {
+    		return type == ((TypeMessage) obj).type;
+    	}
+    	return false;
+    }
+    
 }

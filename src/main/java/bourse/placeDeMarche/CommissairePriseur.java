@@ -1,49 +1,89 @@
 package bourse.placeDeMarche;
 
-import java.util.*;
-import bourse.protocole.*;
-import bourse.sdd.*;
-import bourse.placeDeMarche.enchere.*;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
-/** Le commissaire priseur est en quelque sorte le chef d'orchestre de la gestion
+import bourse.placeDeMarche.enchere.Enchere;
+import bourse.placeDeMarche.enchere.EnchereQuatre;
+import bourse.placeDeMarche.enchere.EnchereReponseBoucle;
+import bourse.placeDeMarche.enchere.EnchereReponseMultiple;
+import bourse.placeDeMarche.enchere.EnchereReponseUnique;
+import bourse.placeDeMarche.enchere.EnchereTrois;
+import bourse.protocole.Programme;
+import bourse.protocole.PropositionEnchereA;
+import bourse.protocole.Protocole;
+import bourse.protocole.Resultat;
+import bourse.sdd.Livre;
+import bourse.sdd.ProgrammePro;
+
+/**
+ * Le commissaire priseur est en quelque sorte le chef d'orchestre de la gestion
  * des enchères. C'est lui qui lance les enchères et qui gère le programme.
  */
 public class CommissairePriseur extends Thread {
     
-    /** Le nombre d'enchères prévues par le commissaire priseur. */
+    /**
+     * Le nombre d'enchères prévues par le commissaire priseur.
+     */
     public static final int TAILLE_PROGRAMME = 5;
     
     private Programme programme;
     private Enchere enchereCourante = null;
     private PlaceDeMarche placeDeMarche;
-    /** Symbolise le fait de savoir si le commissaire priseur est prêt à recevoir
-     * des messages de la part des agents. */
+    
+    /**
+     * Symbolise le fait de savoir si le commissaire priseur est prêt à recevoir
+     * des messages de la part des agents.
+     */
     private boolean attendsDesPropositions;
     private PropositionEnchereA message;
-    /** Représente le numéro de l'enchère la plus avancée prévue par le commissaire
-     * priseur. */
+    
+    /**
+     * Représente le numéro de l'enchère la plus avancée prévue par le commissaire
+     * priseur.
+     */
     private int numEnchere;
-    /** Le nombre de transactions restantes à exécuter. */
+    
+    /**
+     * Le nombre de transactions restantes à exécuter.
+     */
     private int nbTransactionsRestantes = Protocole.transactionsParPlaceDeMarche;
-    /** Accède au programme prévu par le commissaire priseur. */
-    public Programme getProgramme() { return this.programme; }
-    public Enchere getEnchereCourante() { return this.enchereCourante; }
-    private void incrementerNumEnchere() { this.numEnchere++; }
-    private void decrementerNumEnchere() { this.numEnchere--; }
+    
+    /**
+     * Accède au programme prévu par le commissaire priseur.
+     */
+    public Programme getProgramme() {
+    	return this.programme;
+    }
+    
+    public Enchere getEnchereCourante() {
+    	return this.enchereCourante;
+    }
+    
+    private void incrementerNumEnchere() {
+    	this.numEnchere++;
+    }
+    
+    private void decrementerNumEnchere() {
+    	this.numEnchere--;
+    }
+    
     private void decrementerNbTransactionsRestantes() {
-        if (nbTransactionsRestantes > 0)
+        if (nbTransactionsRestantes > 0) {
             nbTransactionsRestantes--;
+        }
     }
     
     public CommissairePriseur(PlaceDeMarche placeDeMarche) {
         this.placeDeMarche = placeDeMarche;
-        this.programme = new Programme(new LinkedList());
+        this.programme = new Programme(new LinkedList<ProgrammePro>());
         this.numEnchere = 1;
         this.attendsDesPropositions = true;
         this.message = null;
     }
     
-    /** Récuppère la première des enchères prévue au programme, la stocke dans
+    /**
+     * Récupère la première des enchères prévue au programme, la stocke dans
      * la donnée membre <i>enchere courante</i> et l'enlève du programme.
      * Cependant, la méthode s'assure que si l'enchère est une proposition d'enchère
      * d'un agent, celui-ci soit bien présent sur la place de marché et le cas échéant
@@ -51,32 +91,35 @@ public class CommissairePriseur extends Thread {
      */
     private void setEnchereCourante() {
         try {
-            ProgrammePro enchere = (ProgrammePro)programme.getListeProgramme().removeFirst();
+            ProgrammePro enchere = programme.removeFirstEnchere();
             creerItem();
             Livre livre = enchere.getLivre();
-            if (!livre.getProprietaire().equalsIgnoreCase(placeDeMarche.getNom()))
-                //vendeur different de la pdm
-            {
-                if (placeDeMarche.getSalleDesVentes().estIdentifie(livre.getProprietaire()))
-                { // le vendeur est identifié
+            if (!livre.getProprietaire().equalsIgnoreCase(placeDeMarche.getNom())) {
+            	//vendeur different de la pdm
+                if (placeDeMarche.getSalleDesVentes().estIdentifie(livre.getProprietaire())) {
+                	// le vendeur est identifié
                     placeDeMarche.getSalleDesVentes().getConnexionAgent(livre.getProprietaire()).getAgent().setBloque(true);
                     enchereCourante = Enchere.newInstance(enchere.getNum(), enchere.getPrixVente(), livre.getId(), enchere.getTypeEnchere());
-                }
-                else
-                { // le vendeur n'est plus présent
+                } else {
+                	// le vendeur n'est plus présent
                     setEnchereCourante();
                 }
-            }
-            else
-            { // C'est la place de marché qui réalise la vente.
+            } else {
+            	// C'est la place de marché qui réalise la vente.
                 enchereCourante = Enchere.newInstance(enchere.getNum(), livre);
             }
-        } catch (NoSuchElementException e) { if (this.placeDeMarche.verbose) System.err.println("Le programme est vide, je "); }
+        } catch (NoSuchElementException e) {
+        	if (this.placeDeMarche.verbose) {
+        		System.err.println("Le programme est vide, je ");
+        	}
+        }
     }
     
-    /** Crée un nouveau livre prit au hasard parmi tous les livres de la base de 
+    /**
+     * Crée un nouveau livre prit au hasard parmi tous les livres de la base de 
      * données. Ne fait rien si le commissaire priseur a déjà fait plus de transactions
-     * que 100 - tailleDuProgramme. */
+     * que 100 - tailleDuProgramme.
+     */
     private void creerItem() {
         if (numEnchere <= Protocole.transactionsParPlaceDeMarche) {
             // Nous pouvons ajouter une nouvelle enchère au programme.
@@ -85,36 +128,49 @@ public class CommissairePriseur extends Thread {
         }
     }
     
-    /** Cette méthode synchronisée pourra être appelée par plusieurs agents en
+    /**
+     * Cette méthode synchronisée pourra être appelée par plusieurs agents en
      * même temps, mais elle ne s'exécutera toujours qu'une seule fois.
      * Elle met à disposition son message et réveille le commissaire priseur.
      */
     public synchronized void vousAvezUnMessage(PropositionEnchereA message, ConnexionAgent connexionAgent) {
         System.out.println("Le commissaire Priseur a un message");
-        while (!attendsDesPropositions) { try { wait(); } catch (InterruptedException e) { } }
+        while (!attendsDesPropositions) {
+        	try {
+        		wait();
+        	} catch (InterruptedException e) {
+        	}
+        }
         attendsDesPropositions = false;
         this.message = message;
-        if (enchereCourante.getTypeEnchere() == Enchere.ENCHERE_TROIS)
+        if (enchereCourante.getTypeEnchere() == Enchere.ENCHERE_TROIS) {
             ((EnchereTrois)this.enchereCourante).setConnexionAgent(connexionAgent);
-        else if (enchereCourante.getTypeEnchere() == Enchere.ENCHERE_QUATRE)
+        } else if (enchereCourante.getTypeEnchere() == Enchere.ENCHERE_QUATRE) {
             ((EnchereQuatre)this.enchereCourante).setConnexionAgent(connexionAgent);
+        }
         this.notifyAll();
     }
     
-    /** Annule l'enchère courante en décrémentant chaque numéro d'enchères dans
-     * le programme. */
+    /**
+     * Annule l'enchère courante en décrémentant chaque numéro d'enchères dans
+     * le programme.
+     */
     private void annulerEnchere() {
         decrementerNumEnchere();
-        ListIterator i = programme.getListeProgramme().listIterator();
-        while (i.hasNext())
-            ((ProgrammePro)i.next()).decrementerNumEnchere();
+        for (final ProgrammePro programmePro : programme.getListeProgramme()) {
+            programmePro.decrementerNumEnchere();
+        }
     }
     
-    /** Le commissaire priseur a détecté qu'il y avait plus de 3 agents connectés
-     * en dehors du vendeur éventuel de l'enchère et de ce fait démarre une enchère. */
+    /**
+     * Le commissaire priseur a détecté qu'il y avait plus de 3 agents connectés
+     * en dehors du vendeur éventuel de l'enchère et de ce fait démarre une enchère.
+     */
     public void demarrerEnchere() {
         setEnchereCourante();
-        if (placeDeMarche.getVerbose()) System.out.println("OUT PROPOSITIONENCHEREP");
+        if (placeDeMarche.getVerbose()) {
+        	System.out.println("OUT PROPOSITIONENCHEREP");
+        }
         placeDeMarche.getSalleDesVentes().envoyerIdentifies(enchereCourante.annonce().toXML());
         Resultat resultat = null;
         switch (enchereCourante.getTypeEnchere()) {
@@ -123,22 +179,28 @@ public class CommissairePriseur extends Thread {
         case Enchere.ENCHERE_CINQ :
             // Il s'agit d'enchères à réponse unique. Le commissaire priseur ne fait que s'endormir pendant la durée du timeout.
             try {
-                wait(((EnchereReponseUnique)enchereCourante).TIMEOUT * 1000);
-            } catch (InterruptedException e) { }
+                wait(EnchereReponseUnique.TIMEOUT * 1000);
+            } catch (InterruptedException e) {
+            }
             resultat = enchereCourante.resolution();
             break;
         case Enchere.ENCHERE_TROIS :
             // Tant que j'attends des propositions, je dors TIMEOUT secondes.
             attendsDesPropositions = true;
             while (attendsDesPropositions) {
-                try { wait(((EnchereReponseMultiple)enchereCourante).TIMEOUT * 1000); } catch (InterruptedException e) { }
-                if (this.message == null)
+                try {
+                	wait(EnchereReponseMultiple.TIMEOUT * 1000);
+                } catch (InterruptedException e) {
+                }
+                if (this.message == null) {
                     // Le timeout a été atteint
                     attendsDesPropositions = false;
-                else {
+                } else {
                     // Le commissaire priseur s'est fait réveillé par un agent.
                     enchereCourante.setPrixCourant(message.getEnchere());
-                    if (placeDeMarche.getVerbose()) System.out.println("OUT PROPOSITIONENCHEREP");
+                    if (placeDeMarche.getVerbose()) {
+                    	System.out.println("OUT PROPOSITIONENCHEREP");
+                    }
                     placeDeMarche.getSalleDesVentes().envoyerIdentifies(((EnchereTrois)enchereCourante).actualiser(message,((EnchereReponseMultiple)enchereCourante).getConnexionAgent().getAgent().getNomAgent()).toXML());
                     attendsDesPropositions = true;
                     notifyAll();
@@ -146,18 +208,26 @@ public class CommissairePriseur extends Thread {
                 }
             }
             ConnexionAgent dernierAgentEncherisseur = ((EnchereReponseMultiple)enchereCourante).getConnexionAgent();
-            if (dernierAgentEncherisseur == null) // Aucun agent n'a enchéri, la vente est annulée.
+            if (dernierAgentEncherisseur == null) {
+            	// Aucun agent n'a enchéri, la vente est annulée.
                 resultat = ((EnchereTrois)enchereCourante).resolution();
-            else
+            } else {
                 resultat = ((EnchereTrois)enchereCourante).resolution(enchereCourante.getPrixCourant(), dernierAgentEncherisseur.getAgent().getNomAgent());
+            }
             break;
         case Enchere.ENCHERE_QUATRE :
             attendsDesPropositions = true;
             while (message == null && enchereCourante.getPrixCourant() > 0.15*enchereCourante.getPrixDepart()) {
                 // Dès que je reçois une proposition, j'arrete d'attendre
-                try { wait(EnchereReponseBoucle.TIMEOUT * 1000); } catch (InterruptedException e) { }
-                if (message == null) { // On est arrivé au TIMEOUT
-                    if (placeDeMarche.getVerbose()) System.out.println("OUT PROPOSITIONENCHEREP");
+                try {
+                	wait(EnchereReponseBoucle.TIMEOUT * 1000);
+                } catch (InterruptedException e) {
+                }
+                if (message == null) {
+                	// On est arrivé au TIMEOUT
+                    if (placeDeMarche.getVerbose()) {
+                    	System.out.println("OUT PROPOSITIONENCHEREP");
+                    }
                     placeDeMarche.getSalleDesVentes().envoyerIdentifies(((EnchereQuatre)enchereCourante).actualiser().toXML());
                 }
             }
@@ -166,11 +236,14 @@ public class CommissairePriseur extends Thread {
         Livre nouveauLivre = new Livre(enchereCourante.getLivre());
         // Si c'est une enchère descendante, on résoud l'enchère
         if (enchereCourante.getTypeEnchere() == Enchere.ENCHERE_QUATRE) {
-            if (message != null) { // On a reçu une proposition valable de la part d'un agent.
+            if (message != null) {
+            	// On a reçu une proposition valable de la part d'un agent.
                 nouveauLivre.setProprietaire(((EnchereReponseBoucle)enchereCourante).getConnexionAgent().getAgent().getNomAgent());
                 resultat = ((EnchereQuatre)enchereCourante).resolution(enchereCourante.getPrixCourant(), ((EnchereReponseBoucle)enchereCourante).getConnexionAgent().getAgent().getNomAgent());
-            } else // L'enchère n'a pas trouvé preneur et est arrivé à 1% du prix de départ
+            } else {
+            	// L'enchère n'a pas trouvé preneur et est arrivé à 1% du prix de départ
                 resultat = enchereCourante.resolution();
+            }
             message = null;
         }
         // Le commissaire vient de se réveiller. Il va maintenant résoudre l'enchère.
@@ -195,7 +268,8 @@ public class CommissairePriseur extends Thread {
                 
                 // Credit de l'argent au vendeur si c'est un agent
                 ConnexionAgent connexionAgent = placeDeMarche.getSalleDesVentes().getConnexionAgent(enchereCourante.getVendeur());
-                if (connexionAgent != null) { // C'est un agent qui a vendu.
+                if (connexionAgent != null) {
+                	// C'est un agent qui a vendu.
                     Agent vendeur = connexionAgent.getAgent();
                     vendeur.setArgent(vendeur.getArgent() + enchereCourante.getPrixCourant());
                 }
@@ -208,23 +282,35 @@ public class CommissairePriseur extends Thread {
             System.out.println("Commissaire Priseur : l'enchère n'a pas trouvée preneur.");
         }
         placeDeMarche.getSalleDesVentes().libererAgents();
-        if (placeDeMarche.getVerbose()) System.out.println("OUT RESULTAT");
+        if (placeDeMarche.getVerbose()) {
+        	System.out.println("OUT RESULTAT");
+        }
         placeDeMarche.getSalleDesVentes().envoyerIdentifies(resultat.toXML());
         enchereCourante.setLivre(nouveauLivre);
     }
     
-    /** Permet de réveiller le commissaire priseur. */
-    public synchronized void reveilleToi() { this.notifyAll(); }
+    /**
+     * Permet de réveiller le commissaire priseur.
+     */
+    public synchronized void reveilleToi() {
+    	this.notifyAll();
+    }
     
     public synchronized void run() {
         System.out.println("Arrivée du commissaire priseur dans la salle des ventes.");
         // Le commissaire priseur réserve TAILLE_PROGRAMME livres au début.
-        for (int i = 0; i < CommissairePriseur.TAILLE_PROGRAMME; i++) { creerItem(); }
+        for (int i = 0; i < CommissairePriseur.TAILLE_PROGRAMME; i++) {
+        	creerItem();
+        }
         while (nbTransactionsRestantes >= 0 && placeDeMarche.getAccepterAgents()) {
             while (!placeDeMarche.getSalleDesVentes().plusDeTroisAgentsIdentifies() && placeDeMarche.getAccepterAgents()) {
                 enchereCourante = null;
                 // Il n'y a pas encore assez d'agents identifiés pour que le commissaire priseur lance une enchère.
-                try { wait(); } catch (InterruptedException e) { System.err.println("J'ai été interrompu alors que j'attendais qu'il y ait assez d'agents identifiés pour lancer une enchère."); }
+                try {
+                	wait();
+                } catch (InterruptedException e) {
+                	System.err.println("J'ai été interrompu alors que j'attendais qu'il y ait assez d'agents identifiés pour lancer une enchère.");
+                }
                 System.out.println("Commissaire priseur : je me suis fait réveillé.");
                 notifyAll();
             }
@@ -235,8 +321,9 @@ public class CommissairePriseur extends Thread {
     public String toHtml() {
         String sortie = "<h2>Commissaire Priseur</h2>\n";
         sortie += "<p>Il me reste <b>" + nbTransactionsRestantes + "</b> transactions avant la fin de la session.<br>J'anticipe " + TAILLE_PROGRAMME + " ench&egrave;res dans mon programme.</p>";
-        if (enchereCourante != null)
+        if (enchereCourante != null) {
             sortie += "<h3>Ench&egrave;re courante</h3>" + enchereCourante.toHtml();
+        }
         sortie += "<h3>Programme</h3>" + programme.toHtml();
         return sortie;
     }

@@ -111,4 +111,9 @@ public class Categorie {
         c = Categorie.newCategorieFromBd("Informatique");
         System.out.println(c.toString(0));
     }
+    
+    @Override
+    public int hashCode() {
+    	return categorie;
+    }
 }
