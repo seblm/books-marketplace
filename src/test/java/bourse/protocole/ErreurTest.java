@@ -53,7 +53,7 @@ public class ErreurTest {
 				System.out.println("   " + err.getMessage());
 			}
 		});
-		final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<MSG>\n<ERREUR NOM=\"nom\">message</ERREUR>\n</MSG>\n";
+		final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<MSG>\n<ERREUR NOM=\"nom\"></ERREUR>\n</MSG>\n";
 		Document document = builder.parse(
 				new ByteArrayInputStream(
 						xml.getBytes("UTF-8")), Protocole.BASE_DTD);
@@ -63,7 +63,6 @@ public class ErreurTest {
 		Element typeDOME = (Element) typeDOM;
 		final Erreur erreur = new Erreur(typeDOME);
 		assertThat(erreur.getNom()).isEqualTo("nom");
-		assertThat(erreur.getRaison()).isEqualTo("raison");
 		assertThat(erreur.getType()).isEqualTo(
 				new TypeMessage(TypeMessage.TM_ERREUR));
 	}

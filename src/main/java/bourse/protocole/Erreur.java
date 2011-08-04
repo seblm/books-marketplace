@@ -95,6 +95,7 @@ public class Erreur extends Protocole {
 			this.message = ((Text) type.getChildNodes().item(0)).getNodeValue();
 
 		} catch (Exception e) {
+			e.printStackTrace(System.err);
 		}
 
 		if (this.nom.equalsIgnoreCase("DUPLICATION")) {
@@ -103,6 +104,7 @@ public class Erreur extends Protocole {
 				this.pdmnom = pdmElem.getAttribute("NOM");
 				this.adresse = pdmElem.getAttribute("ADRESSE");
 			} catch (Exception e) {
+				e.printStackTrace(System.err);
 			}
 			this.raison = "";
 		} else if (this.nom.equalsIgnoreCase("ZEROVENTE")) {
@@ -111,6 +113,7 @@ public class Erreur extends Protocole {
 				this.raison = pdmElem.getAttribute("TYPE");
 
 			} catch (Exception e) {
+				e.printStackTrace(System.err);
 			}
 
 			this.pdmnom = "";

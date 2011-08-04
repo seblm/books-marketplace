@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ResultAgents extends Protocole {
@@ -41,6 +42,9 @@ public class ResultAgents extends Protocole {
         NodeList noeuds = type.getChildNodes();
         this.listeAgents=new LinkedList<String>();
         for(int i=0;i<noeuds.getLength();i++) {
+        	if (noeuds.item(i).getNodeType() == Node.TEXT_NODE) {
+        		continue;
+        	}
             Element agent = (Element)noeuds.item(i);
             this.listeAgents.add(agent.getAttribute("NOM"));
         }
