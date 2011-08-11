@@ -115,7 +115,6 @@ public class Memoire {
     
     public void refreshTemps() {
         ListePdmMemoire liste = this.getPdms();
-        @SuppressWarnings("unchecked")
 		Iterator<PdmMemoire> parcours = liste.getListe().values().iterator();
         int total = 0;
         int cpt = 0;

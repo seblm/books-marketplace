@@ -83,7 +83,7 @@ public class Resultat extends bourse.protocole.Protocole {
     }
     
     public static void main(String args[]) {
-        float solde=1546;float pas=450;
+        float solde=1546;
         int i=12;
         float pr=153;
         float et= (float)0.4;
@@ -91,7 +91,6 @@ public class Resultat extends bourse.protocole.Protocole {
         
         String p=new Resultat(livre,"machin",solde).toXML();
         System.out.println(p);
-        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         // D'après le tutorial JAXP, ces variables fixées à true permettent à
         // l'application de se concentrer sur l'analyse sémantique.

@@ -98,6 +98,7 @@ public class Bd {
     	requete("CREATE TABLE agents (nomPDM VARCHAR(50) NOT NULL, nomAgent VARCHAR(50) NOT NULL, argent DOUBLE NOT NULL, categorie VARCHAR(50) NOT NULL, PRIMARY KEY (nomAgent));");
     	requete("CREATE TABLE pdms (nom varchar(50) NOT NULL default '', adresse varchar(50) NOT NULL default '', PRIMARY KEY (nom));");
     	requete("CREATE TABLE items (ID INT(6) NOT NULL auto_increment, ISBN VARCHAR(50) NOT NULL, Etat FLOAT DEFAULT '1' NOT NULL, Proprio VARCHAR(50) NOT NULL, PrixAchat FLOAT DEFAULT '0' NOT NULL, PRIMARY KEY (ID));");
+    	requete("INSERT INTO livres (Categorie, Titre, Auteur, DatePar, Editeur, Format, PrixN, ISBN) VALUES ('Science fiction', 'Neuromancien', 'William Gibson', '2001-01-11', 'J''ai lu', 'Poche', '5.8', '229030820X');");
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {

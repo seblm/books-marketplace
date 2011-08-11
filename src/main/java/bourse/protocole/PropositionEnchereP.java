@@ -211,7 +211,6 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         
         String p=new PropositionEnchereP("encherequatre",num,temps,pas,livre,enchere,"mouloud").toXML();
         System.out.println(p);
-        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         // D'après le tutorial JAXP, ces variables fixées à true permettent à
         // l'application de se concentrer sur l'analyse sémantique.

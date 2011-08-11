@@ -32,6 +32,7 @@ public class Encheres {
     public Enchere get(int index) throws IndexOutOfBoundsException {
     	return this.encheres.get(index);
     }
+    
     /**
      * Nettoyer la liste = supprimer toutes les encheres.
      */
@@ -39,12 +40,10 @@ public class Encheres {
     	encheres.clear();
     }
     
-    /** Méthode d'affichage. */
+    /**
+     * Méthode d'affichage.
+     */
     public String toString(int decalage) {
-        String delta = "";
-        for (int i = 0; i < decalage; i++) {
-        	delta += " ";
-        }
         String output = "";
         for (final Enchere enchere : encheres) {
         	output += enchere.toString(decalage+1) + "\n";

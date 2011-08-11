@@ -134,12 +134,15 @@ public class Programme extends Protocole {
     }
     
     public String toHtml() {
-        String sortie = "<ol>";
+        StringBuilder sortie = new StringBuilder();
+        sortie.append("<ol>");
         for (final ProgrammePro programmePro : listeProgramme) {
-            sortie += "<li>" + programmePro.getLivre().toHtml() + "</li>";
+            if (programmePro.getLivre() != null) {
+                sortie.append("<li>" + programmePro.getLivre().toHtml() + "</li>");
+            }
         }
-        sortie += "</ol>";
-        return sortie;
+        sortie.append("</ol>");
+        return sortie.toString();
     }
 
 	public ProgrammePro removeFirstEnchere() {

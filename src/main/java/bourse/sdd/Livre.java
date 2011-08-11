@@ -210,7 +210,7 @@ public class Livre {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
         return delta + ((auteur.length() == 0)?"":"Auteur = ") + this.auteur
-           + ((categorie.getCode() == new Categorie(Categorie.AUCUNE).getCode())?"":", Catégorie = ") + this.categorie
+           + ((categorie == null || categorie.getCode() == new Categorie(Categorie.AUCUNE).getCode())?"":", Catégorie = ") + this.categorie
            + ((dateParu.length() == 0)?"":", Date Parution = ") + this.dateParu
            + ((editeur.length() == 0)?"":", Editeur = ") + this.editeur
            + ((etat == (float)0.0)?"":", Etat = " + this.etat)

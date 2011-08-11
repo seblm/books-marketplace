@@ -2,6 +2,7 @@ package bourse.protocole;
 
 // inclusion de l'API JAXP
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -15,6 +16,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -29,7 +33,6 @@ public abstract class Protocole {
     // Constantes globales
     public static final int portAgent = 1982;
     public static int LIVRES_NEUFS_PAR_AGENTS = 15;
-    //public static final String[] categorie = {"Science+fiction", "Bandes+dessin%C3%A9es", "Science", "Romans+Policiers", "Informatique", "Aucune"};
     public static final int SCIENCE_FICTION=0;
     public static final int BANDE_DESSINEE=1;
     public static final int SCIENCE=2;
@@ -56,17 +59,6 @@ public abstract class Protocole {
     // Méthodes à hériter
     protected abstract void toClass(Element type);
     public abstract Document toDOM();
-/*    
-    public int TransfCategorie(String cat){
-        if(cat.equalsIgnoreCase(this.categorie[this.AUCUNE])) return this.AUCUNE;
-        else if(cat.equalsIgnoreCase(this.categorie[this.BANDE_DESSINEE])) return this.BANDE_DESSINEE;
-        else if(cat.equalsIgnoreCase(this.categorie[this.INFORMATIQUE])) return this.INFORMATIQUE;
-        else if(cat.equalsIgnoreCase(this.categorie[this.ROMANS_POLICIERS])) return this.ROMANS_POLICIERS;
-        else if(cat.equalsIgnoreCase(this.categorie[this.SCIENCE])) return this.SCIENCE;
-        else if(cat.equalsIgnoreCase(this.categorie[this.SCIENCE_FICTION])) return this.SCIENCE_FICTION;
-        else return (-1);
-    }
-*/
     public static final Protocole newInstance(String fichierXML) {
         Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -80,9 +72,15 @@ public abstract class Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
+            builder.setEntityResolver(new EntityResolver() {
+                @Override
+                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                    return new InputSource(Protocole.class.getResourceAsStream("/MSG.dtd"));
+                }
+            });
             // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
-            builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
+            builder.setErrorHandler(new ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)
                 public void fatalError(SAXParseException exception) throws SAXException { }
                 // treat validation errors as fatal
@@ -96,7 +94,7 @@ public abstract class Protocole {
                 }
             }
             );
-            Document document = builder.parse(new ByteArrayInputStream(fichierXML.getBytes("UTF-8")), Protocole.BASE_DTD);
+            Document document = builder.parse(new ByteArrayInputStream(fichierXML.getBytes("UTF-8")));
             Element root = document.getDocumentElement();
             NodeList noeuds = root.getChildNodes();
             Element typeDOM = (Element)noeuds.item(0);

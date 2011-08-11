@@ -1,8 +1,9 @@
 package bourse.protocole;
 
 import static org.fest.assertions.Assertions.assertThat;
-
+import static org.junit.Assert.fail;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -92,6 +93,16 @@ public class ProgrammeTest {
 		assertThat(new Programme(programmes).toHtml()).isEqualTo("<ol><li>Livre n°12 : <i>lupin</i> d'une valeur de <b>0 Euros</b>, d&eacute;tenu par <b>agent1</b>.</li>"
 				+ "<li>Livre n°34 : <i>peterpan</i> d'une valeur de <b>0 Euros</b>, d&eacute;tenu par <b>pdm</b>.</li>"
 				+ "<li>Livre n°19 : <i>roi lion</i> d'une valeur de <b>0 Euros</b>, d&eacute;tenu par <b>agent2</b>.</li></ol>");
+	}
+	
+	@Test
+	public void testToHtmlWithoutBooks() {
+	    final Programme programme = new Programme(Arrays.asList(new ProgrammePro(1, null)));
+	    try {
+	        programme.toHtml();
+	    } catch (NullPointerException e) {
+	        fail(e.getMessage());
+	    }
 	}
 
 }
