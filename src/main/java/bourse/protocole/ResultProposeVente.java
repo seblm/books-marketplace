@@ -3,20 +3,22 @@
  *
  * Created on 16 janvier 2004, 10:35
  */
-
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
+import java.io.ByteArrayInputStream;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import java.io.ByteArrayInputStream;
 /**
- *
- * @author  pechot
+ * @author pechot
  */
 public class ResultProposeVente extends bourse.protocole.Protocole {
     
@@ -25,13 +27,13 @@ public class ResultProposeVente extends bourse.protocole.Protocole {
     
     /** Creates a new instance of ResultProposeVente */
     public ResultProposeVente(int idLivre) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_PROPOSE_VENTE));
+        super(TypeMessage.RESULTPROPOSEVENTE);
         this.idLivre=idLivre;
         
     }
     
      public ResultProposeVente(Element type) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_PROPOSE_VENTE));
+        super(TypeMessage.RESULTPROPOSEVENTE);
         this.toClass(type);
     }
     

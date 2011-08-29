@@ -18,7 +18,6 @@ import bourse.protocole.ResultAgents;
 import bourse.protocole.ResultBye;
 import bourse.protocole.ResultProposeVente;
 import bourse.protocole.ResultWelcome;
-import bourse.protocole.TypeMessage;
 import bourse.protocole.Welcome;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
@@ -58,8 +57,8 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
             if (pdm.getVerbose()) System.out.println(" IN " + msg.getType().toString());
             Protocole reponse = null;
             Protocole reponse2 = null;
-            switch (msg.getType().getValue()) {
-                case TypeMessage.TM_WELCOME :
+            switch (msg.getType()) {
+                case WELCOME :
                     // Instancie le bon type de message.
                     Welcome m = (Welcome)msg;
                     // Crée un agent contenant le nom venant du message et le port venant de la connexion
@@ -103,7 +102,7 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
                         }
                     }
                     break;
-                case TypeMessage.TM_BYE :
+                case BYE :
                     if (agent.getBloque()) // L'agent est bloqué par la place de marché : il ne peut pas sortir.
                         reponse = new Erreur("Bloque", "Vous êtes bloqué chez moi, niark niark !");
                     else { // On autorise l'agent à partir.
@@ -112,10 +111,10 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
                         reponse = new ResultBye(this.pdm.getRequetes().getAdressesPdm());
                     }
                     break;
-                case TypeMessage.TM_REQUETE_PROGRAMME :
+                case REQUETEPROGRAMME :
                     reponse = new Programme(this.pdm.getCommissairePriseur().getProgramme().getListeProgramme());
                     break;
-                case TypeMessage.TM_PROPOSE_VENTE :
+                case PROPOSEVENTE :
                     ProposeVente proposeVente = (ProposeVente)msg;
                     Livre livreAgent = pdm.getRequetes().getLivre(proposeVente.getId());
                     if (livreAgent != null) // L'item correspond à un livre.
@@ -131,7 +130,7 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
                     else
                         reponse = new Erreur("Zerovente", "L'id du livre est incorrect : tu pourrais faire plus attention !", "nonValide");
                     break;
-                case TypeMessage.TM_PROPOSITION_ENCHERE_A : if (pdm.getCommissairePriseur().getEnchereCourante() != null) {// Si non, l'agent a envoyé trop tard sa proposition...
+                case PROPOSITIONENCHEREA : if (pdm.getCommissairePriseur().getEnchereCourante() != null) {// Si non, l'agent a envoyé trop tard sa proposition...
                     int typeEnchereCourante = pdm.getCommissairePriseur().getEnchereCourante().getTypeEnchere();
                     Enchere enchereCourante = pdm.getCommissairePriseur().getEnchereCourante();
                     switch (typeEnchereCourante) {
@@ -177,10 +176,10 @@ public class ConnexionAgent extends bourse.reseau.ManagerConnexion {
                     }
                 }
                 break;
-                case TypeMessage.TM_REQUETE_AGENTS :
+                case REQUETEAGENTS :
                     reponse = new ResultAgents(pdm.getSalleDesVentes().agentsToListeDeNoms());
                     break;
-                case TypeMessage.TM_ADMIN :
+                case ADMIN :
                     switch (((Admin)msg).getTypeRequete()) {
                         case Admin.ADMIN_DOC :
                             try {

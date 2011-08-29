@@ -28,13 +28,13 @@ public class ResultAgents extends Protocole {
     }
     
     public ResultAgents(LinkedList<String> liste) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_AGENTS));
+        super(TypeMessage.RESULTAGENTS);
         this.listeAgents=liste;
         
     }
     
     public ResultAgents(Element type) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_AGENTS));
+        super(TypeMessage.RESULTAGENTS);
         this.toClass(type);
     }
     

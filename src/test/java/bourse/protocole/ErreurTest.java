@@ -30,8 +30,7 @@ public class ErreurTest extends SAXTest {
 		Element typeDOME = (Element) typeDOM;
 		final Erreur erreur = new Erreur(typeDOME);
 		assertThat(erreur.getNom()).isEqualTo("nom");
-		assertThat(erreur.getType()).isEqualTo(
-				new TypeMessage(TypeMessage.TM_ERREUR));
+		assertThat(erreur.getType()).isEqualTo(TypeMessage.ERREUR);
 	}
 
 	@Test
@@ -40,8 +39,7 @@ public class ErreurTest extends SAXTest {
 				"trop de blabla");
 		assertThat(e.getNom()).isEqualTo("Zerovente");
 		assertThat(e.getRaison()).isEqualTo("trop de blabla");
-		assertThat(e.getType()).isEqualTo(
-				new TypeMessage(TypeMessage.TM_ERREUR));
+		assertThat(e.getType()).isEqualTo(TypeMessage.ERREUR);
 	}
 
 	@Test

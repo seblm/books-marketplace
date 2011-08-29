@@ -31,12 +31,12 @@ public class Programme extends Protocole {
     }
     
     public Programme(List<ProgrammePro> liste) {
-        super(new TypeMessage(TypeMessage.TM_PROGRAMME));
+        super(TypeMessage.PROGRAMME);
     	this.listeProgramme = new LinkedList<ProgrammePro>(liste);
     }
     
     public Programme(Element type) {
-        super(new TypeMessage(TypeMessage.TM_PROGRAMME));
+        super(TypeMessage.PROGRAMME);
         this.toClass(type);
     }
 

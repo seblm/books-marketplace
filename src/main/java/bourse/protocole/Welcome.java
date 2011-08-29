@@ -10,8 +10,6 @@ import org.xml.sax.SAXParseException;
 
 import java.io.ByteArrayInputStream;
 
-
-
 public class Welcome extends Protocole {
     
     private String nom;
@@ -20,13 +18,13 @@ public class Welcome extends Protocole {
     public String getNom() { return this.nom; }
     
     public Welcome(String nom, String description) {
-        super(new TypeMessage(TypeMessage.TM_WELCOME));
+        super(TypeMessage.WELCOME);
         this.nom = nom;
         this.description = description;
     }
     
     public Welcome(Element type) {
-        super(new TypeMessage(TypeMessage.TM_WELCOME));
+        super(TypeMessage.WELCOME);
         this.toClass(type);
     }
     

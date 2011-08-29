@@ -22,13 +22,18 @@ public class Resultat extends bourse.protocole.Protocole {
     public float getEnchere() { return enchere;}
     
     public Livre getLivre() { return livre;}
-    /** Modifie le nom de l'acheteur (cela se produit lorsque la place de marché
+    
+    /** 
+     * Modifie le nom de l'acheteur (cela se produit lorsque la place de marché
      * a rencontré une erreur lors de la transaction financière sur la base de
-     * données. */
-    public void setAcheteur(String ancienProprietaire) { this.nom = ancienProprietaire; }
+     * données.
+     */
+    public void setAcheteur(String ancienProprietaire) {
+    	this.nom = ancienProprietaire;
+    }
     
     public Resultat(bourse.sdd.Livre livre,String nom, float enchere) {
-        super(new TypeMessage(TypeMessage.TM_RESULTAT));
+        super(TypeMessage.RESULTAT);
         this.nom=nom;
         this.enchere = enchere;
         this.livre=livre;
@@ -36,7 +41,7 @@ public class Resultat extends bourse.protocole.Protocole {
     }
     
     public Resultat(Element type) {
-        super(new TypeMessage(TypeMessage.TM_RESULTAT));
+        super(TypeMessage.RESULTAT);
         this.toClass(type);
     }
     

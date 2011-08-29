@@ -1,11 +1,12 @@
 package bourse.protocole;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
 
-public final class Admin extends bourse.protocole.Protocole {
+public final class Admin extends Protocole {
     
     private int type;
     
@@ -17,12 +18,12 @@ public final class Admin extends bourse.protocole.Protocole {
     
     /** Crée une nouvelle instance du type de message Admin. */
     public Admin(int type) {
-        super(new TypeMessage(TypeMessage.TM_ADMIN));
+        super(TypeMessage.ADMIN);
         this.type = type;
     }
     
     public Admin(Element node) {
-        super(new TypeMessage(TypeMessage.TM_ADMIN));
+        super(TypeMessage.ADMIN);
         toClass(node);
     }
     

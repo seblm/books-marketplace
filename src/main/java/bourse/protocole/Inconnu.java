@@ -5,7 +5,7 @@ import org.w3c.dom.Document;
 public class Inconnu extends bourse.protocole.Protocole {
     
     public Inconnu() {
-        super(new TypeMessage(TypeMessage.TM_INCONNU));
+        super(TypeMessage.INCONNU);
     }
 
     public final Document toDOM() { return null; }

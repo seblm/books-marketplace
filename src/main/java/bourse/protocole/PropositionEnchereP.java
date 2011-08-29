@@ -33,7 +33,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     
     /** contructeur general*/
     public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre,float enchere,String nomagent) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -44,7 +44,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
 
     }
     public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre,float enchere) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -56,7 +56,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /** A utiliser pour enchère un (à prendre ou à laisser) */
     public PropositionEnchereP(String nom,int numero, int temps,Livre livre,float enchere) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.nom=nom;
         this.numero=numero;
         this.pas = 0;
@@ -68,7 +68,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /**constructeur ne demandant pas le nom de l'agent et l'enchere*/
    public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre){
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -80,7 +80,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /**constructeur ne demandant pas le pas*/
    public PropositionEnchereP(String nom,int numero,int temps,Livre livre){
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.nom=nom;
         this.numero=numero;
         this.pas=0;
@@ -92,7 +92,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /** constructeur à partir du DOM*/
     public PropositionEnchereP(Element type) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
+        super(TypeMessage.PROPOSITIONENCHEREP);
         this.toClass(type);
     }
     /**permet le passage du DOM à la classe*/

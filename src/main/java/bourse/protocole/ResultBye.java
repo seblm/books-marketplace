@@ -30,7 +30,7 @@ public class ResultBye extends Protocole {
      * @param LinkedListe liste est une liste chaînée remplie de PDMPro.
      */
    public ResultBye(LinkedList<PDMPro> liste) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_BYE));
+        super(TypeMessage.RESULTBYE);
         if (liste == null) {
             listepdm = new LinkedList<PDMPro>();
         } else {
@@ -39,7 +39,7 @@ public class ResultBye extends Protocole {
     }
     
     public ResultBye(Element type) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_BYE));
+        super(TypeMessage.RESULTBYE);
         this.toClass(type);
     }
     

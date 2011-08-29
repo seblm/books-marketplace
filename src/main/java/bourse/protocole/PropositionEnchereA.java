@@ -22,13 +22,13 @@ public class PropositionEnchereA extends bourse.protocole.Protocole {
     
     
     public PropositionEnchereA(int numero, float enchere) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_A));
+        super(TypeMessage.PROPOSITIONENCHEREA);
         this.enchere = enchere;
         this.numero=numero;
     }
     
     public PropositionEnchereA(Element type) {
-        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_A));
+        super(TypeMessage.PROPOSITIONENCHEREA);
         this.toClass(type);
     }
     

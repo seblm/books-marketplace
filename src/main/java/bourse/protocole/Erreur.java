@@ -38,7 +38,7 @@ public class Erreur extends Protocole {
 	 */
 	public Erreur(String nom, String message, String pdmnom, String adresse,
 			String raison) {
-		super(new TypeMessage(TypeMessage.TM_ERREUR));
+		super(TypeMessage.ERREUR);
 		this.nom = nom;
 		this.message = message;
 		this.pdmnom = pdmnom;
@@ -50,7 +50,7 @@ public class Erreur extends Protocole {
 	 * Creates a new instance of Erreur pour erreur ZEROVENTE
 	 */
 	public Erreur(String nom, String message, String raison) {
-		super(new TypeMessage(TypeMessage.TM_ERREUR));
+		super(TypeMessage.ERREUR);
 		this.nom = nom;
 		this.message = message;
 		this.raison = raison;
@@ -60,7 +60,7 @@ public class Erreur extends Protocole {
 	 * Creates a new instance of Erreur pour erreur DUPLICATION
 	 */
 	public Erreur(String nom, String message, String pdmnom, String adresse) {
-		super(new TypeMessage(TypeMessage.TM_ERREUR));
+		super(TypeMessage.ERREUR);
 		this.nom = nom;
 		this.message = message;
 		this.pdmnom = pdmnom;
@@ -72,7 +72,7 @@ public class Erreur extends Protocole {
 	 * Creates a new instance of Erreur simple evitant le passage de chaine vide
 	 */
 	public Erreur(String nom, String message) {
-		super(new TypeMessage(TypeMessage.TM_ERREUR));
+		super(TypeMessage.ERREUR);
 		this.nom = nom;
 		this.message = message;
 		this.pdmnom = "";
@@ -81,7 +81,7 @@ public class Erreur extends Protocole {
 	}
 
 	public Erreur(Element type) {
-		super(new TypeMessage(TypeMessage.TM_ERREUR));
+		super(TypeMessage.ERREUR);
 		this.toClass(type);
 	}
 

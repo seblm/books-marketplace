@@ -17,13 +17,13 @@ public class ResultWelcome extends bourse.protocole.Protocole {
     public Categorie getCategorie() { return this.categorie; }
     
     public ResultWelcome(float solde, Categorie categorie) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_WELCOME));
+        super(TypeMessage.RESULTWELCOME);
         this.solde = solde;
         this.categorie=categorie;
     }
     
     public ResultWelcome(Element type) {
-        super(new TypeMessage(TypeMessage.TM_RESULT_WELCOME));
+        super(TypeMessage.RESULTWELCOME);
         this.toClass(type);
     }
     
@@ -37,7 +37,7 @@ public class ResultWelcome extends bourse.protocole.Protocole {
         this.categorie = new Categorie(noeud.getNodeValue());
     }
     
-    public org.w3c.dom.Document toDOM() {
+    public Document toDOM() {
          Document document = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -63,7 +63,7 @@ public class ResultWelcome extends bourse.protocole.Protocole {
         return super.toXML(this.toDOM());
     }
     
-    public static void main(String args[]) {
+    public static void main(String args[]) { // TODO à supprimer
         float solde=1546;
         String p=new ResultWelcome(solde,new Categorie()).toXML();
         System.out.println(p);

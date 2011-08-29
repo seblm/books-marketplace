@@ -99,29 +99,29 @@ public abstract class Protocole {
             NodeList noeuds = root.getChildNodes();
             Element typeDOM = (Element)noeuds.item(0);
             Element typeDOME = (Element)typeDOM;
-            TypeMessage type = new TypeMessage(typeDOM.getTagName());
-            switch (type.getValue()) {
-                case TypeMessage.TM_INCONNU : message = new Inconnu(); break;
-                case TypeMessage.TM_WELCOME : message = new Welcome(typeDOME); break;
-                case TypeMessage.TM_BYE     : message = new Bye(typeDOME); break;
-                case TypeMessage.TM_REQUETE_PROGRAMME: message = new RequeteProgramme (); break;
-                case TypeMessage.TM_REQUETE_AGENTS: message = new RequeteAgents (); break;
-                case TypeMessage.TM_RESULT_WELCOME : message = new ResultWelcome(typeDOME); break;
-                case TypeMessage.TM_ERREUR     : message = new Erreur(typeDOME); break;
-                case TypeMessage.TM_RESULT_PROPOSE_VENTE     : message = new ResultProposeVente(typeDOME); break;
-                case TypeMessage.TM_RESULT_AGENTS     : message = new ResultAgents(typeDOME); break;
-                case TypeMessage.TM_PROPOSE_VENTE     : message = new ProposeVente(typeDOME); break;
-                case TypeMessage.TM_PROPOSITION_ENCHERE     : if (typeDOM.hasAttribute("NOM"))
+            System.out.println(typeDOM.getTagName());
+            TypeMessage type = TypeMessage.valueOf(typeDOM.getTagName());
+            switch (type) {
+                case INCONNU              : message = new Inconnu(); break;
+                case WELCOME              : message = new Welcome(typeDOME); break;
+                case BYE                  : message = new Bye(typeDOME); break;
+                case REQUETEPROGRAMME    : message = new RequeteProgramme (); break;
+                case REQUETEAGENTS       : message = new RequeteAgents (); break;
+                case RESULTWELCOME       : message = new ResultWelcome(typeDOME); break;
+                case ERREUR               : message = new Erreur(typeDOME); break;
+                case RESULTPROPOSEVENTE : message = new ResultProposeVente(typeDOME); break;
+                case RESULTAGENTS        : message = new ResultAgents(typeDOME); break;
+                case PROPOSEVENTE        : message = new ProposeVente(typeDOME); break;
+                case PROPOSITIONENCHERE  : if (typeDOM.hasAttribute("NOM"))
                     message = new PropositionEnchereP(typeDOME);
                 else
                     message = new PropositionEnchereA(typeDOME);
                 break;
-                case TypeMessage.TM_PROGRAMME: message = new Programme(typeDOME); break;
-                
-                case TypeMessage.TM_RESULTAT          : message = new Resultat(typeDOME); break;
-                case TypeMessage.TM_RESULT_BYE        : message = new ResultBye(typeDOME); break;
-                case TypeMessage.TM_ADMIN             : message = new Admin(typeDOME); break;
-                default : message = new Erreur("Malformation", "Le type du message n'a pas pu être reconnu."); break;
+                case PROGRAMME            : message = new Programme(typeDOME); break;
+                case RESULTAT             : message = new Resultat(typeDOME); break;
+                case RESULTBYE           : message = new ResultBye(typeDOME); break;
+                case ADMIN                : message = new Admin(typeDOME); break;
+                default                   : message = new Erreur("Malformation", "Le type du message n'a pas pu être reconnu."); break;
                 
             }
         } catch (Exception e) {

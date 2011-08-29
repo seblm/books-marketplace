@@ -12,17 +12,17 @@ public final class RequeteAgents extends bourse.protocole.Protocole {
     
     /** Crée une nouvelle instance du type de message Bye. */
     public RequeteAgents(String commentaire) {
-        super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
+        super(TypeMessage.REQUETEAGENTS);
         this.commentaire = commentaire;
     }
     
     public RequeteAgents() {
-        super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
+        super(TypeMessage.REQUETEAGENTS);
         this.commentaire ="";
     }
     
     public RequeteAgents(Element type) {
-        super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
+        super(TypeMessage.REQUETEAGENTS);
         this.toClass(type);
     }
     

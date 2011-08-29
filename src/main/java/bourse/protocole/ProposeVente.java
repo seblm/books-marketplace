@@ -44,7 +44,7 @@ public class ProposeVente extends Protocole {
 	}
 
 	public ProposeVente(String nom, float prix, int id) {
-		super(new TypeMessage(TypeMessage.TM_PROPOSE_VENTE));
+		super(TypeMessage.PROPOSEVENTE);
 		if (nom == null) {
 			this.nom = "";
 		} else {
@@ -55,7 +55,7 @@ public class ProposeVente extends Protocole {
 	}
 
 	public ProposeVente(Element type) {
-		super(new TypeMessage(TypeMessage.TM_PROPOSE_VENTE));
+		super(TypeMessage.PROPOSEVENTE);
 		this.toClass(type);
 	}
 

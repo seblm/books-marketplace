@@ -3,20 +3,21 @@
  *
  * Created on 16 janvier 2004, 08:08
  */
-
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
+import java.io.ByteArrayInputStream;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import java.io.ByteArrayInputStream;
 /**
- *
- * @author  pechot
+ * @author pechot
  */
 public class RequeteProgramme extends bourse.protocole.Protocole {
     
@@ -24,12 +25,11 @@ public class RequeteProgramme extends bourse.protocole.Protocole {
     
     /** Creates a new instance of RequeteProgramme */
     public RequeteProgramme() {
-         super(new TypeMessage(TypeMessage.TM_REQUETE_PROGRAMME));
-    //   this.requete="";
+         super(TypeMessage.REQUETEPROGRAMME);
     }
     
      public RequeteProgramme(Element type) {
-        super(new TypeMessage(TypeMessage.TM_REQUETE_PROGRAMME));
+        super(TypeMessage.REQUETEPROGRAMME);
         this.toClass(type);
     }
      

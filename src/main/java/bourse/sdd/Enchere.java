@@ -26,7 +26,7 @@ public class Enchere {
 		Document document=root.getOwnerDocument();
         Element enchere = document.createElement("ENCHERE");
         enchere.setAttribute("NUMERO", numero.toString());
-        livre.addElement(enchere, new TypeMessage(TypeMessage.TM_PROGRAMME));
+        livre.addElement(enchere, TypeMessage.PROGRAMME);
         root.appendChild(enchere);
 	}
 }

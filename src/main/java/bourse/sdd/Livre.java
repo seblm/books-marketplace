@@ -41,7 +41,8 @@ public class Livre {
         this.prixAchat = livre.getPrixAchat();
     }
     
-    /** Constructeur par défaut.
+    /**
+     * Constructeur par défaut.
      * @deprecated Ce constructeur fixe toutes les valeurs d'un livre à des valeurs arbitraires.
      * Elles ne reflètent pas l'existance d'un livre propre et l'instanciation d'un livre par
      * ce constructeur est par conséquent vivement déconseillé. */
@@ -99,16 +100,16 @@ public class Livre {
         Document document=root.getOwnerDocument();
         try {
             Element livre = document.createElement("LIVRE");
-            switch (typeMessage.getValue()) {
-                case TypeMessage.TM_PROPOSE_VENTE :
-                case TypeMessage.TM_RESULT_PROPOSE_VENTE :
+            switch (typeMessage) {
+                case PROPOSEVENTE :
+                case RESULTPROPOSEVENTE :
                     // Attribut nécessaire : ID.
                     livre.setAttribute("ID", String.valueOf(id));
                     break;
-                case TypeMessage.TM_PROPOSITION_ENCHERE_P :
+                case PROPOSITIONENCHEREP :
                     // Attribut nécessaire supplémentaire : PROPRIETAIRE
                     
-                case TypeMessage.TM_RESULTAT :
+                case RESULTAT :
                     // Attributs nécessaires supplémentaires : AUTEUR, FORMAT, EDITEUR, DATEPAR, ID, ISBN
                     livre.setAttribute("PROPRIETAIRE", proprietaire);
                     livre.setAttribute("AUTEUR", auteur);
@@ -117,7 +118,7 @@ public class Livre {
                     livre.setAttribute("DATEPAR", dateParu);
                     livre.setAttribute("ID", String.valueOf(id));
                     livre.setAttribute("ISBN", isbn);
-                case TypeMessage.TM_PROGRAMME :
+                case PROGRAMME :
                     // Attributs nécessaires : TITRE, CATEGORIE, PRIX, ETAT
                     livre.setAttribute("TITRE",  titre);
                     livre.setAttribute("CATEGORIE", categorie.toString());

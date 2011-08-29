@@ -17,7 +17,6 @@ import bourse.protocole.ResultBye;
 import bourse.protocole.ResultProposeVente;
 import bourse.protocole.ResultWelcome;
 import bourse.protocole.Resultat;
-import bourse.protocole.TypeMessage;
 
 /* Gère la communication vers la Pdm : lance une connexion. */
 public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
@@ -41,8 +40,8 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
             if (message == null) { throw new java.lang.NullPointerException("Perte de la connexion."); }
             else {
                 Protocole msg = Protocole.newInstance(message);
-                switch (msg.getType().getValue()) {
-                    case TypeMessage.TM_RESULT_WELCOME :
+                switch (msg.getType()) {
+                    case RESULTWELCOME :
                         System.out.println("Transition : recu un message welcome agent");
                         this.papa.getFenetre().addInputMessage("welcome agent");
                         if (this.papa.getEtat() == Etat.attenteRESULTWELCOME) {
@@ -63,7 +62,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             } catch (IOException e) { e.printStackTrace(System.err); }
                         }
                         break;
-                    case TypeMessage.TM_RESULT_BYE :
+                    case RESULTBYE :
                         System.out.println("Transition : Recu un message result bye.");
                         this.papa.getFenetre().addInputMessage("result bye");
                         if (this.papa.getEtat() == 7) {
@@ -80,7 +79,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             } catch (IOException e) { e.printStackTrace(System.err); }
                         }
                         break;
-                    case TypeMessage.TM_ERREUR :
+                    case ERREUR :
                         System.out.println("Transition : Type de l'erreur : " + ((Erreur)msg).getNom());
                         this.papa.getFenetre().addInputMessage("erreur " + ((Erreur)msg).getNom());
                         if (this.papa.getEtat() == 5) {
@@ -117,14 +116,14 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             }
                         }
                         break;
-                    case TypeMessage.TM_RESULT_AGENTS :
+                    case RESULTAGENTS :
                         this.papa.getFenetre().addInputMessage("result agent");
                         System.out.println("Transition : Recu un message result Agents.");
                         if (new Etat(etatEntrant).acceptAsynchronus()) {
                             this.papa.getMemoire().getAgents().miseAJour(((ResultAgents)msg).getListeAgents()); // mise à jour de la liste d'agent.
                         }
                         break;
-                    case TypeMessage.TM_PROPOSITION_ENCHERE_P :
+                    case PROPOSITIONENCHEREP :
                         System.out.println("Transition : Recu un message proposition enchere de la pdm.");
                         this.papa.getFenetre().addInputMessage("proposition enchere");
                         PropositionEnchereP m = (PropositionEnchereP)msg;
@@ -158,7 +157,7 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             }
                         }   
                         break;
-                    case TypeMessage.TM_RESULTAT :
+                    case RESULTAT :
                         System.out.println("Transition : Recu un message de résutat d'enchère.");
                         this.papa.getFenetre().addInputMessage("resultat");
                         if (new Etat(etatEntrant).acceptAsynchronus()) {
@@ -188,14 +187,14 @@ public final class ConnexionPdm extends bourse.reseau.ManagerConnexion {
                             this.papa.showResults();
                         }
                         break;
-                    case TypeMessage.TM_PROGRAMME :
+                    case PROGRAMME :
                         System.out.println("Transition : Recu un message programme.");
                         this.papa.getFenetre().addInputMessage("programme");
                         if (new Etat(etatEntrant).acceptAsynchronus()) {
                             this.papa.getCurrentPdm().setProgramme(new ListeProgramme(((Programme)msg).getListeProgramme()));
                         }
                         break;
-                    case TypeMessage.TM_RESULT_PROPOSE_VENTE :
+                    case RESULTPROPOSEVENTE :
                         this.papa.getFenetre().addInputMessage("result propose vente");
                         System.out.println("Transition : result propose vente");
                         ResultProposeVente rpv = (ResultProposeVente)msg;
