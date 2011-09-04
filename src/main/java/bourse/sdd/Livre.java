@@ -23,10 +23,8 @@ public class Livre {
     protected float prixAchat;
 
     /** Constructeur initialisant tous les paramètres d'un livre. */
-    public Livre(String titre, String auteur, Categorie categorie,
-            String format, String editeur, float prix, float etat,
-            String dateParu, String isbn, int id, String proprietaire,
-            float prixAchat) {
+    public Livre(String titre, String auteur, Categorie categorie, String format, String editeur, float prix,
+            float etat, String dateParu, String isbn, int id, String proprietaire, float prixAchat) {
         this.titre = titre;
         this.auteur = auteur;
         this.categorie = categorie;
@@ -154,80 +152,40 @@ public class Livre {
         return titre;
     }
 
-    public void setTitre(String t) {
-        this.titre = t;
-    }
-
     public String getAuteur() {
         return auteur;
-    }
-
-    public void setAuteur(String a) {
-        this.auteur = a;
     }
 
     public Categorie getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(Categorie c) {
-        this.categorie = c;
-    }
-
     public String getFormat() {
         return format;
-    }
-
-    public void setFormat(String f) {
-        this.format = f;
     }
 
     public String getEditeur() {
         return editeur;
     }
 
-    public void setEditeur(String e) {
-        this.editeur = e;
-    }
-
     public float getPrix() {
         return this.prix;
-    }
-
-    public void setPrix(float p) {
-        this.prix = p;
     }
 
     public float getEtat() {
         return this.etat;
     }
 
-    public void setEtat(float e) {
-        this.etat = e;
-    }
-
     public String getDateParu() {
         return this.dateParu;
-    }
-
-    public void setDateParu(String d) {
-        this.dateParu = d;
     }
 
     public String getIsbn() {
         return this.isbn;
     }
 
-    public void setIsbn(String i) {
-        this.isbn = i;
-    }
-
     public int getId() {
         return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getProprietaire() {
@@ -254,32 +212,20 @@ public class Livre {
         return delta
                 + ((auteur.length() == 0) ? "" : "Auteur = ")
                 + this.auteur
-                + ((categorie == null || categorie.getCode() == new Categorie(
-                        Categorie.AUCUNE).getCode()) ? "" : ", Catégorie = ")
-                + this.categorie
-                + ((dateParu.length() == 0) ? "" : ", Date Parution = ")
-                + this.dateParu
-                + ((editeur.length() == 0) ? "" : ", Editeur = ")
-                + this.editeur
+                + ((categorie == null || categorie.getCode() == new Categorie(Categorie.AUCUNE).getCode()) ? ""
+                        : ", Catégorie = ") + this.categorie + ((dateParu.length() == 0) ? "" : ", Date Parution = ")
+                + this.dateParu + ((editeur.length() == 0) ? "" : ", Editeur = ") + this.editeur
                 + ((etat == (float) 0.0) ? "" : ", Etat = " + this.etat)
-                + ((format.length() == 0) ? "" : ", Format = ")
-                + this.format
-                + ((id == 0) ? "" : ", Id = " + this.id)
-                + ((isbn.length() == 0) ? "" : ", Isbn = ")
-                + this.isbn
-                + ((prix == (float) 0.0) ? "" : ", Prix = " + this.prix)
-                + ((titre.length() == 0) ? "" : ", Titre = ")
-                + this.titre
-                + (proprietaire.equals("") ? "" : ", Proprietaire = ")
-                + proprietaire
-                + ((prixAchat == (float) 0.0) ? "" : ", PrixAchat = "
-                        + prixAchat);
+                + ((format.length() == 0) ? "" : ", Format = ") + this.format + ((id == 0) ? "" : ", Id = " + this.id)
+                + ((isbn.length() == 0) ? "" : ", Isbn = ") + this.isbn
+                + ((prix == (float) 0.0) ? "" : ", Prix = " + this.prix) + ((titre.length() == 0) ? "" : ", Titre = ")
+                + this.titre + (proprietaire.equals("") ? "" : ", Proprietaire = ") + proprietaire
+                + ((prixAchat == (float) 0.0) ? "" : ", PrixAchat = " + prixAchat);
     }
 
     public String toHtml() {
-        String affichage = "Livre n°" + id + " : <i>" + titre
-                + "</i> d'une valeur de <b>" + Math.round(prix * etat * 100)
-                / 100 + " Euros</b>";
+        String affichage = "Livre n°" + id + " : <i>" + titre + "</i> d'une valeur de <b>"
+                + Math.round(prix * etat * 100) / 100 + " Euros</b>";
         if (proprietaire.length() != 0)
             affichage += ", d&eacute;tenu par <b>" + proprietaire + "</b>";
         if (prixAchat != (float) 0.0)
@@ -290,8 +236,7 @@ public class Livre {
 
     @Override
     public String toString() {
-        String affichage = "Livre n°" + id + " : " + titre
-                + " d'une valeur de <b>" + Math.round(prix * etat)
+        String affichage = "Livre n°" + id + " : " + titre + " d'une valeur de <b>" + Math.round(prix * etat)
                 + " Euros</b>";
         if (!proprietaire.isEmpty()) {
             affichage += ", détenu par " + proprietaire + "";

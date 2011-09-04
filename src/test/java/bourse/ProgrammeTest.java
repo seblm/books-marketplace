@@ -1,4 +1,4 @@
-package bourse.protocole;
+package bourse;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -13,6 +13,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import bourse.placeDeMarche.enchere.Enchere;
+import bourse.protocole.Categorie;
+import bourse.protocole.Programme;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 

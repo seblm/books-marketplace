@@ -15,27 +15,25 @@ import org.xml.sax.SAXParseException;
 
 public abstract class SAXTest {
 
-    private static DocumentBuilderFactory factory;
-
     protected static DocumentBuilder documentBuilder;
 
     @BeforeClass
     public static void initDocumentBuilderFactory() throws ParserConfigurationException {
-        factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
         factory.setIgnoringElementContentWhitespace(true);
         documentBuilder = factory.newDocumentBuilder();
         documentBuilder.setEntityResolver(new EntityResolver() {
-                @Override
-                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-                    if (systemId.endsWith(Protocole.URI_DTD)) {
-                        return new InputSource(ErreurTest.class.getResourceAsStream("/" + Protocole.URI_DTD));
-                    }
-                    return null;
+            @Override
+            public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                if (systemId.endsWith(Protocole.URI_DTD)) {
+                    return new InputSource(ErreurTest.class.getResourceAsStream("/" + Protocole.URI_DTD));
                 }
-            });
+                return null;
+            }
+        });
 
         documentBuilder.setErrorHandler(new ErrorHandler() {
             public void fatalError(SAXParseException exception) throws SAXException {
