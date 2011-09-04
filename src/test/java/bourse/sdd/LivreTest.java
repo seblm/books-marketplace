@@ -10,14 +10,11 @@ public class LivreTest {
 
     @Test
     public void intiialize_the_bean() {
-        Livre livre = new Livre("lupin", "leblanc", new Categorie(
-                Categorie.SCIENCE), "poch", "belin", 153f, 0.4f, "15/11/00",
-                "yetet", 12, "protocoleman", 50.95f);
+        Livre livre = TestFactory.createLivre();
 
         assertThat(livre.getTitre()).isEqualTo("lupin");
         assertThat(livre.getAuteur()).isEqualTo("leblanc");
-        assertThat(livre.getCategorie().getCategorie()).isEqualTo(
-                Categorie.SCIENCE);
+        assertThat(livre.getCategorie().getCategorie()).isEqualTo(Categorie.SCIENCE);
         assertThat(livre.getFormat()).isEqualTo("poch");
         assertThat(livre.getEditeur()).isEqualTo("belin");
         assertThat(livre.getPrix()).isEqualTo(153f);
