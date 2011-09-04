@@ -3,8 +3,6 @@ package bourse.sdd;
 import static bourse.sdd.TestFactory.createLivre;
 import static org.fest.assertions.Assertions.assertThat;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Test;
@@ -12,13 +10,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class EnchereTest {
+import bourse.protocole.SAXTest;
+
+public class EnchereTest extends SAXTest {
 
     @Test
     public void with_a_document_node_should_add_bid() throws ParserConfigurationException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.newDocument();
+        Document document = documentBuilder.newDocument();
         Element root = document.createElement("root");
         Enchere bid = new Enchere(1, createLivre());
 
