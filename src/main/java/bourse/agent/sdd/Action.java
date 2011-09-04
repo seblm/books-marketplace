@@ -4,103 +4,80 @@ import java.util.Random;
 
 /**
  * Répertorie les actions possibles
- * 
- * TODO transformer cette classe en enum
  */
-public class Action {
-    
+public enum Action {
+
     /**
-     * 0 : Aucune action séléctionnée.
+     * Aucune action séléctionnée.
      */
-    public static final int aucune = 0;
-    
+    aucune,
+
     /**
-     * 1 : Vendre son bouquin.
+     * Vendre son bouquin.
      */
-    public static final int vendre = 1;
-    
+    vendre,
+
     /**
-     * 2 : Migration.
+     * Migration.
      */
-    public static final int migrer = 2;
-    
+    migrer,
+
     /**
-     * 3 : Effectuer son bilan.
+     * Effectuer son bilan.
      */
-    public static final int bilan = 3;
-    
+    bilan,
+
     /**
-     * 4 : Demander le programme.
+     * Demander le programme.
      */
-    public static final int programme = 4;
-    
+    programme,
+
     /**
-     * 5 : Demander la liste des agents connectés.
+     * Demander la liste des agents connectés.
      */
-    public static final int adversaires = 5;
-    
+    adversaires,
+
     /**
-     * 6 : Attendre l'enchère.
+     * Attendre l'enchère.
      */
-    public static final int attenteEnchere = 6;
-    
+    attenteEnchere,
+
     /**
-     * 7 : réalise l'objectif.
+     * Réalise l'objectif.
      */
-    public static final int objectif = 7;
-    
-    /**
-     * L'action courante.
-     */
-    private int action;
-    
-    /**
-     * Change l'action.
-     */
-    public void setAction(int a) {
-        action = a;
-    }
-    
-    /**
-     * Retourne l'action.
-     */
-    public int getAction() {
-        return action;
-    }
-    
-    /**
-     * Construit une action en fonction de son code.
-     */
-    public Action(int a) {
-        action = a;
-    }
-    
+    objectif;
+
     /**
      * Construit une action au hasard.
      */
-    public Action() {
-        action = new Random().nextInt(6);
+    public static Action randomAction() {
+        return Action.values()[new Random().nextInt(6)];
     }
-    
+
     /**
      * Affichage.
      */
-    public String toString(int decalage) {
-        final StringBuilder output = new StringBuilder();
-        for (int i = 0; i < decalage; i++) {
-            output.append(' ');
+    public String toString() {
+        switch (this) {
+        case aucune:
+            return "aucune action séléctionnée";
+        case vendre:
+            return "vendre son bouquin";
+        case migrer:
+            return "migration";
+        case bilan:
+            return "effectuer son bilan";
+        case programme:
+            return "demande de programme";
+        case adversaires:
+            return "demande de la liste des agents présents";
+        case attenteEnchere:
+            return "attente d'une proposition enchère";
+        case objectif:
+            return "réaliser l'objectif";
+        default:
+            return "";
         }
-        output.append(action).append(" (");
-        switch (this.action) {
-            case 0: output.append("aucune action séléctionnée"); break;
-            case 1: output.append("vendre son bouquin"); break;
-            case 2: output.append("migration"); break;
-            case 3: output.append("effectuer son bilan"); break;
-            case 4: output.append("demande de programme"); break;
-            case 5: output.append("demande de la liste des agents présents"); break;
-            case 6: output.append("attente d'une proposition enchère"); break;
-        }
-        return output.append(')').toString();
     }
-    
+
 }

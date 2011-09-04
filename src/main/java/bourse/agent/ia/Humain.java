@@ -1,5 +1,6 @@
 package bourse.agent.ia;
 
+import static bourse.agent.sdd.Action.aucune;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +14,8 @@ import bourse.sdd.Livre;
 
 public class Humain extends Decision {
     
+    private static final long TIMEOUT = 10000;
+    
 	/**
 	 * Constructeur de descision humaine.
 	 */
@@ -24,14 +27,14 @@ public class Humain extends Decision {
      * Arbitrairement 10 secondes d'attente.
      */
     public long timeout() {
-    	return 10000;
+    	return TIMEOUT;
     }
     
     /**
      * On demande à l'utilisateur d'entrer l'action à réaliser.
      */
     public void choixAction() {
-        pere.setAction(new Action(Action.aucune));
+        pere.setAction(aucune);
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(" 0 : aucune (pour répondre à une proposition d'enchère)");
         System.out.println(" 1 : vendre son premier bouquin");
@@ -42,10 +45,10 @@ public class Humain extends Decision {
         System.out.println(" 6 : attendre une proposition enchère");
         System.out.print("action ? ");
         try {
-            pere.setAction(new Action(Integer.parseInt(in.readLine())));
+            pere.setAction(Action.values()[Integer.parseInt(in.readLine())]);
         } catch (IOException e) {
         	e.printStackTrace(System.err);
-        	pere.setAction(new Action(0));
+        	pere.setAction(aucune);
         }
     }
     
@@ -98,11 +101,7 @@ public class Humain extends Decision {
         	e.printStackTrace(System.err);
         	return false;
         }
-        if (reponse == 1) {
-        	return true;
-        } else {
-        	return false;
-        }
+        return reponse == 1;
     }
     
     /**
@@ -120,11 +119,7 @@ public class Humain extends Decision {
         	e.printStackTrace(System.err);
         	return false;
         }
-        if (reponse == 1) {
-        	return true;
-        } else {
-        	return false;
-        }
+        return reponse == 1;
     }
     
     /**
@@ -142,11 +137,7 @@ public class Humain extends Decision {
         	e.printStackTrace(System.err);
         	return false;
         }
-        if (reponse == 1) {
-        	return true;
-        } else {
-        	return false;
-        }
+        return reponse == 1;
     }
     
     /**

@@ -2,7 +2,7 @@ package bourse.agent.ia;
 
 import java.util.Iterator;
 import java.util.Random;
-
+import static bourse.agent.sdd.Action.bilan;
 import bourse.agent.Agent;
 import bourse.agent.sdd.Action;
 import bourse.agent.sdd.ListeLivre;
@@ -11,6 +11,8 @@ import bourse.protocole.ProposeVente;
 import bourse.sdd.Livre;
 
 public class Aleatoire extends Decision {
+    
+    private static final float THRESHOLD = 5;
     
     /**
      * Creates a new instance of Aleatoire
@@ -23,24 +25,24 @@ public class Aleatoire extends Decision {
      * Algorithme de choix d'une action.
      */
     public void choixAction() {
-        if (pere.getWallet() < (float)5.0) {
-            System.out.println("<<< Aleatoire >>> J'ai décidé de partir.");
-            pere.setAction(new Action(Action.bilan));
+        if (pere.getWallet() < THRESHOLD) {
+            System.out.println("<<< Aléatoire >>> J'ai décidé de partir.");
+            pere.setAction(bilan);
         } else {
             Action a = null;
             do {
-                a = new Action();
+                a = Action.randomAction();
                 pere.setAction(a);
-            } while (a.getAction() == Action.bilan);
-            System.out.print("<<< Aleaoire >>> J'ai décidé ");
-            switch (a.getAction()) {
-                case Action.adversaires    : System.out.println("de demander la liste des agents connectés."); break;
-                case Action.attenteEnchere : System.out.println("d'attendre une enchère."); break;
-                case Action.aucune         : System.out.println("de ne rien faire."); break;
-                case Action.bilan          : System.out.println("de faire le bilan."); break;
-                case Action.migrer         : System.out.println("de migrer"); break;
-                case Action.programme      : System.out.println("de demander le programme."); break;
-                case Action.vendre         : System.out.println("de vendre un de mes livres."); break;
+            } while (a == bilan);
+            System.out.print("<<< Aléatoire >>> J'ai décidé ");
+            switch (a) {
+                case adversaires    : System.out.println("de demander la liste des agents connectés."); break;
+                case attenteEnchere : System.out.println("d'attendre une enchère."); break;
+                case aucune         : System.out.println("de ne rien faire."); break;
+                case bilan          : System.out.println("de faire le bilan."); break;
+                case migrer         : System.out.println("de migrer"); break;
+                case programme      : System.out.println("de demander le programme."); break;
+                case vendre         : System.out.println("de vendre un de mes livres."); break;
             }
         }
     }
@@ -59,14 +61,14 @@ public class Aleatoire extends Decision {
             livre = (Livre)i.next();
             trouve = (!livre.getCategorie().equals(pere.getCategorie()));
         }
-        return new ProposeVente(Enchere.NOM[new Random().nextInt(5)], new Random().nextFloat()*livre.getPrixAchat(), livre.getId());
+        return new ProposeVente(Enchere.NOM[new Random().nextInt(Enchere.NOM.length)], new Random().nextFloat()*livre.getPrixAchat(), livre.getId());
     }
     
     /**
      * C'est le prix qui sera envoyé à la pdm dans le message du protocole.
      */
     public float choixPrix() {
-        bourse.sdd.Livre livre = pere.getEnvironnement().getCourante().getLivre();
+        Livre livre = pere.getEnvironnement().getCourante().getLivre();
         return livre.getPrix();
     }
     

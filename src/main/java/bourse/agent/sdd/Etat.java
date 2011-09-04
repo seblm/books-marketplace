@@ -5,44 +5,44 @@ public class Etat {
 
     /** Variables d'instance. */
     /** 0 : Quitter. */
-    public static int quitter = 0;
+    public static final int quitter = 0;
     /** 1 : Etat initial. */
-    public static int initial = 1;
+    public static final int initial = 1;
     /** 2 : Connait les pdms actives. */
-    public static int connaitPdms = 2;
+    public static final int connaitPdms = 2;
     /** 3 : Pdm choisie dans la liste des actives. */
-    public static int pdmChoisie = 3;
+    public static final int pdmChoisie = 3;
     /** 4 : Connexion physique effectuée. */
-    public static int connectePhysiquement = 4;
+    public static final int connectePhysiquement = 4;
     /** 5 : Attente d'une réponse au WELCOME. */
-    public static int attenteRESULTWELCOME = 5;
+    public static final int attenteRESULTWELCOME = 5;
     /** 6 : Pret pour travailler. */
-    public static int pret = 6;
+    public static final int pret = 6;
     /** 7 : Attente d'une réponse au BYE. */
-    public static int attenteRESULTBYE = 7;
+    public static final int attenteRESULTBYE = 7;
     /** 8 : Non connecté physiquement. */
-    public static int nonConnecte = 8;
+    public static final int nonConnecte = 8;
     /** 9 : Action choisie. */
-    public static int actionChoisie = 9;
+    public static final int actionChoisie = 9;
     /** 10 : Attente de réponse à la demande de vente. */
-    public static int attentePropositionEnchere = 10;
+    public static final int attentePropositionEnchere = 10;
     /** 11 : Attente du déclenchement de la vente. */
-    public static int attenteDeclenchementEnchere = 11;
+    public static final int attenteDeclenchementEnchere = 11;
     /** 12 : Debut du mode enchère. */
-    public static int modeEnchere = 12;
+    public static final int modeEnchere = 12;
     /** 13 : Attente du résultat de sa vente. */
-    public static int attenteRESULTATdeSaVente = 13;
+    public static final int attenteRESULTATdeSaVente = 13;
     /** 14 : Enchère interessante. */
-    public static int enchereInteressante = 14;
+    public static final int enchereInteressante = 14;
     /** 15 : L'enchere est une EnchèreUn. */
-    public static int enchereUnOuQuatre = 15;
+    public static final int enchereUnOuQuatre = 15;
     /**
      * 16 : L'enchere est une EnchèreDeux ou une enchère cinq car on gère de la
      * meme facon.
      */
-    public static int enchereDeuxOuCinq = 16;
+    public static final int enchereDeuxOuCinq = 16;
     /** 17 : L'enchere est une EnchèreTrois. */
-    public static int enchereTrois = 17;
+    public static final int enchereTrois = 17;
     /** L'état courant. */
     private int etat;
 
