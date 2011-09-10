@@ -1,6 +1,9 @@
 package bourse.placeDeMarche;
 
-import java.net.Socket;
+import java.sql.*;
+import java.io.*;
+import java.net.*;
+import java.util.LinkedList;
 
 public class PlaceDeMarche {
     
@@ -23,7 +26,7 @@ public class PlaceDeMarche {
     public boolean isAlive() { return this.alive; }
     public void setNom(String nom) { this.nom = nom; }
     public synchronized boolean getAccepterAgents() { return this.accepterAgents; }
-    /** Correspond au souhait de terminer la place de marchÃ© */
+    /** Correspond au souhait de terminer la place de marché */
     public synchronized SalleDesVentes getSalleDesVentes() { return this.salleDesVentes; }
     public synchronized PdmServeur getPdmServeur() { return serveur; }
     public synchronized Requetes getRequetes() { return requetes; }
@@ -54,7 +57,7 @@ public class PlaceDeMarche {
     
     public synchronized void terminer() {
         this.accepterAgents = false;
-        // Terminaison du serveur : puisqu'il est bloquÃ© sur accept(), nous nous connectons une derniÃ¨re fois chez lui avant de dÃ©connecter aussitÃ´t.
+        // Terminaison du serveur : puisqu'il est bloqué sur accept(), nous nous connectons une dernière fois chez lui avant de déconnecter aussitôt.
         try {
             new Socket(serveur.getSocketServeur().getInetAddress(), port).close();
         } catch (Exception e) { if (verbose) System.err.println(e); }
@@ -90,12 +93,12 @@ public class PlaceDeMarche {
                         port = Integer.parseInt(args[1]);
                         nom = args[0];
                     } catch (NumberFormatException ePrime) {
-                        System.err.println("Erreur lors du parsing du port. Le port et le nom par dÃ©faut seront utilisÃ©s.\nUsage: java PlaceDeMarche [nom] [port d'Ã©coute]");
+                        System.err.println("Erreur lors du parsing du port. Le port et le nom par défaut seront utilisés.\nUsage: java PlaceDeMarche [nom] [port d'écoute]");
                     }
                 }
                 break;
         }
-        System.out.println("DÃ©marrage de la place de marchÃ© " + nom + " sur le port " + port + ".");
+        System.out.println("Démarrage de la place de marché " + nom + " sur le port " + port + ".");
         PlaceDeMarche placeDeMarche = new PlaceDeMarche(nom, port, true);
         placeDeMarche.run();
     }

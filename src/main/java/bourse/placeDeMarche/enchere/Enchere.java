@@ -1,40 +1,39 @@
 package bourse.placeDeMarche.enchere;
 
+import bourse.sdd.*;
+import bourse.protocole.*;
+import bourse.placeDeMarche.*;
 import java.util.Random;
-
-import bourse.protocole.PropositionEnchereP;
-import bourse.protocole.Resultat;
-import bourse.sdd.Livre;
 
 public abstract class Enchere {
     
     protected static final float POURCENTAGE_PAS = (float).1;
     
-    /** EnchÃ¨re inconnue */
+    /** Enchère inconnue */
     public static final int ENCHERE_INCONNUE = 0;
-    /** EnchÃ¨re Ã  prendre ou Ã  laisser : le prix est dÃ©terminÃ© et chaque acheteur
-     * rÃ©ponds par oui ou non. L'objet peut ne pas Ãªtre vendu. */
+    /** Enchère à prendre ou à laisser : le prix est déterminé et chaque acheteur
+     * réponds par oui ou non. L'objet peut ne pas être vendu. */
     public static final int ENCHERE_UN = 1;
-    /** EnchÃ¨re Ã  prix scellÃ© : chaque acheteur fait une seule proposition et
+    /** Enchère à prix scellé : chaque acheteur fait une seule proposition et
      * l'objet est vendu au plus offrant. */
     public static final int ENCHERE_DEUX = 2;
-    /** EnchÃ¨re ascendante : c'est l'enchÃ¨re classique oÃ¹ les agents surenchÃ©ris-
-     * sent de faÃ§on concurrente. L'objet est vendu au plus offrant. */
+    /** Enchère ascendante : c'est l'enchère classique où les agents surenchéris-
+     * sent de façon concurrente. L'objet est vendu au plus offrant. */
     public static final int ENCHERE_TROIS = 3;
-    /** EnchÃ¨re descendante : la place de marchÃ© commence par un prix Ã©levÃ© qui
-     * est baissÃ© progressivement jusqu'Ã  ce qu'un agent l'accepte. */
+    /** Enchère descendante : la place de marché commence par un prix élevé qui
+     * est baissé progressivement jusqu'à ce qu'un agent l'accepte. */
     public static final int ENCHERE_QUATRE = 4;
-    /** EnchÃ¨re de Vickrey : chaque acheteur fait une seule proposition et l'objet
+    /** Enchère de Vickrey : chaque acheteur fait une seule proposition et l'objet
      * est vendu au prix de la seconde meilleure offre. */
     public static final int ENCHERE_CINQ = 5;
     
-    /** @return le type de l'enchÃ¨re (dans le protocole). */
+    /** @return le type de l'enchère (dans le protocole). */
     public static final String[] NOM = {"EnchereInconnue", "EnchereUn", "EnchereDeux", "EnchereTrois", "EnchereQuatre", "EnchereCinq"};
     
     public String typeEnchereToString(int type) {
         switch (type) {
-            case 1 : return "Ã  prendre ou Ã  laisser";
-            case 2 : return "Ã  prix scellÃ©";
+            case 1 : return "à prendre ou à laisser";
+            case 2 : return "à prix scellé";
             case 3 : return "ascendante";
             case 4 : return "descendante";
             case 5 : return "de Vickrey";
@@ -51,7 +50,7 @@ public abstract class Enchere {
     }
     
     private static int choisirTypeEnchere() { return Enchere.generateurAleatoire.nextInt(5) + 1; }
-    /** Cette mÃ©thode statique est appelÃ©e par la place de marchÃ© lorsqu'elle veut
+    /** Cette méthode statique est appelée par la place de marché lorsqu'elle veut
      * vendre un nouveau livre. */
     public static final Enchere newInstance(int numEnchere, Livre livre) {
         int typeAleatoire = Enchere.choisirTypeEnchere();
@@ -78,15 +77,15 @@ public abstract class Enchere {
     
     protected int numEnchere;
     protected Livre livre;
-    /** Le type de l'enchÃ¨re courante. Doit-Ãªtre une valeur comprise dans l'en-
+    /** Le type de l'enchère courante. Doit-être une valeur comprise dans l'en-
      * semble Enchere.ENCHERE_{UN, ... CINQ} */
     protected int typeEnchere;
     protected float prixCourant;
-    /** Nom de l'agent ayant effectuÃ© la plus grosse enchÃ¨re jusqu'ici, rien si
-     * c'est le premier tour (uniquement en cas d'enchÃ¨re montante). */
+    /** Nom de l'agent ayant effectué la plus grosse enchère jusqu'ici, rien si
+     * c'est le premier tour (uniquement en cas d'enchère montante). */
     protected String nomAgent;
 
-    /** Constructeur utilisÃ© lorsque la place de marchÃ© est vendeuse. */
+    /** Constructeur utilisé lorsque la place de marché est vendeuse. */
     protected Enchere(int numEnchere, Livre livre) {
         try { this.requetes = new Requetes(true); } catch (Exception e) {
             // Il s'agit d'une erreur fatale.
@@ -99,7 +98,7 @@ public abstract class Enchere {
         this.prixCourant = livre.getPrix() * livre.getEtat();
     }
     
-    /** Constructeur utilisÃ© lorsque la place de marchÃ© reÃ§oit une proposition de
+    /** Constructeur utilisé lorsque la place de marché reçoit une proposition de
      * vente. */
     protected Enchere(int numEnchere, float prixVente, int idLivre) {
         try { this.requetes = new Requetes(true); } catch (Exception e) {
@@ -113,26 +112,26 @@ public abstract class Enchere {
         this.prixCourant = prixVente;
     }
     
-    /** Une enchÃ¨re en un tour se dÃ©roule de la maniÃ¨re suivante :
-     * La place marchÃ© envoie Ã  tous les agents une enchÃ¨re et s'endort jusqu'Ã 
-     * la fin de son timeout. De leur cÃ´tÃ©, les agents rÃ©pondent ou pas.
-     * Lors du rÃ©veil de la place de marchÃ©, celle-ci dÃ©termine le vainqueur de
-     * l'enchÃ¨re s'il y en a un en suivant les rÃ¨gles propres au type de l'en-
-     * chÃ¨re annoncÃ©. */
+    /** Une enchère en un tour se déroule de la manière suivante :
+     * La place marché envoie à tous les agents une enchère et s'endort jusqu'à
+     * la fin de son timeout. De leur côté, les agents répondent ou pas.
+     * Lors du réveil de la place de marché, celle-ci détermine le vainqueur de
+     * l'enchère s'il y en a un en suivant les règles propres au type de l'en-
+     * chère annoncé. */
     public boolean estEnchereReponseUnique() { return this.typeEnchere == Enchere.ENCHERE_UN || this.typeEnchere == Enchere.ENCHERE_DEUX || this.typeEnchere == Enchere.ENCHERE_CINQ; }
 
-    /** Une enchÃ¨re de type boucle itÃ¨re ses annonces d'enchÃ¨res jusqu'Ã  ce qu'un 
-     * agent signale qu'il dÃ©sire l'objet. */
+    /** Une enchère de type boucle itère ses annonces d'enchères jusqu'à ce qu'un 
+     * agent signale qu'il désire l'objet. */
     public boolean estEnchereReponseBoucle() { return this.typeEnchere == Enchere.ENCHERE_QUATRE; }
 
-    /** Une place de marchÃ© qui met en place une enchÃ¨re en plusieurs tours com-
-     * mence par annoncer l'enchÃ¨re aux puis s'endort jusqu'Ã  son rÃ©veil provo-
-     * quÃ© par :
-     * - un message de la part d'un agent dÃ©sirant enchÃ©rir ;
+    /** Une place de marché qui met en place une enchère en plusieurs tours com-
+     * mence par annoncer l'enchère aux puis s'endort jusqu'à son réveil provo-
+     * qué par :
+     * - un message de la part d'un agent désirant enchérir ;
      * - le timeout.
-     * Dans le premier cas, l'enchÃ¨re actualise ses donnÃ©es, renvoie un message
-     * Ã  tous les autres agents et se rendort ; dans le second, elle se termine
-     * et envoie le rÃ©sultat de la transaction. */
+     * Dans le premier cas, l'enchère actualise ses données, renvoie un message
+     * à tous les autres agents et se rendort ; dans le second, elle se termine
+     * et envoie le résultat de la transaction. */
     public boolean estEnchereReponseMultiple() { return this.typeEnchere == Enchere.ENCHERE_TROIS; }
 
     public float getPas() { return prixCourant * Enchere.POURCENTAGE_PAS; }
@@ -150,12 +149,12 @@ public abstract class Enchere {
     protected void incrementerNumEnchere() { numEnchere++; }
         
     public abstract PropositionEnchereP annonce();
-    /** UtilisÃ© lorsqu'un agent se connecte "au milieu" d'une enchÃ¨re. */
+    /** Utilisé lorsqu'un agent se connecte "au milieu" d'une enchère. */
     public abstract PropositionEnchereP reAnnonce();
     public abstract Resultat resolution();
     
     public String toHtml() {
-        return "NÂ° " + this.numEnchere + " : EnchÃ¨re " + this.typeEnchereToString(this.typeEnchere) + " sur " + livre.toHtml();
+        return "N° " + this.numEnchere + " : Enchère " + this.typeEnchereToString(this.typeEnchere) + " sur " + livre.toHtml();
     }
    
 }

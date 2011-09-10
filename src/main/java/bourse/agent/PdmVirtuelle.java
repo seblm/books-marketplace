@@ -1,41 +1,18 @@
 package bourse.agent;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.util.LinkedList;
-
-import bourse.protocole.Categorie;
-import bourse.protocole.Erreur;
-import bourse.protocole.Programme;
-import bourse.protocole.PropositionEnchereP;
-import bourse.protocole.ResultAgents;
-import bourse.protocole.ResultProposeVente;
-import bourse.protocole.Resultat;
-import bourse.reseau.ManagerConnexion;
-import bourse.sdd.Livre;
-import bourse.sdd.PDMPro;
-import bourse.sdd.ProgrammePro;
-
-/**
- * Emulation d'une pdm.
- */
-public class PdmVirtuelle extends ManagerConnexion {
-
-    /**
-     * Constructeur de pdm virtuelle.
-     */
+/** Emulation d'une pdm. */
+public class PdmVirtuelle extends bourse.reseau.ManagerConnexion {
+        
+    /** Constructeur de pdm virtuelle. */
     public PdmVirtuelle(boolean verbose) throws java.lang.Exception {
-        super(new ServerSocket(1981).accept(), "</MSG>", verbose);
+        super(new java.net.ServerSocket(1981).accept(), "</MSG>", verbose);
     }
-
-    @Override
+    
     public void run() {
         super.run();
         try {
-            System.out.println("D√©marrage du serveur");
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    System.in));
+            System.out.println("DÈmarrage du serveur");
+            java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
             boolean sortir = false;
             int choix;
             while (!sortir) {
@@ -54,109 +31,64 @@ public class PdmVirtuelle extends ManagerConnexion {
                 System.out.println(" 8 : RESULTAGENTS");
                 System.out.println("ENCHERES");
                 System.out.println(" 9 : PROPOSITIONENCHERE");
-                System.out.println("10 : PROPOSITIONENCHERE (mise √† jour)");
+                System.out.println("10 : PROPOSITIONENCHERE (mise ‡ jour)");
                 System.out.println("11 : RESULTAT");
                 System.out.println("12 : ERREUR ZEROVENTE");
                 System.out.println("13 : RESULTPROPOSEVENTE");
-                System.out.print("Le message √† envoyer ? ");
+                System.out.print("Le message ‡ envoyer ? ");
                 choix = Integer.parseInt(in.readLine());
-                Livre b = new Livre("tintin", "RG",
-                        new Categorie(Categorie.BD), "broche", "Casterman",
-                        (float) 30.99, (float) 0, "2004-04-21", "222222222",
-                        26, "protocoleman", (float) 12.85);
+                java.util.LinkedList l = new java.util.LinkedList();
+                bourse.sdd.Livre b = new bourse.sdd.Livre("tintin", "RG", new bourse.protocole.Categorie(bourse.protocole.Categorie.BD), "broche", "Casterman", (float)30.99, (float)0, "2004-04-21", "222222222", 26, "protocoleman", (float)12.85);
                 switch (choix) {
-                case 0:
-                    sortir = true;
-                    break;
-                case 1:
-                    this.ecrire(new bourse.protocole.ResultWelcome(100,
-                            new Categorie()).toXML());
-                    break;
-                case 2:
-                    this.ecrire(new bourse.protocole.Erreur("Duplication",
-                            "d√©sol√©, t'es dupliqu√© man.", "localhost", "1981")
-                            .toXML());
-                    break;
-                case 3:
-                    final LinkedList<PDMPro> l = new LinkedList<PDMPro>();
-                    l.add(new PDMPro("PdmVirtuelle", "localhost:1981"));
-                    this.ecrire(new bourse.protocole.ResultBye(l).toXML());
-                    break;
-                case 4:
-                    this.ecrire(new bourse.protocole.Erreur("Bloque",
-                            "d√©sol√©, je te bloque mon gros.").toXML());
-                    break;
-                case 5:
-                    this.ecrire(new bourse.protocole.Erreur("XMLMalformation",
-                            "d√©sol√©, t'es malform√© man.").toXML());
-                    break;
-                case 6:
-                    this.ecrire(new bourse.protocole.Erreur("Inattendu",
-                            "d√©sol√©, tu m'envoie de la merde l√†.").toXML());
-                    break;
-                case 7:
-                    final LinkedList<ProgrammePro> programmePros = new LinkedList<ProgrammePro>();
-                    programmePros.add(new ProgrammePro(56, new Livre(
-                            "le seigneur des anals", "JRR Tolkien",
-                            new Categorie(Categorie.SF), "poche",
-                            "TaMereEditions", 30, 0, "2003-01-01", "222222222",
-                            150, "protocoleman", (float) 50)));
-                    programmePros.add(new ProgrammePro(57, new Livre("tintin",
-                            "RG", new Categorie(Categorie.BD), "broche",
-                            "Casterman", (float) 30.99, 0, "2004-04-21",
-                            "222222222", 26, "ban", (float) 85)));
-                    this.ecrire(new Programme(programmePros).toXML());
-                    break;
-                case 8:
-                    final LinkedList<String> listeAgents = new LinkedList<String>();
-                    listeAgents.add("Groupe-A-billou");
-                    listeAgents.add("GroupeB-georgesOfTheJungle");
-                    this.ecrire(new ResultAgents(listeAgents).toXML());
-                    break;
-                case 9:
-                    this.ecrire(new PropositionEnchereP("EnchereUn", 10, 12,
-                            (float) 5.5, b, (float) 35.0, "").toXML());
-                    break;
-                case 10:
-                    this.ecrire(new PropositionEnchereP("EnchereUn", 10, 12,
-                            (float) 6, b, (float) 35.0, "Groupe-E.Bernadette")
-                            .toXML());
-                    break;
-                case 11:
-                    this.ecrire(new Resultat(b, "Groupe-E.Bernadette",
-                            (float) 35.0).toXML());
-                    break;
-                case 12:
-                    this.ecrire(new Erreur("Zerovente",
-                            "d√©sol√©, je veux pas vendre ton bouquin de merde.")
-                            .toXML());
-                    break;
-                case 13:
-                    this.ecrire(new ResultProposeVente(26).toXML());
+                    case 0 : sortir = true; break;
+                    case 1 : this.ecrire(new bourse.protocole.ResultWelcome(100, new bourse.protocole.Categorie()).toXML()); break;
+                    case 2 : this.ecrire(new bourse.protocole.Erreur("Duplication", "dÈsolÈ, t'es dupliquÈ man.", "localhost", "1981").toXML()); break;
+                    case 3 :
+                        l.clear();
+                        l.add(new bourse.sdd.PDMPro("PdmVirtuelle", "localhost:1981"));
+                        this.ecrire(new bourse.protocole.ResultBye(l).toXML());
+                        break;
+                    case 4 : this.ecrire(new bourse.protocole.Erreur("Bloque", "dÈsolÈ, je te bloque mon gros.").toXML()); break;
+                    case 5 : this.ecrire(new bourse.protocole.Erreur("XMLMalformation", "dÈsolÈ, t'es malformÈ man.").toXML()); break;
+                    case 6 : this.ecrire(new bourse.protocole.Erreur("Inattendu", "dÈsolÈ, tu m'envoie de la merde l‡.").toXML()); break;
+                    case 7 :
+                        l.clear();
+                        l.add(new bourse.sdd.ProgrammePro(56, new bourse.sdd.Livre("le seigneur des anals", "JRR Tolkien", new bourse.protocole.Categorie(bourse.protocole.Categorie.SF), "poche", "TaMereEditions", 30, 0, "2003-01-01", "222222222", 150, "protocoleman", (float)50)));
+                        l.add(new bourse.sdd.ProgrammePro(57, new bourse.sdd.Livre("tintin", "RG", new bourse.protocole.Categorie(bourse.protocole.Categorie.BD), "broche", "Casterman", (float)30.99, 0, "2004-04-21", "222222222", 26, "ban", (float)85)));
+                        this.ecrire(new bourse.protocole.Programme(l).toXML());
+                        break;
+                    case 8:
+                        l.clear();
+                        l.add("Groupe-A-billou");
+                        l.add("GroupeB-georgesOfTheJungle");
+                        this.ecrire(new bourse.protocole.ResultAgents(l).toXML());
+                        break;
+                    case 9:
+                        this.ecrire(new bourse.protocole.PropositionEnchereP("EnchereUn", 10, 12, (float)5.5, b, (float)35.0, "").toXML());
+                        break; 
+                    case 10:
+                        this.ecrire(new bourse.protocole.PropositionEnchereP("EnchereUn", 10, 12, (float)6, b, (float)35.0, "Groupe-E.Bernadette").toXML());
+                        break;   
+                    case 11:
+                        this.ecrire(new bourse.protocole.Resultat(b, "Groupe-E.Bernadette", (float)35.0).toXML());
+                        break;                             
+                    case 12 : this.ecrire(new bourse.protocole.Erreur("Zerovente", "dÈsolÈ, je veux pas vendre ton bouquin de merde.").toXML()); break;
+                    case 13 : this.ecrire(new bourse.protocole.ResultProposeVente(26).toXML());
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+        } catch (java.lang.Exception e) { e.printStackTrace(System.err); }
     }
-
-    @Override
-    protected void traiter(String message) {
-    }
-
+    
+    protected void traiter(String message) {}
+    
     public static void main(String[] argc) {
         try {
             PdmVirtuelle pdm = new PdmVirtuelle(true);
             pdm.run();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+        } catch (java.lang.Exception e) { e.printStackTrace(System.err); }
     }
-
-    /**
-     * Appel√© par ThreadLecture lorsque la connexion a √©t√© ferm√© par le client.
-     */
-    protected void close() {
-    }
-
+    
+    /** AppelÈ par ThreadLecture lorsque la connexion a ÈtÈ fermÈ par le client.  */
+    protected void close() {}
+    
 }

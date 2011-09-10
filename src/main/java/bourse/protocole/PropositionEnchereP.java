@@ -10,7 +10,7 @@ import org.xml.sax.SAXParseException;
 
 import java.io.ByteArrayInputStream;
 
-/** C'est le message envoyÃ© Ã  chaque Ã©tape d'enchÃ¨re par la place de marchÃ© vers
+/** C'est le message envoyé à chaque étape d'enchère par la place de marché vers
  * les agents. */
 public class PropositionEnchereP extends bourse.protocole.Protocole {
     
@@ -33,7 +33,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     
     /** contructeur general*/
     public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre,float enchere,String nomagent) {
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -44,7 +44,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
 
     }
     public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre,float enchere) {
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -54,9 +54,9 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         this.nomagent="";
 
     }
-    /** A utiliser pour enchÃ¨re un (Ã  prendre ou Ã  laisser) */
+    /** A utiliser pour enchère un (à prendre ou à laisser) */
     public PropositionEnchereP(String nom,int numero, int temps,Livre livre,float enchere) {
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
         this.numero=numero;
         this.pas = 0;
@@ -68,7 +68,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /**constructeur ne demandant pas le nom de l'agent et l'enchere*/
    public PropositionEnchereP(String nom,int numero, int temps,float pas,Livre livre){
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
         this.numero=numero;
         this.pas=pas;
@@ -80,7 +80,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
     }
     /**constructeur ne demandant pas le pas*/
    public PropositionEnchereP(String nom,int numero,int temps,Livre livre){
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.nom=nom;
         this.numero=numero;
         this.pas=0;
@@ -90,12 +90,12 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         this.nomagent="";
     
     }
-    /** constructeur Ã  partir du DOM*/
+    /** constructeur à partir du DOM*/
     public PropositionEnchereP(Element type) {
-        super(TypeMessage.PROPOSITIONENCHEREP);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_P));
         this.toClass(type);
     }
-    /**permet le passage du DOM Ã  la classe*/
+    /**permet le passage du DOM à la classe*/
     protected void toClass(Element type) {
         this.nom = type.getAttribute("NOM");
         this.numero = Integer.parseInt(type.getAttribute("NUMERO"));
@@ -211,9 +211,10 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         
         String p=new PropositionEnchereP("encherequatre",num,temps,pas,livre,enchere,"mouloud").toXML();
         System.out.println(p);
+        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
-        // l'application de se concentrer sur l'analyse sÃ©mantique.
+        // D'après le tutorial JAXP, ces variables fixées à true permettent à
+        // l'application de se concentrer sur l'analyse sémantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -222,7 +223,7 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La dÃ©finition de ErrorHandler est inspirÃ©e de
+            // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

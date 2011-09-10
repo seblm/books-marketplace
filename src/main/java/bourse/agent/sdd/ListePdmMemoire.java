@@ -1,190 +1,162 @@
 package bourse.agent.sdd;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import bourse.agent.Visualisation;
-
-/**
- * Donne toutes les pdms que l'agent connait
- */
+/** Donne toutes les pdms que l'agent connait */
 public class ListePdmMemoire {
     
-    /**
-     * Liste des pdms.
-     */
-    private Map<String, PdmMemoire> liste;
+    /** Variables d'instances. */
+    /** Liste des pdms. */
+    private HashMap liste;
+    /** Lien vers la fenetre centrale. */
+    private bourse.agent.Visualisation fenetre;
     
-    /**
-     * Lien vers la fenetre centrale.
-     */
-    private Visualisation fenetre;
-    
-    /**
-     * Construit une liste de pdms vide.
-     */
-    public ListePdmMemoire(Visualisation fenetre) {
-        liste = new HashMap<String, PdmMemoire>();
+    /** Constructeur. */
+    /** Construit une liste de pdms vide. */
+    public ListePdmMemoire(bourse.agent.Visualisation fenetre) {
+        this.liste = new HashMap();
         this.fenetre = fenetre;
     }
     
-    /**
-     * Retourne la liste.
-     */
-    public Map<String, PdmMemoire> getListe() {
-    	return liste;
-    }
-    
+    /** Méthodes. */
+    /** Retourne la liste. */
+    public HashMap getListe() { return this.liste; }
     /** Rafraichir l'affichage de la liste. */
     public void refresh() {
         int numeroLigne = 0;
-        // RÃ©instanciation du JTable pour que sa taille soit celle de la mÃ©moire.
-        DefaultTableModel tm = new DefaultTableModel(
-            new String [] {"Nom", "Adresse", "Active", "VisitÃ©e", "EnchÃ¨res gÃ©rÃ©es", "Numero du tour"},
+        // Réinstanciation du JTable pour que sa taille soit celle de la mémoire.
+        javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
+            new String [] {"Nom", "Adresse", "Active", "Visitée", "Enchères gérées", "Numero du tour"},
             liste.size()
         );
-        JTable tableau = new JTable(tm);
-        for (PdmMemoire pdmMemoire : liste.values()) {
-            pdmMemoire.toRow(tableau, numeroLigne);
+        javax.swing.JTable tableau = new javax.swing.JTable(tm);
+        Iterator parcours = this.liste.values().iterator();
+        while (parcours.hasNext()) {
+            ((PdmMemoire)parcours.next()).toRow(tableau, numeroLigne);
             numeroLigne++;
         }
         fenetre.getJScrollPanePdmMemoire().remove(fenetre.getTableauPdmMemoire());
         fenetre.getJScrollPanePdmMemoire().setViewportView(tableau);
     }
-    
-    /**
-     * Ajouter une pdm.
-     */
-    public void ajouter(PdmMemoire pdm) {
-    	liste.put(pdm.getNom(), pdm);
-    }
-    
-    /**
-     * Supprimer une pdm.
-     */
-    public void supprimer(PdmMemoire pdm) {
-    	liste.remove(pdm.getNom());
-    }
-    
-    /**
-     * AccÃ¨s Ã  une pdm de la liste Ã  partir de son nom.
-     */
-    public PdmMemoire acceder(String nom) {
-    	return liste.get(nom);
-    }
-    
-    /**
-     * Renvoie vrai si la pdm existe dans la liste.
-     */
-    protected boolean existe(String nom) {
-    	return liste.containsKey(nom);
-    }
-    
-    /**
-     * Renvoie vrai si aucune pdm n'est active dans la liste.
-     */
+    /** Ajouter une pdm. */
+    public void ajouter(PdmMemoire pdm) { liste.put(pdm.getNom(), pdm); }
+    /** Supprimer une pdm. */
+    public void supprimer(PdmMemoire pdm) { this.liste.remove(pdm.getNom()); }
+    /** Accès à une pdm de la liste à partir de son nom. */
+    public PdmMemoire acceder(String nom) { return (PdmMemoire)this.liste.get(nom); }
+    /** Renvoie vrai si la pdm existe dans la liste. */
+    protected boolean existe(String nom) { return this.liste.containsKey(nom); }
+    /** Renvoie vrai si aucune pdm n'est active dans la liste. */
     public boolean aucuneActive() {
-        Iterator<PdmMemoire> parcours = liste.values().iterator();
+        Iterator parcours = this.liste.values().iterator();
         while (parcours.hasNext()) {
-            if (parcours.next().getActive()) {
-            	return false;
-            }
-        }
-        return true;
+            if (((PdmMemoire)parcours.next()).getActive()) return false;
+        } return true;
     }
-    
-    /**
-     * Renvoie la premiÃ¨re pdm active non visitÃ©e, null sinon.
-     */
+    /** Renvoie la première pdm active non visitée, null sinon. */
     public PdmMemoire premiereActiveNonVisitee() {
-        Iterator<PdmMemoire> parcours = liste.values().iterator();
+        Iterator parcours = this.liste.values().iterator();
         PdmMemoire current;
         while (parcours.hasNext()) {
-            current = parcours.next();
-            if (current.getActive() && !current.getVisitee()) {
-            	return current;
-            }
-        }
-        return null;
+            current = (PdmMemoire)(parcours.next());
+            if (current.getActive() && !current.getVisitee()) return current;
+        } return null;
     }
-    
-    /**
-     * Renvoie une autre pdm active visitÃ©e.
-     */
+    /** Renvoie une autre pdm active visitée. */
     public PdmMemoire premiereActiveVisitee() {
-        // copie des pdms actives et visitÃ©es
-        List<PdmMemoire> copiePdmActives = new LinkedList<PdmMemoire>();
-        for (PdmMemoire current : liste.values()) {
-            if (current.getActive() && current.getVisitee()) {
-            	copiePdmActives.add(current);
-            }
+        Iterator parcours = this.liste.values().iterator();
+        PdmMemoire current;
+        // copie des pdms actives et visitées
+        LinkedList copiePdmActives = new LinkedList();
+        while (parcours.hasNext()) {
+            current = (PdmMemoire)(parcours.next());
+            if (current.getActive() && current.getVisitee()) copiePdmActives.add(current);
         }
-        // SÃ©lection au hasard d'une pdm active et visitÃ©e
-        int index = new Random().nextInt(copiePdmActives.size());
-        return copiePdmActives.get(index);
+        // Sélection au hasar d'une pdm active et visitée
+        int index = new java.util.Random().nextInt(copiePdmActives.size());
+        return (PdmMemoire)copiePdmActives.get(index);
     }
-    
-    /**
-     * Change tous les Ã©tats d'activation de la liste. MÃ©thode dangeureuse.
-     */
+    /** Change tous les états d'activation de la liste. Méthode dangeureuse. */
     private void setActivee(boolean activee) {
-        for (final PdmMemoire pdmMemoire : liste.values()) {
-            pdmMemoire.setActive(activee);
+        Iterator parcours = this.liste.values().iterator();
+        while (parcours.hasNext()) {
+            ((PdmMemoire)parcours.next()).setActive(activee);
         }
     }
-    
-    /**
-     * Renvoie vrai si la liste est vide.
-     */
-    public boolean estVide() {
-    	return liste.isEmpty();
-    }
-    
-    /**
-     * MÃ©thode de mise Ã  jour globale Ã  partir d'une liste de pdm de l'environnement.
-     * Typiquement : aprÃ¨s avoir tÃ©lÃ©chargÃ© la nouvelle liste.
-     */
+    /** Renvoie vrai si la liste est vide. */
+    public boolean estVide() { return this.liste.isEmpty(); }
+    /** Méthode de mise à jour globale à partir d'une liste de pdm de l'environnement.
+     *  Typiquement : après avoir téléchargé la nouvelle liste.*/
     public void miseAJour(ListePdm l) {
-        setActivee(false); // par dÃ©faut, toutes les pdms sont dÃ©sactivÃ©es.
+        this.setActivee(false); // par défaut, toutes les pdms sont désactivées.
+        Iterator parcours = l.getListe().values().iterator();
         PdmMemoire ancienne;
+        Pdm nouvelle;
         PdmMemoire aInserer;
-        for (final Pdm nouvelle : l.getListe().values()) {
-            // on a la pdm Ã  sauvegarder.
-            if (existe(nouvelle.getNom())) {
-            	// on doit mettre Ã  jour la pdm sans l'Ã©craser.
-            	ancienne = acceder(nouvelle.getNom());
-            	// on a l'ancienne pdm.
+        while (parcours.hasNext()) {
+            nouvelle = (Pdm)parcours.next(); // on a la pdm à sauvegarder.
+            if (existe(nouvelle.getNom())) { // on doit mettre à jour la pdm sans l'écraser.
+                ancienne = acceder(nouvelle.getNom()); // on a l'ancienne pdm.
                 aInserer = new PdmMemoire(nouvelle.getNom(), nouvelle.getAdresse().toString(), ancienne.getVisitee(), true, ancienne.getProgramme(), ancienne.getNumeroDernierTour());
-            } else {
-            	// on peut ajouter la pdm.
+            } else // on peut ajouter la pdm.
                 aInserer = new PdmMemoire(nouvelle);
-            }
             ajouter(aInserer);
         }
         refresh();
     }
-    
-    /**
-     * MÃ©thode d'affichage.
-     */
+    /** Méthode d'affichage. */
     public String toString(int decalage) {
+        String delta = "";
+        for (int i=0; i<decalage; i++) delta += " ";
         String output = "";
-        Iterator<PdmMemoire> parcours = this.liste.values().iterator();
-        while (parcours.hasNext()) {
-        	output += ((PdmMemoire)parcours.next()).toString(decalage) + "\n";
-        }
-        if (output.length() == 0) {
-        	return output;
-        } else {
-        	return output.substring(0, output.length() - 1);
-        }
+        Iterator parcours = this.liste.values().iterator();
+        while (parcours.hasNext()) { output += ((PdmMemoire)parcours.next()).toString(decalage) + "\n"; }
+        if (output.length() == 0) return output;
+        else return output.substring(0, output.length()-1);
     }
-    
+    /** Programme principal. */
+    public static void main(String[] argc) {
+        java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+        bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
+        visu.show();
+        ListePdmMemoire l = new ListePdmMemoire(visu);
+        PdmMemoire p1 = new PdmMemoire("p1", "HOME", false, false, new ListeProgramme(),1);
+        PdmMemoire p2 = new PdmMemoire("p2", "192.168.1.2:80", true, true, new ListeProgramme(),2);
+        PdmMemoire p3 = new PdmMemoire("p3", "0.0.0.0:0", false, false, new ListeProgramme(),2);
+        
+        System.out.println("initialisation : ");
+        l.ajouter(p1);
+        l.ajouter(p2);
+        l.ajouter(p3);
+        System.out.println(l.toString(3));
+        
+        // pause 
+        try { in.readLine(); } catch (Exception e) {  }
+                
+        System.out.println("Aucune active ? " + l.aucuneActive());
+        
+        if (l.premiereActiveNonVisitee() != null)
+            System.out.println("Première active non visitée : " + l.premiereActiveNonVisitee().toString(4));
+        if (l.premiereActiveVisitee() != null)
+            System.out.println("Première active visitée : " + l.premiereActiveVisitee().toString(4));
+        
+        System.out.println("mises à jour : ");
+        Pdm pdm1 = new Pdm("p1", "192.168.1.1:8080"); // p1 toujours active
+        Pdm pdm2 = new Pdm("p2", "192.168.1.3:80"); // p2 a changé d'adresse
+        // p3 déconnectée.
+        Pdm pdm4 = new Pdm("p4", "192.168.1.5:2726"); // p4 nouvelle arrivée.
+        ListePdm p = new ListePdm(); p.ajouter(pdm1); p.ajouter(pdm2); p.ajouter(pdm4);
+        l.miseAJour(p);
+        System.out.println(l.toString(5));
+        
+        // pause 
+        try { in.readLine(); } catch (Exception e) {  }
+        
+        System.out.println("mises à jour : ");
+        pdm1 = new Pdm("p1", "192.168.1.52:8080"); // p1 changé d'adresse
+        // p2 déconnectée.
+        pdm4 = new Pdm("p4", "192.168.1.5:2726"); // p4 nouvelle arrivée.
+        p = new ListePdm(); p.ajouter(pdm1); p.ajouter(pdm4);
+        l.miseAJour(p);        
+    }
 }

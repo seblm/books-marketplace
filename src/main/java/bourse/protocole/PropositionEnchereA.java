@@ -17,18 +17,18 @@ public class PropositionEnchereA extends bourse.protocole.Protocole {
     public float getEnchere(){
         return this.enchere;
     }
-    /** Retourne le numÃ©ro de l'enchÃ¨re sur lequel l'agent a envoyÃ©. */
+    /** Retourne le numéro de l'enchère sur lequel l'agent a envoyé. */
     public int getNumero() { return this.numero; }
     
     
     public PropositionEnchereA(int numero, float enchere) {
-        super(TypeMessage.PROPOSITIONENCHEREA);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_A));
         this.enchere = enchere;
         this.numero=numero;
     }
     
     public PropositionEnchereA(Element type) {
-        super(TypeMessage.PROPOSITIONENCHEREA);
+        super(new TypeMessage(TypeMessage.TM_PROPOSITION_ENCHERE_A));
         this.toClass(type);
     }
     
@@ -71,9 +71,10 @@ public class PropositionEnchereA extends bourse.protocole.Protocole {
         float enchere=1546;int num=50;
         String p=new PropositionEnchereA(num,enchere).toXML();
         System.out.println(p);
+        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
-        // l'application de se concentrer sur l'analyse sÃ©mantique.
+        // D'après le tutorial JAXP, ces variables fixées à true permettent à
+        // l'application de se concentrer sur l'analyse sémantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -82,7 +83,7 @@ public class PropositionEnchereA extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La dÃ©finition de ErrorHandler est inspirÃ©e de
+            // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

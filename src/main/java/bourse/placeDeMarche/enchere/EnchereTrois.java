@@ -30,23 +30,23 @@ public class EnchereTrois extends EnchereReponseMultiple {
     }
     
     public PropositionEnchereP actualiser(PropositionEnchereA propositionEnchere, String nomAgentEncherisseur) {
-        // Le message propositionEnchere est validÃ© par le commissaire priseur.
+        // Le message propositionEnchere est validé par le commissaire priseur.
         this.prixCourant = propositionEnchere.getEnchere();
         this.topChrono = new java.util.Date().getTime();
         this.nomAgent = nomAgentEncherisseur;
         return new PropositionEnchereP(Enchere.NOM[typeEnchere], numEnchere, TIMEOUT, getPas(), livre, prixCourant, nomAgentEncherisseur);
     }
     
-    /** AppelÃ© par le commisaire priseur lorsque l'enchÃ¨re a Ã©tÃ© rÃ©solue. */
+    /** Appelé par le commisaire priseur lorsque l'enchère a été résolue. */
     public Resultat resolution(float prixResultat, String nomAcheteur) {
         return new Resultat(livre, nomAcheteur, prixResultat);
     }
     
-    /** AppelÃ© par le commissaire priseur lorsque l'enchÃ¨re n'a pas Ã©tÃ© rÃ©solue. */
+    /** Appelé par le commissaire priseur lorsque l'enchère n'a pas été résolue. */
     public Resultat resolution() {
         return resolution(livre.getPrixAchat(), livre.getProprietaire());
     }
 
-    public String toString() { return "EnchÃ¨re ascendante"; }
+    public String toString() { return "Enchère ascendante"; }
 
 }

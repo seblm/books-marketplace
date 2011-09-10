@@ -1,85 +1,61 @@
 package bourse.reseau;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.h2.tools.Server;
+import java.sql.*;
+import java.lang.ClassNotFoundException;
+import java.lang.InstantiationError;
+import java.lang.IllegalAccessException;
+import bourse.protocole.Protocole;
 
 public class Bd {
-
-	/**
-     * Connection pour se connecter Ã  la bd.
-     */
+    /** Connection pour se connecter à la bd. */
     private Connection connexion;
-    
-    /**
-     * Statement pour envoyer des requetes Ã  la bd.
-     */
+    /** Statement pour envoyer des requetes à la bd.. */
     private Statement declaration;
-    
-    /**
-     * DÃ©termine si l'instance doit afficher toutes les requÃªtes qu'elle transmet
-     * au SGBD ou pas.
-     */
+    /** Détermine si l'instance doit afficher toutes les requêtes qu'elle transmet
+     * au SGBD ou pas. */
     protected boolean verbose;
-    
-    private boolean inMemory;
 
-    /**
-     * Constructeur de Bd et vÃ©rification de la connexion avec le sgbd.
-     */
+    /** Constructeur de Bd et vérification de la connexion avec le sgbd. */
     public Bd(boolean verbose) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    	inMemory = false;
-        // vÃ©rification de la connexion avec le sgbd.
+        // chargement du pilote MySQL à la construction.
+        try { Class.forName("org.gjt.mm.mysql.Driver").newInstance(); } //loads the driver
+        catch (ClassNotFoundException e) { throw new ClassNotFoundException("Impossible de trouver le driver MM."); }
+        catch (InstantiationException e) { throw new InstantiationException("Impossible d'instancier le driver MM."); }
+        catch (IllegalAccessException e) { throw new IllegalAccessException("Impossible d'accéder au driver MM."); }        
+        // vérification de la connexion avec le sgbd.
         try { this.connexion(); }
         catch (SQLException e) {
-            throw new SQLException("Impossible de se connecter au sgbd : mauvais paramÃ¨tres.");
+            System.out.println(Protocole.parametresBd);
+            throw new SQLException("Impossible de se connecter au sgbd : mauvais paramètres.");
         }
         try { this.deconnexion(); }
         catch (SQLException e) { throw new SQLException("Impossible de fermer la connexion avec le sgbd."); }
         this.verbose = verbose;
     }
-    
-    public Bd(final Connection connection) throws SQLException {
-    	connexion = connection;
-    	declaration = connexion.createStatement();
-    	inMemory = connection.getMetaData().getURL().contains("mem");
-    }
-    
-    public Bd(boolean verbose, boolean inMemory) throws SQLException {
-    	this.inMemory = inMemory;
-    	this.verbose = verbose;
-    	this.connexion();
-    }
 
-    /**
-     * Connexion Ã  la bd et initialisation du statement pour envoyer des requÃªtes.
-     */
-    protected void connexion() throws SQLException {
-        this.connexion = DriverManager.getConnection("jdbc:h2:" + (inMemory?"mem:bourse-aux-livres":"tcp://localhost/bourse-aux-livres"), "SA", "");
-        this.declaration = this.connexion.createStatement();
-        if (inMemory) {
-        	init();
+    /** Connexion à la bd et initialisation du statement pour envoyer des requêtes. */
+    protected void connexion() throws java.sql.SQLException {
+        try {
+            this.connexion = DriverManager.getConnection("jdbc:mysql://" + Protocole.parametresBd.getHote() + ":" + Protocole.parametresBd.getPort() + "/" + Protocole.parametresBd.getBaseDeDonnees(), Protocole.parametresBd.getUtilisateur(), Protocole.parametresBd.getMotDePasse());
+            this.declaration = this.connexion.createStatement();
+        } catch (SQLException e) {
+            if (verbose) e.printStackTrace(System.err);
+            throw new SQLException("Impossible de se connecter à la bd : mauvais paramètres.");
         }
     }
-    
-    /** DÃ©connexion de la bd (fermeture du statement et de la connexion. */
+    /** Déconnexion de la bd (fermeture du statement et de la connexion. */
     public void deconnexion() throws SQLException {
         this.declaration.close();
         this.connexion.close();
     }
-    /** ExÃ©cuter la requÃªte et rÃ©cupÃ¨rer le rÃ©sultat. */
+    /** Exécuter la requête et récupèrer le résultat. */
     public ResultSet resultat(String query) throws SQLException {
-        if (this.connexion.isClosed()) {
+        //if (this.connexion.isClosed())
             this.connexion();
-        }
         ResultSet resultat = this.declaration.executeQuery(query);
+        this.connexion.close();
         return resultat;
     }
-    /** ExÃ©cuter une commande sur la db (le nombre de colonnes affectÃ©es par la
+    /** Exécuter une commande sur la db (le nombre de colonnes affectées par la
      *  requete, 0 sinon). */
     public int requete(String requete) throws SQLException {
         if (this.connexion.isClosed())
@@ -88,32 +64,21 @@ public class Bd {
         try { this.deconnexion(); } catch (SQLException e) { }
         return resultat;
     }
-    /** MÃ©thode d'affichage standard. */
+    /** Méthode d'affichage standard. */
     public String toString() {
         return this.connexion.toString();
     }
     
-    private void init() throws SQLException {
-    	requete("CREATE TABLE livres (Categorie VARCHAR(50) NOT NULL, Titre VARCHAR(100) NOT NULL, Auteur VARCHAR(50) NOT NULL, DatePar DATE NOT NULL, Editeur VARCHAR(50) NOT NULL, Format VARCHAR(20) NOT NULL, PrixN DOUBLE DEFAULT '0' NOT NULL, ISBN VARCHAR(50) NOT NULL, PRIMARY KEY (ISBN));");
-    	requete("CREATE TABLE agents (nomPDM VARCHAR(50) NOT NULL, nomAgent VARCHAR(50) NOT NULL, argent DOUBLE NOT NULL, categorie VARCHAR(50) NOT NULL, PRIMARY KEY (nomAgent));");
-    	requete("CREATE TABLE pdms (nom varchar(50) NOT NULL default '', adresse varchar(50) NOT NULL default '', PRIMARY KEY (nom));");
-    	requete("CREATE TABLE items (ID INT(6) NOT NULL auto_increment, ISBN VARCHAR(50) NOT NULL, Etat FLOAT DEFAULT '1' NOT NULL, Proprio VARCHAR(50) NOT NULL, PrixAchat FLOAT DEFAULT '0' NOT NULL, PRIMARY KEY (ID));");
-    	requete("INSERT INTO livres (Categorie, Titre, Auteur, DatePar, Editeur, Format, PrixN, ISBN) VALUES ('Science fiction', 'Neuromancien', 'William Gibson', '2001-01-11', 'J''ai lu', 'Poche', '5.8', '229030820X');");
+    /** Méthode de test. */
+    public static void main(String arcg[]) {
+        try {
+            Bd b = new Bd(true);
+            ResultSet r = b.resultat("SELECT * FROM livres;");
+            while (r.next())
+                System.out.println("Titre = " + r.getString("Titre") + ", Prix = " + r.getFloat("PrixN"));
+            r = b.resultat("SELECT COUNT(*) FROM livres;");
+            if (r.next()) System.out.println("Le nombre du livres entrés = " + r.getInt(1));
+        } catch (Exception e) { e.printStackTrace(System.err); }
     }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    	Server server = null;
-    	try {
-    		server = Server.createTcpServer("-tcp").start();
-    		Bd bd = new Bd(true);
-    		bd.init();
-    		server.stop();
-    		server = Server.createTcpServer("-tcp", "-ifExists").start();
-    	} finally {
-    		if (server != null) {
-    			server.stop();
-    		}
-    	}
-    }
-
+    
 }

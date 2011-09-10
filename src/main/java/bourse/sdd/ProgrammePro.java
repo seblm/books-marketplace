@@ -1,96 +1,76 @@
 /*
+ * ProgrammePro.java
+ *
  * Created on 20 janvier 2004, 10:07
  */
 
 package bourse.sdd;
 
-import bourse.placeDeMarche.enchere.Enchere;
+import bourse.sdd.*;
 
 /**
- * @author pechot
+ *
+ * @author  pechot
  */
 public class ProgrammePro {
-
+    
     private int numEnchere;
-
     public Livre livre;
-
     private int typeEnchere;
-
     private float prixVente;
-
-    /**
-     * Constructeur appelÃ© lorsque le type de l'enchÃ¨re n'est pas connue.
-     */
-    public ProgrammePro(int num, Livre livre) {
-        numEnchere = num;
-        this.livre = livre;
-        typeEnchere = Enchere.ENCHERE_INCONNUE;
-        prixVente = 0f;
+    /** Creates a new instance of ProgrammePro */
+    
+    /** Constructeur appelé lorsque le type de l'enchère n'est pas connue. */
+    public ProgrammePro(int num,bourse.sdd.Livre livre) {
+        this.numEnchere=num;
+        this.livre=livre;
+        this.typeEnchere = bourse.placeDeMarche.enchere.Enchere.ENCHERE_INCONNUE;
+        this.prixVente = (float)0;
     }
-
-    /**
-     * Constructeur appelÃ© lorsque l'agent propose une vente.
-     */
-    public ProgrammePro(int num, Livre livre, int typeEnchere, float prixVente) {
-        this.numEnchere = num;
-        this.livre = livre;
+    
+    /** Constructeur appelé lorsque l'agent propose une vente. */
+    public ProgrammePro(int num,bourse.sdd.Livre livre, int typeEnchere, float prixVente) {
+        this.numEnchere=num;
+        this.livre=livre;
         this.typeEnchere = typeEnchere;
         this.prixVente = prixVente;
     }
-
-    public int getNum() {
-        return numEnchere;
+    
+    public int getNum(){
+        return this.numEnchere;
     }
-
-    public float getPrixVente() {
-        return prixVente;
+    
+    public float getPrixVente(){
+        return this.prixVente;
     }
-
-    public int getTypeEnchere() {
-        return typeEnchere;
+    
+    public int getTypeEnchere(){
+        return this.typeEnchere;
     }
-
-    public Livre getLivre() {
-        return livre;
+    
+    public bourse.sdd.Livre getLivre(){
+        return this.livre;
     }
-
-    public void decrementerNumEnchere() {
-        numEnchere--;
+    
+    public void setLivre(bourse.sdd.Livre livre){
+        this.livre=livre;
     }
-
-    public void incrementerNumEnchere() {
-        numEnchere++;
+    
+    public void setNumEnchere(int num){
+        this.numEnchere=num;
     }
-
-    /**
-     * MÃ©thode d'affichage qui dÃ©cale l'affichage de dÃ©calage.
-     */
+    public void decrementerNumEnchere() { numEnchere--; }
+    public void incrementerNumEnchere() { numEnchere++; }
+    /** Méthode d'affichage qui décale l'affichage de décalage. */
     public String toString(int decalage) {
         String delta = "";
-        for (int i = 0; i < decalage; i++)
-            delta += " ";
-        return delta + "numÃ©ro = " + this.numEnchere + ", livre = [ " + this.livre.toString(0) + " ]";
+        for (int i=0; i<decalage; i++) delta += " ";
+        return delta + "numéro = " + this.numEnchere + ", livre = [ " + this.livre.toString(0) + " ]";
     }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || !(object instanceof ProgrammePro)) {
-            return false;
-        }
-        final ProgrammePro programmePro = (ProgrammePro) object;
-        return numEnchere == programmePro.numEnchere && prixVente == programmePro.prixVente
-                && typeEnchere == programmePro.typeEnchere && livre == programmePro.livre;
+    /** Programme principale. */
+    public static void main(String argc[]) {
+        bourse.sdd.Livre l1 = new bourse.sdd.Livre("l1", "a2", new bourse.protocole.Categorie(), "poche", "O'reilly", (float)50.65, (float)0.45, "2004-01-01", "222222222", 1, "", (float)0.0);
+        ProgrammePro p = new ProgrammePro(34, l1);
+        System.out.println(p.toString(5));
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + numEnchere;
-        hash = 31 * hash + (null == livre ? 0 : livre.hashCode());
-        hash = 31 * hash + typeEnchere;
-        hash = 31 * hash + new Float(prixVente).hashCode();
-        return hash;
-    }
-
 }

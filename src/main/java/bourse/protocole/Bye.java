@@ -10,19 +10,19 @@ public final class Bye extends bourse.protocole.Protocole {
     
     private String commentaire;
     
-    /** CrÃ©e une nouvelle instance du type de message Bye. */
+    /** Crée une nouvelle instance du type de message Bye. */
     public Bye(String commentaire) {
-        super(TypeMessage.BYE);
+        super(new TypeMessage(TypeMessage.TM_BYE));
         this.commentaire = commentaire;
     }
     
     public Bye() {
-        super(TypeMessage.BYE);
+        super(new TypeMessage(TypeMessage.TM_BYE));
         this.commentaire = "";
     }
     
     public Bye(Element type) {
-        super(TypeMessage.BYE);
+        super(new TypeMessage(TypeMessage.TM_BYE));
         this.toClass(type);
     }
     

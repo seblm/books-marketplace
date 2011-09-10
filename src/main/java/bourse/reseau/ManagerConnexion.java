@@ -3,16 +3,16 @@ package bourse.reseau;
 import java.io.*;
 import java.net.Socket;
 
-/** Serveur gÃ©rant les entrÃ©es/sorties d'une connexion. */
+/** Serveur gérant les entrées/sorties d'une connexion. */
 public abstract class ManagerConnexion extends Thread {
 
     private Socket socket;
     public PrintWriter out;
     private ThreadLecture threadLecture;
-    /** Le message n'est transmis que lorsque la derniÃ¨re chaÃ®ne reÃ§ue contient
-     * la chaÃ®ne motifFin. */
+    /** Le message n'est transmis que lorsque la dernière chaîne reçue contient
+     * la chaîne motifFin. */
     private String motifFin;
-    /** Tant que Ã©couter est vrai, le thread de lecture continue Ã  attendre des
+    /** Tant que écouter est vrai, le thread de lecture continue à attendre des
      * messages. */
     private boolean ecouter;
     private boolean connexionInterrompue;
@@ -34,9 +34,9 @@ public abstract class ManagerConnexion extends Thread {
 
     protected abstract void traiter(String message);
     
-    /** DÃ©termine si la connexion doit encore Ã©couter. */
+    /** Détermine si la connexion doit encore écouter. */
     protected synchronized boolean getEcouter() { return ecouter && !connexionInterrompue; }
-    /** FixÃ© Ã  false, le boolÃ©en Ã©couter stope toute lecture et donc termine la connexion. */
+    /** Fixé à false, le booléen écouter stope toute lecture et donc termine la connexion. */
     protected synchronized void setEcouter(boolean ecouter) { this.ecouter = ecouter; }
     protected synchronized boolean getConnexionInterrompue() { return connexionInterrompue; }
     protected synchronized void setConnexionInterrompue(boolean connexionInterrompue) { this.connexionInterrompue = connexionInterrompue; }
@@ -44,7 +44,7 @@ public abstract class ManagerConnexion extends Thread {
     protected synchronized void setVerbose(boolean verbose) { this.verbose = verbose; }
     protected String getMotifFin() { return this.motifFin; }
     protected synchronized String getHostAddress() { return this.socket.getInetAddress().getHostAddress(); }
-    /** Ã‰crire une chaÃ®ne vers l'hÃ´te distant. */
+    /** Écrire une chaîne vers l'hôte distant. */
     public synchronized void ecrire(String chaine) throws IOException {
         if (ecouter) {
             if (verbose) System.out.println("Envoi de \"" + chaine + "\"");

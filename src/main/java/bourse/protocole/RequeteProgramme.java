@@ -3,21 +3,20 @@
  *
  * Created on 16 janvier 2004, 08:08
  */
+
 package bourse.protocole;
 
-import java.io.ByteArrayInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import java.io.ByteArrayInputStream;
 /**
- * @author pechot
+ *
+ * @author  pechot
  */
 public class RequeteProgramme extends bourse.protocole.Protocole {
     
@@ -25,11 +24,12 @@ public class RequeteProgramme extends bourse.protocole.Protocole {
     
     /** Creates a new instance of RequeteProgramme */
     public RequeteProgramme() {
-         super(TypeMessage.REQUETEPROGRAMME);
+         super(new TypeMessage(TypeMessage.TM_REQUETE_PROGRAMME));
+    //   this.requete="";
     }
     
      public RequeteProgramme(Element type) {
-        super(TypeMessage.REQUETEPROGRAMME);
+        super(new TypeMessage(TypeMessage.TM_REQUETE_PROGRAMME));
         this.toClass(type);
     }
      
@@ -61,9 +61,10 @@ public class RequeteProgramme extends bourse.protocole.Protocole {
          
         String p= new RequeteProgramme().toXML();
         System.out.println(p);
+        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
-        // l'application de se concentrer sur l'analyse sÃ©mantique.
+        // D'après le tutorial JAXP, ces variables fixées à true permettent à
+        // l'application de se concentrer sur l'analyse sémantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -72,7 +73,7 @@ public class RequeteProgramme extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La dÃ©finition de ErrorHandler est inspirÃ©e de
+            // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

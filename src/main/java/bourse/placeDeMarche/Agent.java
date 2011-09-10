@@ -9,8 +9,8 @@ public class Agent {
     private float argent;
     private Categorie categorie;
     private boolean bloque;
-    /** Instancie un agent avec les informations minimum. Il est conseillÃ© d'actualiser
-     * ces donnÃ©es par une requÃªte Ã  la base de donnÃ©es. */
+    /** Instancie un agent avec les informations minimum. Il est conseillé d'actualiser
+     * ces données par une requête à la base de données. */
     public Agent(int port) {
         this.nomPDM = "";
         this.nomAgent = "";
@@ -19,8 +19,8 @@ public class Agent {
         this.categorie = new Categorie();
         this.bloque = false;
     }
-    /** Instancie un agent avec toutes les informations nÃ©cessaires pour Ãªtre
-     * enregistrÃ© dans la table agents de la base de donnÃ©es. */
+    /** Instancie un agent avec toutes les informations nécessaires pour être
+     * enregistré dans la table agents de la base de données. */
     public Agent(String nomPDM, String nomAgent, int port, float argent, Categorie categorie) {
         this.port = port;
         this.setAgent(nomPDM, nomAgent, argent, categorie);
@@ -59,8 +59,8 @@ public class Agent {
         return "<i>" + nomAgent + "</i> connect&eacute; sur " + nomPDM + ":" + port + ", disposant de <b>" + argent + " Euros</b>, int&eacute;ress&eacute; par " + categorie + " et actuellement " + (bloque?"":"non ") + "bloqu&eacute;.";
     }
     
-    /** Surcharge la mÃ©thode de comparaison standard de Agent en le comparant Ã  
-     * un autre agent et en testant l'Ã©galitÃ© sur le nom et le port de l'agent.
+    /** Surcharge la méthode de comparaison standard de Agent en le comparant à 
+     * un autre agent et en testant l'égalité sur le nom et le port de l'agent.
      */
     public boolean equals(Object o) {
         if (o instanceof Agent) {

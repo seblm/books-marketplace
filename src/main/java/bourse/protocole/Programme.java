@@ -1,106 +1,93 @@
 package bourse.protocole;
 
+import org.w3c.dom.*;
+import bourse.sdd.*;
+
+//import  javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import bourse.sdd.Enchere;
-import bourse.sdd.Livre;
-import bourse.sdd.ProgrammePro;
+ 
 
 public class Programme extends Protocole {
     
-    /**
-     * Une liste cha√Æn√©e remplie de bourse.sdd.ProgrammePro
-     */
-    private LinkedList<ProgrammePro> listeProgramme;
+    /** Une liste chaÓnÈe remplie de bourse.sdd.ProgrammePro */
+    private LinkedList listeProgramme;
     
-    public List<ProgrammePro> getListeProgramme() {
-    	return this.listeProgramme;
-    }
+    public LinkedList getListeProgramme() { return this.listeProgramme; }
+    public void setListeProgramme(LinkedList listeProgramme) { this.listeProgramme = listeProgramme; }
     
-    public void setListeProgramme(List<ProgrammePro> listeProgramme) {
-    	this.listeProgramme = new LinkedList<ProgrammePro>(listeProgramme);
-    }
-    
-    public Programme(List<ProgrammePro> liste) {
-        super(TypeMessage.PROGRAMME);
-    	this.listeProgramme = new LinkedList<ProgrammePro>(liste);
+    public Programme(LinkedList liste) {
+        super(new TypeMessage(TypeMessage.TM_PROGRAMME));
+        this.listeProgramme=liste;
     }
     
     public Programme(Element type) {
-        super(TypeMessage.PROGRAMME);
+        super(new TypeMessage(TypeMessage.TM_PROGRAMME));
         this.toClass(type);
     }
 
     public int nbEncheresProposeesParAgents(String nomPdm) {
         int resultat = 0;
-        ListIterator<ProgrammePro> i = listeProgramme.listIterator();
-        while (i.hasNext() && !i.next().getLivre().getProprietaire().equalsIgnoreCase(nomPdm)) {
+        java.util.ListIterator i = listeProgramme.listIterator();
+        while (i.hasNext() && !((ProgrammePro)i.next()).getLivre().getProprietaire().equalsIgnoreCase(nomPdm))
             resultat++;
-        }
         return resultat;
     }
 
-    /**
-     * Regarde si un agent peut proposer une vente (le livre n'est pas d√©j√† en vente
-     * dans le programme et la taille de programme est coh√©rente).
-     */
+    /** Regarde si un agent peut proposer une vente (le livre n'est pas dÈj‡ en vente
+     * dans le programme et la taille de programme est cohÈrente). */
     public boolean insertionPossible(String nomPdm, int idLivre) {
         boolean bonneTaille = nbEncheresProposeesParAgents(nomPdm) < listeProgramme.size();
         if (bonneTaille) {
-            ListIterator<ProgrammePro> i = listeProgramme.listIterator();
+            java.util.ListIterator i = listeProgramme.listIterator();
             boolean dejaPresent = false;
-            while (i.hasNext() && !dejaPresent) {
-                dejaPresent = i.next().getLivre().getId() == idLivre;
-            }
+            while (i.hasNext() && !dejaPresent)
+                dejaPresent = ((ProgrammePro)i.next()).getLivre().getId() == idLivre;
             return !dejaPresent;
-        } else {
+        } else
             return false;
-        }
     }
     
-    /**
-     * Ins√®re une proposition de vente dans le programme.
-     * @return true si l'ajout a r√©ussit, false sinon
+    /** InsËre une proposition de vente dans le programme.
+     * @return true si l'ajout a rÈussit, false sinon
      */
     public boolean ajouterVente(Livre l, String nomPdm, int typeEnchere, float prixVente) {
-        ProgrammePro derniereEnchere = listeProgramme.removeLast();
+        Object derniereEnchere = listeProgramme.removeLast();
         int index = 0;
-        ListIterator<ProgrammePro> i = listeProgramme.listIterator();
-        while (i.hasNext() && !i.next().getLivre().getProprietaire().equalsIgnoreCase(nomPdm)) {
+        java.util.ListIterator i = listeProgramme.listIterator();
+        while (i.hasNext() && !((ProgrammePro)i.next()).getLivre().getProprietaire().equalsIgnoreCase(nomPdm))
             index++;
-        }
-        if (!i.hasNext()) {
-        	// Il n'y a plus de place dans le programme.
+        if (!i.hasNext()) { // Il n'y a plus de place dans le programme.
             listeProgramme.addLast(derniereEnchere);
             return false;
         } else {
             int emplacementInsertion = index;
-            int numeroEnchereInsertion = i.next().getNum();
+            int numeroEnchereInsertion = ((ProgrammePro)i.next()).getNum();
             i.previous();
-            while (i.hasNext()) {
-                i.next().incrementerNumEnchere();
-            }
-            listeProgramme.add(emplacementInsertion, new ProgrammePro(numeroEnchereInsertion, l, typeEnchere, prixVente));
+            while (i.hasNext())
+                ((ProgrammePro)i.next()).incrementerNumEnchere();
+            listeProgramme.add(emplacementInsertion, new ProgrammePro(numeroEnchereInsertion , l, typeEnchere, prixVente));
             return true;
         }
     }
     
-    protected void toClass(Element msg) {
-        NodeList programmes = msg.getChildNodes();
-        listeProgramme = new LinkedList<ProgrammePro>();
-        for (int i = 0; i < programmes.getLength(); i++) {
-            Element programme = (Element)programmes.item(i);
-            Element enchere = (Element)programme.getFirstChild();
-            ProgrammePro p = new ProgrammePro(Integer.parseInt(enchere.getAttribute("NUMERO")), new Livre((Element) enchere.getFirstChild()));
+    protected void toClass(Element type) {
+        NodeList noeuds = type.getChildNodes();
+        this.listeProgramme=new LinkedList();
+        for(int i=0;i<noeuds.getLength();i++)
+        {
+            Element enchere = (Element)noeuds.item(i);
+            NodeList noeud = enchere.getChildNodes();
+            Element livrelm=(Element)noeud.item(0);
+            ProgrammePro p=new ProgrammePro(Integer.parseInt(enchere.getAttribute("NUMERO")), new Livre(livrelm));
             this.listeProgramme.add(i, p);
         }
     }
@@ -113,44 +100,60 @@ public class Programme extends Protocole {
             document = builder.newDocument();
             Element root = document.createElement("MSG");
             document.appendChild(root);
-            Element programme = document.createElement("PROGRAMME");
-            root.appendChild(programme);
-            for (final ProgrammePro programmePro : listeProgramme) {
-	            if (programmePro.getLivre() == null) {
-	                System.err.println("Programme : c'est livre qui est null !");
-	            } else {
-	            	Enchere enchere = new Enchere(programmePro.getNum(), programmePro.getLivre());
-	            	enchere.addElement(programme);
-	            }
+            Element type = document.createElement("PROGRAMME");
+            root.appendChild(type);
+            for(int i=0;i<this.listeProgramme.size();i++)
+            {
+            Element enchere = document.createElement("ENCHERE");
+            type.appendChild(enchere);
+            Attr num = document.createAttribute("NUMERO");
+            num.setValue(String.valueOf(((ProgrammePro)this.listeProgramme.get(i)).getNum()));
+            enchere.setAttributeNode(num);
+            if (((ProgrammePro)this.listeProgramme.get(i)).getLivre() == null)
+                System.err.println("Programme : c'est livre qui est null !");
+            ((ProgrammePro)this.listeProgramme.get(i)).getLivre().addElement(enchere, this.type);
+            
             }
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
         return document;
+
     }
     
     public String toXML() {
         return super.toXML(this.toDOM());
     }
     
-    public String toHtml() {
-        StringBuilder sortie = new StringBuilder();
-        sortie.append("<ol>");
-        for (final ProgrammePro programmePro : listeProgramme) {
-            if (programmePro.getLivre() != null) {
-                sortie.append("<li>" + programmePro.getLivre().toHtml() + "</li>");
-            }
-        }
-        sortie.append("</ol>");
-        return sortie.toString();
+    public static void main(String args[]) {
+        
+        LinkedList pdmliste=new LinkedList();
+        int i=12;
+        float pr=0;
+        float et= (float)0.4;
+        Livre livre=new Livre("lupin", "leblanc", new Categorie(), "poch", "belin", pr, et,"15/11/00","yetet",i,"",(float)0.0); 
+        ProgrammePro plm=new ProgrammePro(1,livre);
+        pdmliste.add(0, plm);
+        Livre livre2=new Livre("peterpan", "disney", new Categorie(), "poch", "belin", pr, et,"15/11/00","yetet",i,"",(float)0.0); 
+        ProgrammePro plm2=new ProgrammePro(2,livre2);
+        pdmliste.add(1, plm2);
+        Livre livre3=new Livre("roi lion", "disney", new Categorie(), "poch", "belin", pr, et,"15/11/00","yetet",i,"",(float)0.0); 
+        ProgrammePro plm3=new ProgrammePro(3,livre3);
+        pdmliste.add(2, plm3);
+        
+        String p=new Programme(pdmliste).toXML();
+        System.out.println(p);
+        Protocole message = Protocole.newInstance("<MSG><PROGRAMME><ENCHERE NUMERO=\"1\"><LIVRE TITRE=\"coucou\" CATEGORIE=\"Romans\" PRIX=\"5\" ETAT=\"0.8\"/></ENCHERE></PROGRAMME></MSG>");
+        System.out.println(((Programme)message).toHtml());
     }
-
-	public ProgrammePro removeFirstEnchere() {
-		return listeProgramme.removeFirst();
-	}
-
-	public ProgrammePro getLast() {
-		return listeProgramme.getLast();
-	}
+    
+    public String toHtml() {
+        ListIterator i = listeProgramme.listIterator();
+        String sortie = "<ol>";
+        while (i.hasNext())
+            sortie += "<li>" + ((ProgrammePro)i.next()).getLivre().toHtml() + "</li>";
+        sortie += "</ol>";
+        return sortie;
+    }
     
 }

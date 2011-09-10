@@ -1,21 +1,18 @@
 package bourse.agent;
 
-import javax.swing.JFrame;
-
 /*
  * Demarrage.java
  *
- * Created on 3 fÃ©vrier 2004, 17:40
+ * Created on 3 février 2004, 17:40
  */
 
 /**
+ *
  * @author  eric
  */
-public class Demarrage extends JFrame {
+public class Demarrage extends javax.swing.JFrame {
     
-	private static final long serialVersionUID = 1249724060048822103L;
-
-	/** Creates new form Demarrage */
+    /** Creates new form Demarrage */
     public Demarrage() {
         initComponents();
     }
@@ -62,7 +59,7 @@ public class Demarrage extends JFrame {
         jLabelControleAgent.setText("Contr\u00f4le");
         jPanelAgent.add(jLabelControleAgent);
 
-        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "AlÃ©atoire" }));
+        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "Aléatoire" }));
         jPanelAgent.add(jComboBoxControleAgent);
 
         jCheckBoxVerbose.setText("mode verbeux");
@@ -115,7 +112,7 @@ public class Demarrage extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        new Demarrage().setVisible(true);
+        new Demarrage().show();
     }
     
     

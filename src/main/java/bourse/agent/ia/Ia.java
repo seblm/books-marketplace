@@ -1,204 +1,148 @@
 package bourse.agent.ia;
 
-import static bourse.agent.sdd.Action.adversaires;
-import static bourse.agent.sdd.Action.attenteEnchere;
-import static bourse.agent.sdd.Action.migrer;
-import static bourse.agent.sdd.Action.programme;
+import java.net.*;
+import java.io.*;
+import bourse.protocole.*;
+import bourse.agent.sdd.*;
 
-import java.util.Date;
-import java.util.Iterator;
-
-import bourse.agent.Agent;
-import bourse.agent.sdd.AideDecisionVente;
-import bourse.agent.sdd.ListeLivre;
-import bourse.agent.sdd.Possession;
-import bourse.protocole.ProposeVente;
-import bourse.sdd.Livre;
-
-/**
- * Centralise les m√©thodes d'ia.
- */
+/** Centralise les mÈthodes d'ia. */
 public class Ia extends Decision {
-
-    private static final long TIMEOUT = 10000;
     
-    private static final int REFRESH = 5000;
-    
-    /**
-     * Constructeur.
-     */
-    public Ia(Agent appelant) {
-        super(appelant);
-    }
-
-    /**
-     * Renvoie le temps d'attente en millisecondes √† param√©trer en fonction de
-     * l'impatience. Il y aurait un net b√©n√©fice √† sauvegardr les temps moyens
-     * de r√©ponse d'une pdm pour pouvoir ajouster automatiquement ce timeout en
-     * fonction de la pdm. On gagnerai en vitesse et donc en efficacit√©
-     * g√©n√©rale.
-     */
-    public long timeout() {
-        return TIMEOUT;
-    }
-
-    /**
-     * Algorithme de choix d'une action.
-     */
+    /** MÈthodes */
+    /** Constructeur. */
+    public Ia(bourse.agent.Agent appelant) { super(appelant); }
+    /** Renvoie le temps d'attente en millisecondes ‡ paramÈtrer en fonction de
+     *  l'impatience. Il y aurait un net bÈnÈfice ‡ sauvegardr les temps moyens
+     *  de rÈponse d'une pdm pour pouvoir ajouster automatiquement ce timeout en
+     *  fonction de la pdm. On gagnerai en vitesse et donc en efficacitÈ
+     *  gÈnÈrale. */
+    public long timeout() { return 10000; }
+    /** Algorithme de choix d'une action. */
     public void choixAction() {
-        // On s'informe en fonction du nombre d'actions pass√©es sur la pdm.
-        // Si on vient d'arriver dans la pdm, on doit demander la liste des
-        // agents connect√©s.
-        if (pere.getEnvironnement().getNombreActions() == 0) {
-            pere.setAction(adversaires);
-        } else if (pere.getEnvironnement().getNombreActions() == 1) {
-            // C'est notre deuxi√®me action, on t√©l√©charge le programme.
-            pere.setAction(programme);
-        } else if ((new Date().getTime() - pere.getEnvironnement().getDateListeAgent()) > REFRESH) {
-            // si on a pas t√©l√©charg√© la liste des agents depuis 5 secondes, on
-            // redemande la liste des agents.
-            pere.setAction(adversaires);
-        } else if ((new Date().getTime() - pere.getEnvironnement().getDateListeProgramme()) > REFRESH) {
-            // si on a pas t√©l√©charg√© la liste des programmes depuis 5 secondes,
-            // on redemande la liste des programmes.
-            pere.setAction(programme);
-        } else if (this.pere.getMemoire().getAgents().taille() < 3) {
-            // si moins de deux agents sont connect√©s, on peut migrer.
-            pere.setAction(migrer);
-        } else if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1)
-                .getLivre() != null) {
-            // Test de la cat√©gorie du premier livre du programme de la pdm
-            // n'est pas int√©ressante.
-            if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1).getLivre()
-                    .getCategorie().getCode() != pere.getCategorie().getCode()) {
-                pere.setAction(migrer);
-            }
-        } else {
-            pere.setAction(attenteEnchere);
+        /** on s'informe en fonction du nombre d'actions passÈes sur la pdm. */
+        /** Si on vient d'arriver dans la pdm, on doit demander la liste des agents connectÈs. */
+        if (pere.getEnvironnement().getNombreActions() == 0)
+            pere.setAction(new Action(5));
+        /** C'est notre deuxiËme action, on tÈlÈcharge le programme. */
+        else if (pere.getEnvironnement().getNombreActions() == 1)
+            pere.setAction(new Action(4));
+        /** si on a pas tÈlÈchargÈ la liste des agents depuis 5 secondes, on
+         *  redemande la liste des agents. */
+        else if ((new java.util.Date().getTime() - pere.getEnvironnement().getDateListeAgent()) > 5000) {
+            pere.setAction(new Action(5));
         }
+        /** si on a pas tÈlÈchargÈ la liste des programmes depuis 5 secondes, on
+         *  redemande la liste des programmes. */
+        else if ((new java.util.Date().getTime() - pere.getEnvironnement().getDateListeProgramme()) > 5000) {
+            pere.setAction(new Action(4));
+        }
+        /** si moins de deux agents sont connectÈs, on peut migrer. */
+        else if (this.pere.getMemoire().getAgents().taille() < 3)
+            pere.setAction(new Action(Action.migrer));
+//            pere.setAction(new Action(6));
+        /* Test de la catÈgorie du premier livre du programme de la pdm n'est pas intÈressante. */
+        else if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1).getLivre() != null) {
+            if (pere.getMemoire().getPdms().acceder(pere.getCurrentPdm().getNom()).getProgramme().getIeme(1).getLivre().getCategorie().getCode() != pere.getCategorie().getCode())
+                pere.setAction(new Action(Action.migrer));
+//                pere.setAction(new Action(6));
+        } else
+            pere.setAction(new Action(6));
     }
-
-    /**
-     * Si le livre est de notre cat√©gorie, on fixe √† 120 % du prix propos√©,
-     * sinon, on fixe √† 80%.
-     */
+    /** Si le livre est de notre catÈgorie, on fixe ‡ 120 % du prix proposÈ,
+     *  sinon, on fixe ‡ 80%. */
     public float choixPrix() {
         return this.pere.getEnvironnement().getCourante().getPrixMaximum();
     }
-
-    /**
-     * On donne le prix du livre comme prix maximum.
-     */
-    public float choixPrixMax() {
+    /** On donne le prix du livre comme prix maximum. */
+    public float choixPrixMax(){
         return pere.getEnvironnement().getCourante().getLivre().getPrix();
     }
-
-    /**
-     * Dans une premi√®re approche, un livre est int√©ressant si il appartient √†
-     * la m√™me cat√©gorie que l'agent. Sinon, une fois sur cinq, on le juge
-     * int√©ressant quand m√™me.
-     */
-    public boolean livreInteressant(Livre l, int typeEnchere, float miseAPrix) {
+    /** Dans une premiËre approche, un livre est intÈressant si il appartient ‡
+     *  la mÍme catÈgorie que l'agent.
+     *  Sinon, une fois sur cinq, on le juge intÈressant quand mÍme. */
+    public boolean livreInteressant(bourse.sdd.Livre l, int typeEnchere, float miseAPrix) {
         boolean reponse = false;
         float seuilBonneCategorie;
         float seuilAutreCategorie;
         float seuil;
-        // si le livre est de la m√™me cat√©gorie que l'agent.
+        /** si le livre est de la mÍme catÈgorie que l'agent. */
         if (l.getCategorie().equals(pere.getCategorie())) {
-            seuilBonneCategorie = (float) 0.5; // on est le seul √† √™tre de cette
-                                               // cat√©gorie
-            seuilAutreCategorie = (float) 1.1; // d'autes agents suceptibles
-                                               // d'√™tre int√©ress√©s.
+            seuilBonneCategorie = (float)0.5; // on est le seul ‡ Ítre de cette catÈgorie
+            seuilAutreCategorie = (float)1.1; // d'autes agents suceptibles d'Ítre intÈressÈs.
             seuil = 2;
         } else {
-            seuil = (float) 0.8;
-            seuilBonneCategorie = (float) 0.5;
-            seuilAutreCategorie = (float) 0.8;
+            seuil = (float)0.8;
+            seuilBonneCategorie = (float)0.5;
+            seuilAutreCategorie = (float)0.8;
         }
-        System.out.println("typeEnch√®re = " + typeEnchere);
+        System.out.println("typeEnchËre = " + typeEnchere);
         switch (typeEnchere) {
-        case 1:
-        case 2:
-        case 5:
-            if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0) {
-                pere.getEnvironnement().getCourante()
-                        .setPrixMaximum((float) (seuilBonneCategorie * l.getPrix() * l.getEtat()));
-            } else {
-                pere.getEnvironnement().getCourante()
-                        .setPrixMaximum((float) (seuilAutreCategorie * l.getPrix() * l.getEtat()));
-            }
-            reponse = true;
-            break;
-        case 3:
-            reponse = (miseAPrix < (float) (seuil * (l.getPrix() * l.getEtat())));
-            if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0) {
-                pere.getEnvironnement().getCourante().setPrixMaximum((float) (miseAPrix * 1.2));
-            } else {
+            case 1 :
+            case 2 :
+            case 5 :
+                if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0) {
+                    pere.getEnvironnement().getCourante().setPrixMaximum((float)(seuilBonneCategorie * l.getPrix() * l.getEtat()));
+                } else {
+                    pere.getEnvironnement().getCourante().setPrixMaximum((float)(seuilAutreCategorie * l.getPrix() * l.getEtat()));
+                }
+                reponse =true;
+                break;
+            case 3 :
+                reponse = (miseAPrix < (float)(seuil * (l.getPrix() * l.getEtat()) ));
+                if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0)
+                    pere.getEnvironnement().getCourante().setPrixMaximum((float)(miseAPrix * 1.2));
+                else
+                    pere.getEnvironnement().getCourante().setPrixMaximum(miseAPrix);
+                break;
+            case 4 :
                 pere.getEnvironnement().getCourante().setPrixMaximum(miseAPrix);
-            }
-            break;
-        case 4:
-            pere.getEnvironnement().getCourante().setPrixMaximum(miseAPrix);
-            float prixDeBase = ((float) (l.getPrix() * l.getEtat()));
-            if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0) {
-                reponse = (miseAPrix < (float) (seuilBonneCategorie * prixDeBase));
-            } else {
-                reponse = (miseAPrix < (float) (seuilAutreCategorie * prixDeBase));
-            }
-            System.out.println("Le livre est-il int√©ressant ?\nMiseAPrix = " + miseAPrix + "\nprixDeBase = "
-                    + prixDeBase + "si il n'y a pas de concurrents : "
-                    + (miseAPrix < (float) (seuilBonneCategorie * prixDeBase))
-                    + "si il y a des concurrents dans la meme cat√©gorie = "
-                    + (miseAPrix < (float) (seuilAutreCategorie * prixDeBase)));
-            break;
+                float prixDeBase = ((float)(l.getPrix() * l.getEtat()));
+                if (pere.getMemoire().getAgents().concurrent(l.getCategorie(), pere.getNom()) == 0)
+                    reponse = (miseAPrix < (float)(seuilBonneCategorie * prixDeBase));
+                else
+                    reponse = (miseAPrix < (float)(seuilAutreCategorie * prixDeBase));
+                System.out.println("Le livre est-il intÈressant ?\nMiseAPrix = " + miseAPrix + "\nprixDeBase = " + prixDeBase + "si il n'y a pas de concurrents : " +  (miseAPrix < (float)(seuilBonneCategorie * prixDeBase)) + "si il y a des concurrents dans la meme catÈgorie = " + (miseAPrix < (float)(seuilAutreCategorie * prixDeBase)));
+                break;
         }
         return reponse;
     }
-
-    /**
-     * On donne en entr√©e la liste des livres que l'on poss√®de, l'agorithme doit
-     * d√©terminer le livre √† vendre. on retourne un objet
-     * bourse.protocole.ProposeVente pr√™t √† √™tre export√©.
-     */
-    public ProposeVente choixLivreAVendre(ListeLivre l) {
+    /** On donne en entrÈe la liste des livres que l'on possËde, l'agorithme doit dÈterminer le livre ‡ vendre.
+     *  on retourne un objet bourse.protocole.ProposeVente prÍt ‡ Ítre exportÈ. */
+    public bourse.protocole.ProposeVente choixLivreAVendre(ListeLivre l) {
         float prix = 0;
         int id = pere.getMemoire().getLivreAVendre();
-        Livre ouvrage = pere.getMemoire().getPossessions().get(id).getLivre();
+        bourse.sdd.Livre ouvrage = pere.getMemoire().getPossessions().get(id).getLivre();
         String nom = "Enchere";
         if (new java.util.Random().nextBoolean()) {
             nom += "Trois";
-            prix = (float) (ouvrage.getPrixAchat() * 1.1);
+            prix = (float)(ouvrage.getPrixAchat() * 1.1);
         } else {
             nom += "Quatre";
-            prix = (float) (ouvrage.getPrixAchat() * 1.5);
+            prix = (float)(ouvrage.getPrixAchat() * 1.5);
         }
-        return new ProposeVente(nom, prix, id);
+        return new bourse.protocole.ProposeVente(nom, prix, id);
     }
-
     public boolean venteInteressante() {
         AideDecisionVente ad = this.pere.getMemoire().getAideDecisionVente();
         ad.miseAJourQVente();
-        if (pere.getMemoire().getTemps() > 50) {
+        if (pere.getMemoire().getTemps() > 50)
             return ((ad.getSommeQVente() / ad.getNbQVenteCalcules()) < (0.5 * ad.getQVenteActuel()));
-        } else {
+        else
             return false;
-        }
     }
-
     public float qVente() {
         float coeffVente = 0;
         float totalVente = 0;
         int meilleureVente = 0;
         float maxCoeffVente = 0;
-        Livre li = null;
-        Iterator<Possession> parcours = pere.getMemoire().getPossessions().getValues().iterator();
+        bourse.sdd.Livre li = new bourse.sdd.Livre();
+        java.util.Iterator parcours = pere.getMemoire().getPossessions().getValues().iterator();
         while (parcours.hasNext()) {
-            Possession p = parcours.next();
+            Possession p = (Possession)parcours.next();
             li = p.getLivre();
             if (li.getProprietaire().equalsIgnoreCase(pere.getNom()) && !p.getInstanceDeVente())
                 if (!pere.getCategorie().equals(li.getCategorie())) {
-                    coeffVente = interetVente(li)
-                            * pere.getMemoire().getAgents().coefficientCategorie(li.getCategorie());
+                    coeffVente = interetVente(li) * pere.getMemoire().getAgents().coefficientCategorie(li.getCategorie());                
                     if (coeffVente > maxCoeffVente) {
                         maxCoeffVente = coeffVente;
                         meilleureVente = li.getId();
@@ -209,11 +153,8 @@ public class Ia extends Decision {
         pere.getMemoire().setLivreAVendre(meilleureVente);
         return totalVente;
     }
-
-    /**
-     * Calcule un coefficient qui est plus grand si on a fait une bonne affaire.
-     */
-    public float interetVente(Livre li) {
+    /** Calcule un coefficient qui est plus grand si on a fait une bonne affaire. */
+    public float interetVente(bourse.sdd.Livre li) {
         return li.getPrix() * li.getEtat() / li.getPrixAchat();
     }
 }

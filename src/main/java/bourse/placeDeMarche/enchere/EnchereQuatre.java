@@ -24,14 +24,14 @@ public class EnchereQuatre extends EnchereReponseBoucle {
         return new PropositionEnchereP(NOM[typeEnchere], numEnchere, TIMEOUT, getPas(), livre, getPrixDepart());
     }
     
-    /** UtilisÃ© lorsqu'un agent se connecte "au milieu" d'une enchÃ¨re.  */
+    /** Utilisé lorsqu'un agent se connecte "au milieu" d'une enchère.  */
     public PropositionEnchereP reAnnonce() {
         long tempsRestant = new java.util.Date().getTime() - topChrono;
         return new PropositionEnchereP(NOM[typeEnchere], numEnchere, (int)tempsRestant, getPas(), livre, getPrixCourant());
     }
     
     public PropositionEnchereP actualiser() {
-        // Le message propositionEnchere est validÃ© par le commissaire priseur.
+        // Le message propositionEnchere est validé par le commissaire priseur.
         this.prixCourant -= getPas();
         this.topChrono = new java.util.Date().getTime();
         return new PropositionEnchereP(Enchere.NOM[typeEnchere], numEnchere, TIMEOUT, getPas(), livre, prixCourant);

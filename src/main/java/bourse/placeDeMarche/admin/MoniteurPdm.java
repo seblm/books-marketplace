@@ -6,17 +6,13 @@
 
 package bourse.placeDeMarche.admin;
 
-import javax.swing.JFrame;
-
 /**
  *
  * @author  slemerdy
  */
-public class MoniteurPdm extends JFrame {
+public class MoniteurPdm extends javax.swing.JFrame {
     
-	private static final long serialVersionUID = -7386357483798723582L;
-	
-	/** Creates new form moniteurPdm */
+    /** Creates new form moniteurPdm */
     public MoniteurPdm() throws java.io.IOException {
         initComponents();
     }
@@ -116,12 +112,12 @@ public class MoniteurPdm extends JFrame {
             java.io.PrintWriter out = new java.io.PrintWriter(socket.getOutputStream(), true);
             out.println("<MSG><ADMIN REQUETE=\"terminer\"/></MSG>");
         } catch (java.net.UnknownHostException e) {
-            labelStatut.setText("L'hÃ´te " + this.champHote.getText() + " est inconnu");
+            labelStatut.setText("L'hôte " + this.champHote.getText() + " est inconnu");
         } catch (java.io.IOException e) {
-            labelStatut.setText("Erreur d'entrÃ©e/sortie");
+            labelStatut.setText("Erreur d'entrée/sortie");
             e.printStackTrace(System.err);
         } catch (NumberFormatException e) {
-            labelStatut.setText("Le port doit-Ãªtre un entier");
+            labelStatut.setText("Le port doit-être un entier");
         }
     }//GEN-LAST:event_bouttonTerminerMouseClicked
 
@@ -135,7 +131,7 @@ public class MoniteurPdm extends JFrame {
             String buffer = "";
             int nombreTentatives = 10;
             int attenteParTentative = 1000;
-            // nombreTentatives * attenteParTentative = nombre de milisecondes avant que n'Ã©choue l'Ã©coute.
+            // nombreTentatives * attenteParTentative = nombre de milisecondes avant que n'échoue l'écoute.
             int numeroTentative = 0;
             synchronized (this) {
                 while (numeroTentative < 5 && socket.getInputStream().available() == 0) {
@@ -144,7 +140,7 @@ public class MoniteurPdm extends JFrame {
                 }
             }
             if (socket.getInputStream().available() != 0) {
-                // Il y a quelquechose Ã  lire sur la socket.
+                // Il y a quelquechose à lire sur la socket.
                 while (buffer.lastIndexOf("</html>") == -1) {
                     buffer = in.readLine();
                     reception += buffer;
@@ -154,21 +150,21 @@ public class MoniteurPdm extends JFrame {
                 sortieFichier.write(reception);
                 sortieFichier.close();
                 editorPaneVisualisation.setPage("file://" + fichierCache.getCanonicalPath());
-                labelStatut.setText("Envoi terminÃ©");
+                labelStatut.setText("Envoi terminé");
             } else
-                labelStatut.setText("Aucune rÃ©ponse de la part de " + champHote.getText() + " depuis " + (nombreTentatives * attenteParTentative) + "ms.");
+                labelStatut.setText("Aucune réponse de la part de " + champHote.getText() + " depuis " + (nombreTentatives * attenteParTentative) + "ms.");
             in.close();
             out.close();
             socket.close();
         } catch (java.net.UnknownHostException e) {
-            labelStatut.setText("L'hÃ´te " + this.champHote.getText() + " est inconnu");
+            labelStatut.setText("L'hôte " + this.champHote.getText() + " est inconnu");
         } catch (java.io.UnsupportedEncodingException e) {
-            labelStatut.setText("UTF-8 n'est pas supportÃ©");
+            labelStatut.setText("UTF-8 n'est pas supporté");
         } catch (java.io.IOException e) {
-            labelStatut.setText("Erreur d'entrÃ©e/sortie");
+            labelStatut.setText("Erreur d'entrée/sortie");
             e.printStackTrace(System.err);
         } catch (NumberFormatException e) {
-            labelStatut.setText("Le port doit-Ãªtre un entier");
+            labelStatut.setText("Le port doit-être un entier");
         }
     }//GEN-LAST:event_bouttonActualiserMouseClicked
     
@@ -182,7 +178,7 @@ public class MoniteurPdm extends JFrame {
      */
     public static void main(String args[]) {
         try {
-            new MoniteurPdm().setVisible(true);
+            new MoniteurPdm().show();
         } catch (java.io.IOException e) {
             System.err.println(e);
         }

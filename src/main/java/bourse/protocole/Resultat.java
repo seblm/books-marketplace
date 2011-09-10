@@ -16,24 +16,19 @@ public class Resultat extends bourse.protocole.Protocole {
     private float enchere ;
     private bourse.sdd.Livre livre;
     
-    /** Obtient le nom de l'acheteur ou du vendeur si la vente n'a pas rÃ©ussie. */ 
+    /** Obtient le nom de l'acheteur ou du vendeur si la vente n'a pas réussie. */ 
     public String getAcheteur() { return nom; } 
     
     public float getEnchere() { return enchere;}
     
     public Livre getLivre() { return livre;}
-    
-    /** 
-     * Modifie le nom de l'acheteur (cela se produit lorsque la place de marchÃ©
-     * a rencontrÃ© une erreur lors de la transaction financiÃ¨re sur la base de
-     * donnÃ©es.
-     */
-    public void setAcheteur(String ancienProprietaire) {
-    	this.nom = ancienProprietaire;
-    }
+    /** Modifie le nom de l'acheteur (cela se produit lorsque la place de marché
+     * a rencontré une erreur lors de la transaction financière sur la base de
+     * données. */
+    public void setAcheteur(String ancienProprietaire) { this.nom = ancienProprietaire; }
     
     public Resultat(bourse.sdd.Livre livre,String nom, float enchere) {
-        super(TypeMessage.RESULTAT);
+        super(new TypeMessage(TypeMessage.TM_RESULTAT));
         this.nom=nom;
         this.enchere = enchere;
         this.livre=livre;
@@ -41,7 +36,7 @@ public class Resultat extends bourse.protocole.Protocole {
     }
     
     public Resultat(Element type) {
-        super(TypeMessage.RESULTAT);
+        super(new TypeMessage(TypeMessage.TM_RESULTAT));
         this.toClass(type);
     }
     
@@ -88,7 +83,7 @@ public class Resultat extends bourse.protocole.Protocole {
     }
     
     public static void main(String args[]) {
-        float solde=1546;
+        float solde=1546;float pas=450;
         int i=12;
         float pr=153;
         float et= (float)0.4;
@@ -96,9 +91,10 @@ public class Resultat extends bourse.protocole.Protocole {
         
         String p=new Resultat(livre,"machin",solde).toXML();
         System.out.println(p);
+        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
-        // l'application de se concentrer sur l'analyse sÃ©mantique.
+        // D'après le tutorial JAXP, ces variables fixées à true permettent à
+        // l'application de se concentrer sur l'analyse sémantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -107,7 +103,7 @@ public class Resultat extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La dÃ©finition de ErrorHandler est inspirÃ©e de
+            // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

@@ -1,352 +1,143 @@
 package bourse.agent;
 
-import static bourse.agent.sdd.Action.aucune;
-import static bourse.agent.sdd.Action.bilan;
-import static bourse.agent.sdd.Etat.actionChoisie;
-import static bourse.agent.sdd.Etat.attenteDeclenchementEnchere;
-import static bourse.agent.sdd.Etat.attentePropositionEnchere;
-import static bourse.agent.sdd.Etat.attenteRESULTATdeSaVente;
-import static bourse.agent.sdd.Etat.attenteRESULTBYE;
-import static bourse.agent.sdd.Etat.attenteRESULTWELCOME;
-import static bourse.agent.sdd.Etat.connaitPdms;
-import static bourse.agent.sdd.Etat.connectePhysiquement;
-import static bourse.agent.sdd.Etat.enchereDeuxOuCinq;
-import static bourse.agent.sdd.Etat.enchereInteressante;
-import static bourse.agent.sdd.Etat.enchereTrois;
-import static bourse.agent.sdd.Etat.enchereUnOuQuatre;
-import static bourse.agent.sdd.Etat.initial;
-import static bourse.agent.sdd.Etat.modeEnchere;
-import static bourse.agent.sdd.Etat.nonConnecte;
-import static bourse.agent.sdd.Etat.pdmChoisie;
-import static bourse.agent.sdd.Etat.pret;
-import static bourse.agent.sdd.Etat.quitter;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.util.Random;
+import bourse.agent.sdd.*;
+import bourse.agent.ia.*;
+import bourse.protocole.*;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-
-import bourse.agent.ia.Aleatoire;
-import bourse.agent.ia.Decision;
-import bourse.agent.ia.Humain;
-import bourse.agent.ia.Ia;
-import bourse.agent.sdd.Action;
-import bourse.agent.sdd.Etat;
-import bourse.agent.sdd.ListeLivre;
-import bourse.agent.sdd.ListePdm;
-import bourse.agent.sdd.ListeProgramme;
-import bourse.agent.sdd.Pdm;
-import bourse.agent.sdd.PdmMemoire;
-import bourse.protocole.Categorie;
-import bourse.reseau.Ip;
-
-/**
- * GÃ¨re l'agent courtier.
- */
+/** Gère l'agent courtier. */
 public class Agent {
-
-    /**
-     * Vrai pour un affichage complet, faux pour avoir aucun message en sortie standard.
-     */
+    
+    /** Variables d'instances. */
+    /** Vrai pour un affichage complet, faux pour avoir aucun message en sortie standard. */
     private static boolean verbose;
-
-    /**
-     * Variables de l'action de l'agent.
-     */
-    private Action action;
-
-    /**
-     * Pour accÃ©der Ã  la liste des pdms actives Ã  l'initialisation de l'agent.
-     */
+    /** Variables de l'action de l'agent. */
+    private Action action;  
+    /** Pour accéder à la liste des pdms actives à l'initialisation de l'agent. */
     private RequetesAgent bd;
-
-    /**
-     * Le numÃ©ro de la catÃ©gorie attribuÃ©e.
-     */
+    /** Le numéro de la catégorie attribuée. */
     private Categorie categorie;
-
-    /**
-     * L'environnement actuel de l'agent.
-     */
+    /** L'environnement actuel de l'agent. */
     private Environnement environnement;
-
-    /**
-     * Variables de l'Ã©tat courant de l'agent.
-     */
+    /** Variables de l'état courant de l'agent. */
     private Etat etat;
-
-    /**
-     * Variable de l'Ã©tat suivant de l'agent.
-     */
+    /** Variable de l'état suivant de l'agent. */
     private Etat etatSuivant;
-
-    /**
-     * Le nom du groupe.
-     */
-    private static final String GROUPE = "Groupe-E";
-
-    private static final int ERROR = -1;
-
-    private static final int FIRST_TIME = -1;
-
-    /**
-     * Le nom de la pdm hÃ´te.
-     */
+    /** Le nom du groupe. */
+    private static final String groupe = "Groupe-E";
+    /** Le nom de la pdm hôte. */
     private String hote;
-
-    /**
-     * La mÃ©moire : ce qui est sÃ»r.
-     */
-    private final Memoire memoire;
-
-    /**
-     * Le nom de l'Agent.
-     */
+    /** La mémoire : ce qui est sûr. */
+    private Memoire memoire;
+    /** Le nom de l'Agent. */
     private String nom;
-
-    /**
-     * Le client pour communiquer avec la Pdm.
-     */
+    /** Le client pour communiquer avec la Pdm. */
     private ConnexionPdm pdmConnectee;
-
-    /**
-     * Le solde de son compte.
-     */
+    /** Le solde de son compte. */
     private float portefeuille;
-
-    /**
-     * Le centre de decision.
-     * 
-     * TODO should be final
-     */
+    /** Le centre de decision. */
     private Decision decision;
-
-    /**
-     * ExpÃ©rimentation
-     */
+    /** Expérimentation */
     private Visualisation fenetre;
-
-    /**
-     * Constructeur d'agent par dÃ©faut.
-     */
+    /** Le serveur pour attendre les communications d'autres agents. */
+    /** Le client pour contacter d'autres agents. */
+    
+    /** Constructeurs. */
+    /** Constructeur d'agent par défaut. */
     public Agent(String nom) {
         this.fenetre = new Visualisation();
         setWallet(0);
         setNom(nom);
         setCategorie(new Categorie(Categorie.AUCUNE));
-        memoire = new Memoire(this, fenetre);
+        Memoire m = new Memoire(this, fenetre);
+        Possessions p = new Possessions(fenetre, m);
+        setMemoire(m);
         setEnvironnement(new Environnement());
         setEtat(Etat.initial);
-        setAction(aucune);
-        try {
-            this.bd = new RequetesAgent(verbose);
-        } catch (java.sql.SQLException e) {
-            e.getLocalizedMessage();
-            System.exit(ERROR);
-        } catch (java.lang.ClassNotFoundException e) {
-            e.getLocalizedMessage();
-            System.exit(ERROR);
-        } catch (java.lang.InstantiationException e) {
-            e.getLocalizedMessage();
-            System.exit(ERROR);
-        } catch (java.lang.IllegalAccessException e) {
-            e.getLocalizedMessage();
-            System.exit(ERROR);
-        }
+        setAction(new Action(Action.aucune));
+        try { this.bd = new RequetesAgent(verbose);
+        } catch (java.sql.SQLException e) { e.getLocalizedMessage(); System.exit(-1);
+        } catch (java.lang.ClassNotFoundException e) { e.getLocalizedMessage(); System.exit(-1);
+        } catch (java.lang.InstantiationException e) { e.getLocalizedMessage(); System.exit(-1);
+        } catch (java.lang.IllegalAccessException e) { e.getLocalizedMessage(); System.exit(-1); }
     }
-
-    /**
-     * Renvoie l'etat de l'agent.
-     */
-    public int getEtat() {
-        return this.etat.getEtat();
-    }
-
-    /**
-     * Met Ã  jour l'Ã©tat de l'agent et ordonne Ã  la boucle qu'il y a eu un changement et met Ã  jour cette valeur dans
-     * l'inteface..
-     */
-    public void setEtat(int e) {
-        this.etat = new Etat(e);
-        this.fenetre.setEtat(new Etat(e).toString(0));
-    }
-
-    /**
-     * Modifie l'Ã©tat suivant de l'agent.
-     */
-    public void setEtatSuivant(int etatSuivant) {
-        this.etatSuivant = new Etat(etatSuivant);
-    }
-
-    /**
-     * Renvoie la pdm Ã  laquelle il est connectÃ©e et met Ã  jour cette valeur dans l'inteface.
-     */
-    public PdmMemoire getCurrentPdm() {
-        return this.memoire.getPdms().acceder(this.hote);
-    }
-
-    /**
-     * Retourne la valeur du portefeuille.
-     */
-    public float getWallet() {
-        return this.portefeuille;
-    }
-
-    /**
-     * Met Ã  jour la somme d'argent et met Ã  jour cette valeur dans l'inteface.
-     */
-    public void setWallet(float somme) {
-        this.portefeuille = somme;
-        this.fenetre.setSolde(String.valueOf(somme));
-    }
-
-    /**
-     * Retourne la categorie courante
-     */
-    public Categorie getCategorie() {
-        return this.categorie;
-    }
-
-    /**
-     * Met Ã  jour la catÃ©gorie et met Ã  jour cette valeur dans l'inteface.
-     */
-    public void setCategorie(Categorie categorie) {
-        this.categorie = categorie;
-        this.fenetre.setCategorie(categorie.toString());
-    }
-
-    /**
-     * Renvoie l'action.
-     */
-    public Action getAction() {
-        return this.action;
-    }
-
-    /**
-     * Met Ã  jour l'action et met Ã  jour cette valeur dans l'inteface.
-     */
-    public void setAction(Action a) {
-        this.action = a;
-        this.fenetre.setAction(a.toString());
-    }
-
-    /**
-     * Renvoie l'environnement courant.
-     */
-    public Environnement getEnvironnement() {
-        return this.environnement;
-    }
-
-    /**
-     * Modifie l'environnement courant et met Ã  jour cette valeur dans l'inteface.
-     */
-    private void setEnvironnement(Environnement e) {
-        this.environnement = e;
-        this.fenetre.setEnvironnement(e.toString(0));
-    }
-
-    /**
-     * Renvoie la mÃ©moire actuelle.
-     */
-    public Memoire getMemoire() {
-        return this.memoire;
-    }
-
-    /**
-     * Modifie le nom de la pdm actuelle.
-     */
-    public void setHote(String nom) {
-        this.hote = nom;
-        this.fenetre.setHote(nom);
-    }
-
-    /**
-     * Modifie le nom de l'agent.
-     */
-    private void setNom(String nom) {
-        this.nom = Agent.GROUPE + "-" + nom;
-        this.fenetre.setNom(this.nom);
-    }
-
-    /**
-     * Renvoie le nom de l'agent sous la forme Groupe-E-xxx oÃ¹ xxx est le prÃ©nom de l'agent.
-     */
-    public String getNom() {
-        return this.nom;
-    }
-
-    /**
-     * Renvoie la fenÃªtre.
-     */
-    public Visualisation getFenetre() {
-        return this.fenetre;
-    }
-
-    /**
-     * Modifie le mode verbeux.
-     */
-    public void setVerbose(boolean verbose) {
-        Agent.verbose = verbose;
-    }
-
-    public Decision getDecision() {
-        return decision;
-    }
-
-    /**
-     * MÃ©thode d'affichage qui prÃ©sente de facon lisible l'objet.
-     */
+    
+    /** Assesseurs, modifieurs. */
+    /** Renvoie l'etat de l'agent. */
+    public int getEtat() { return this.etat.getEtat(); }
+    /** Met à jour l'état de l'agent et ordonne à la boucle qu'il y a eu un changement et met à jour cette valeur dans l'inteface.. */
+    public void setEtat(int e) { this.etat = new Etat(e); this.fenetre.setEtat(new Etat(e).toString(0)); }
+    /** Renvoie l'état suivant de l'agent modifié par le thread de réception des messages. */
+    public int getEtatSuivant() { return etatSuivant.getEtat(); }
+    /** Modifie l'état suivant de l'agent. */
+    public void setEtatSuivant(int _etatSuivant) { etatSuivant = new Etat(_etatSuivant); }
+    /** Renvoie la pdm à laquelle il est connectée et met à jour cette valeur dans l'inteface. */
+    public PdmMemoire getCurrentPdm() { return this.memoire.getPdms().acceder(this.hote); }
+    /**Retourne la valeur du portefeuille. */
+    public float getWallet(){return this.portefeuille;}
+    /** Met à jour la somme d'argent et met à jour cette valeur dans l'inteface. */
+    public void setWallet(float somme) { this.portefeuille = somme; this.fenetre.setSolde(String.valueOf(somme)); }
+    /**retourne la categorie courante*/
+    public Categorie getCategorie() { return this.categorie; }
+    /** Met à jour la catégorie et met à jour cette valeur dans l'inteface. */
+    public void setCategorie(Categorie categorie) { this.categorie = categorie; this.fenetre.setCategorie(categorie.toString()); }
+    /** Renvoie l'action. */
+    public int getAction() { return this.action.getAction(); }
+    /** Met à jour l'action et met à jour cette valeur dans l'inteface. */
+    public void setAction(Action a) { this.action = a; this.fenetre.setAction(a.toString(0)); }
+    /** Renvoie l'environnement courant. */
+    public Environnement getEnvironnement() { return this.environnement; }
+    /** Modifie l'environnement courant et met à jour cette valeur dans l'inteface. */
+    public void setEnvironnement(Environnement e) { this.environnement = e; this.fenetre.setEnvironnement(e.toString(0)); }
+    /** Renvoie la mémoire actuelle. */
+    public Memoire getMemoire() { return this.memoire; }
+    /** Modifie la mémoire de l'agent. */
+    public void setMemoire(Memoire m) { this.memoire = m; }
+    /** Modifie le nom de la pdm actuelle. */
+    public void setHote(String nom) { this.hote = nom; this.fenetre.setHote(nom); }
+    /** Modifie le nom de l'agent. */
+    public void setNom(String nom) { this.nom = this.groupe + "-" + nom; this.fenetre.setNom(this.nom); }
+    /** Renvoie le nom de l'agent sous la forme Groupe-E-xxx où xxx est le prénom de l'agent. */
+    public String getNom() { return this.nom; }
+    /** Renvoie la fenêtre. */
+    public Visualisation getFenetre() { return this.fenetre; }
+    /** Modifie lengthmode verbeux. */
+    public void setVerbose(boolean verbose) { this.verbose = verbose; }
+    public void setDecision(bourse.agent.ia.Decision _decision) { this.decision = _decision; }
+    public Decision getDecision() { return decision; }
+        
+    /** Méthodes. */
+    /** Méthode d'affichage qui présente de facon lisible l'objet. */
     public String toString(int decalage) {
         String delta = "";
-        for (int i = 0; i < decalage; i++)
-            delta += " ";
-        return delta + "Nom = " + nom + "\n" + delta + "Solde = " + portefeuille + "\n" + delta + "Decision = "
-                + decision + "\n" + delta + "CatÃ©gorie = " + categorie.toString(0) + "\n" + delta + "Etat = "
-                + etat.toString(0) + "\n" + delta + "Action = " + action.toString() + "\n" + delta + "Memoire =\n"
-                + memoire.toString(decalage + 1) + "\n" + delta + "Environnement =\n"
-                + environnement.toString(decalage + 1) + "\n" + delta + "Hote = " + this.hote;
+        for (int i=0; i<decalage; i++) delta += " ";
+        return delta + "Nom = " + nom + "\n"
+             + delta + "Solde = " + portefeuille + "\n"
+             + delta + "Decision = " + decision + "\n"
+             + delta + "Catégorie = " + categorie.toString(0) + "\n"
+             + delta + "Etat = " + etat.toString(0)+ "\n"
+             + delta + "Action = " + action.toString(0) + "\n"
+             + delta + "Memoire =\n" + memoire.toString(decalage+1) + "\n"
+             + delta + "Environnement =\n" + environnement.toString(decalage+1) + "\n"
+             + delta + "Hote = " + this.hote;
     }
-
-    /**
-     * Cherche la liste des adresses des pdms depuis la bd.
-     */
-    private void getPdmsFromBd() {
-        if (getEtat() == initial) {
-            System.out.println("Transition : RÃ©cupÃ©ration les pdms dÃ©clarÃ©es dans la bd.");
+    /** Cherche la liste des adresses des pdms depuis la bd. */
+    public void getPdmsFromBd() {
+        if (getEtat() == Etat.initial) {
+            System.out.println("Transition : Récupération les pdms déclarées dans la bd.");
             try {
-                ResultSet r = bd.getPdMs();
+                java.sql.ResultSet r = bd.getPdMs();
                 ListePdm l = new ListePdm();
-                while (r.next()) {
-                    l.ajouter(new Pdm(r.getString("nom"), r.getString("adresse")));
-                }
+                while (r.next()) l.ajouter(new Pdm(r.getString("nom"), r.getString("adresse")));
                 memoire.getPdms().miseAJour(l);
             } catch (java.sql.SQLException e) {
                 System.err.println(e.getLocalizedMessage());
-                setEtat(quitter);
+                setEtat(Etat.quitter);
             }
-            setEtat(connaitPdms);
+            setEtat(Etat.connaitPdms);
         }
     }
-
-    /**
-     * Affiche les rÃ©sultats de l'agent dans l'onglet.
-     */
+    /** Affiche les résultats de l'agent dans l'onglet. */
     public void showResults() { // cat, id, titre, points, argent
         if (new Etat(getEtat()).acceptAsynchronus()) {
             String output = "";
@@ -355,13 +146,17 @@ public class Agent {
                 java.sql.ResultSet r = bd.getResultPerBook(nom);
                 if (r.next()) {
                     output = "Argent = " + r.getString("argent") + "\n";
-                    output += "Titre = " + r.getString("titre") + " Id = " + r.getString("id") + " Points = "
-                            + r.getFloat("points") + " CatÃ©gorie = " + r.getString("categorie") + "\n";
+                    output += "Titre = " + r.getString("titre")
+                            + " Id = " + r.getString("id")
+                            + " Points = " + r.getFloat("points")
+                            + " Catégorie = " + r.getString("categorie") + "\n";
                     sommePoints += r.getFloat("points");
                 }
                 while (r.next()) {
-                    output += "Titre = " + r.getString("titre") + " Id = " + r.getString("id") + " Points = "
-                            + r.getFloat("points") + " CatÃ©gorie = " + r.getString("categorie") + "\n";
+                    output += "Titre = " + r.getString("titre")
+                            + " Id = " + r.getString("id")
+                            + " Points = " + r.getFloat("points")
+                            + " Catégorie = " + r.getString("categorie") + "\n";
                     sommePoints += r.getFloat("points");
                 }
                 output += "Total des points = " + sommePoints;
@@ -372,424 +167,333 @@ public class Agent {
             System.out.println(output);
         }
     }
-
-    /**
-     * DÃ©connexion physique.
-     */
-    private void deconnexionPhysique() {
-        if (getEtat() == connaitPdms) {
-            System.out.println("Transition : dÃ©connexion physique.");
+    /** Déconnexion physique. */
+    public void deconnexionPhysique() {
+        if (getEtat() == Etat.connaitPdms) {
+            System.out.println("Transition : déconnexion physique.");
             this.showResults();
             pdmConnectee.deconnecter();
-            try {
-                bd.deconnexion();
-            } catch (java.sql.SQLException e) {
-                System.out.println("Impossible de se dÃ©connecter de la bd.");
-            }
-            setEtat(nonConnecte); // Ã©tat 8.
+            try { bd.deconnexion(); } catch (java.sql.SQLException e) { System.out.println("Impossible de se déconnecter de la bd."); }
+            setEtat(Etat.nonConnecte); // état 8.
         }
     }
-
-    /**
-     * Connexion physique Ã  la pdm.
-     */
-    private void connexionPhysique(String ip, int port) throws IOException {
-        if (this.getEtat() == pdmChoisie) {
-            if (this.pdmConnectee != null) {
-                this.pdmConnectee.deconnecter();
-            }
-            System.out.println("Transition : connexion physique Ã  : " + this.getCurrentPdm().getAdresse().toString());
+    /** Connexion physique à la pdm. */
+    public void connexionPhysique(String ip, int port) throws java.net.ConnectException, java.io.IOException {
+        if (this.getEtat() == Etat.pdmChoisie) {
+            if (this.pdmConnectee != null) this.pdmConnectee.deconnecter();
+            System.out.println("Transition : connexion physique à : " + this.getCurrentPdm().getAdresse().toString());
             this.pdmConnectee = new ConnexionPdm(this, verbose);
             this.pdmConnectee.start();
-            this.setEtat(connectePhysiquement);
-        } else {
-            System.err.println("Transition : echec de la connexion vers "
-                    + this.getCurrentPdm().getAdresse().toString());
-        }
+            this.setEtat(Etat.connectePhysiquement);
+        } else
+            System.err.println("Transition : echec de la connexion vers " + this.getCurrentPdm().getAdresse().toString());
     }
-
-    /**
-     * Connexion Ã  la PdM via le protocole.
-     */
-    private void welcomePdm() {
-        if (this.getEtat() == connectePhysiquement) {
+    /** Connexion à la PdM via le protocole. */
+    public void welcomePdm() {
+        if (this.getEtat() == Etat.connectePhysiquement) {
             System.out.println("Transition : envoyer welcome.");
             String export = new bourse.protocole.Welcome(this.nom, "Coucou !").toXML();
             try {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("welcome");
-            } catch (IOException e) {
-                e.printStackTrace(System.err);
-            }
-            this.setEtat(attenteRESULTWELCOME);
+            } catch (IOException e) { e.printStackTrace(System.err); }
+            this.setEtat(Etat.attenteRESULTWELCOME);
         }
     }
-
-    /**
-     * DÃ©connexion Ã  la PdM via le protocole.
-     */
-    private void byePdm() {
-        if (this.getEtat() == pret) {
+    /** Déconnexion à la PdM via le protocole. */
+    public void byePdm() {
+        if (this.getEtat() == Etat.pret) {
             System.out.println("Transition : envoyer bye.");
             String export = new bourse.protocole.Bye("Au revoir belle pdm !").toXML();
             try {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("bye");
-            } catch (IOException e) {
-                e.printStackTrace(System.err);
-            }
-            this.setEtat(attenteRESULTBYE);
+            } catch (IOException e) { e.printStackTrace(System.err); }
+            this.setEtat(Etat.attenteRESULTBYE);
         }
     }
-
-    /**
-     * Envoyer une proposition de vente.
-     */
-    private void proposeVente() {
-        if (getEtat() == actionChoisie) {
+    /** Envoyer une proposition de vente. */
+    public void proposeVente() {
+        if (getEtat() == Etat.actionChoisie) {
             System.out.println("Transition : envoyer propose vente.");
             ListeLivre l = this.memoire.getPossessions().possede(this.nom);
-            System.out.println("livres possÃ©dÃ©s par " + this.nom + ":" + l.toString(10));
+            System.out.println("livres possédés par " + this.nom + ":" + l.toString(10));
             try {
                 String export = this.decision.choixLivreAVendre(l).toXML();
                 try {
                     this.pdmConnectee.ecrire(export);
                     this.fenetre.addOutputMessage("propose vente");
-                } catch (IOException e) {
-                    e.printStackTrace(System.err);
-                }
-            } catch (NullPointerException e) {
-                // on n'a pas trouvÃ© de livre.
-            }
-            if (getEtat() == actionChoisie)
-                this.setEtat(attentePropositionEnchere);
+                } catch (IOException e) { e.printStackTrace(System.err); }
+            } catch (java.lang.NullPointerException e) { /** on a pas trouvé de livre. */ }
+            if (getEtat() == Etat.actionChoisie) this.setEtat(Etat.attentePropositionEnchere);;
         }
     }
-
-    /**
-     * Envoi d'une demande de programme.
-     */
-    private void demandeProgramme() {
-        if (this.getEtat() == pret || getEtat() == actionChoisie) {
+    /** Envoi d'une demande de programme. */
+    public void demandeProgramme() {
+        if (this.getEtat() == Etat.pret || getEtat() == Etat.actionChoisie) {
             System.out.println("Transition : envoi d'une requete programme.");
             String export = new bourse.protocole.RequeteProgramme().toXML();
             try {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("requete programme");
-            } catch (IOException e) {
-                e.printStackTrace(System.err);
-            }
-            // mise Ã  jour de la date de tÃ©lÃ©chargement de la liste des agents connectÃ©s
+            } catch (IOException e) { e.printStackTrace(System.err); }
+            /** mise à jour de la date de téléchargement de la liste des agents
+             *  connéctés */
             environnement.setDateListeProgramme();
             while (this.environnement.getNombreActions() <= 1)
-                try {
-                    this.wait(100);
-                } catch (InterruptedException e) {
-                }
+                try { this.wait(100); } catch (InterruptedException e) { }
         }
     }
-
-    /**
-     * Envoi d'une demande d'agents connectÃ©s.
-     */
-    private void demandeAdversaires() {
-        if (this.getEtat() == pret || getEtat() == actionChoisie) {
+    /** Envoi d'une demande d'agents connectés. */
+    public void demandeAdversaires() {
+        if (this.getEtat() == Etat.pret || getEtat() == Etat.actionChoisie) {
             System.out.println("Transition : envoi d'une requete agents.");
             String export = new bourse.protocole.RequeteAgents().toXML();
             try {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("requete agents");
-            } catch (IOException e) {
-                e.printStackTrace(System.err);
-            }
-            // mise Ã  jour de la date de tÃ©lÃ©chargement de la liste des agents connectÃ©s
+            } catch (IOException e) { e.printStackTrace(System.err); }
+            /** mise à jour de la date de téléchargement de la liste des agents
+             *  connéctés */
             environnement.setDateListeAgent();
         }
     }
-
-    /**
-     * Fait un notifyAll Ã  l'interieur de l'agent (Ã©vite au thread de l'appeller directement).
-     */
-    public synchronized void synchroniser() {
-        this.notifyAll();
-    }
-
-    /**
-     * Traitement de l'enchÃ¨re Ã  prendre ou Ã  laisser.
-     */
-    private void enchereUnOuQuatre() {
-        System.out.println("Transition : envoyer proposition enchÃ¨re.");
-        String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(),
-                getEnvironnement().getCourante().getValeurEnchere()).toXML();
+    /** Fait un notifyAll à l'interieur de l'agent (évite au thread de l'appeller directement). */
+    public synchronized void synchroniser() { this.notifyAll(); }
+    /** Traitement de l'enchère à prendre ou à laisser. */
+    public void enchereUnOuQuatre() {
+        System.out.println("Transition : envoyer proposition enchère.");
+        String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), getEnvironnement().getCourante().getValeurEnchere()).toXML();
         try {
             this.pdmConnectee.ecrire(export);
             this.fenetre.addOutputMessage("proposition enchere");
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-        this.setEtat(attenteRESULTATdeSaVente);
+        } catch (IOException e) { e.printStackTrace(System.err); }
+        this.setEtat(Etat.attenteRESULTATdeSaVente);
     }
-
-    private void enchereDeuxCinq() {
-        System.out.println("Transition : envoyer proposition enchÃ¨re.");
+    public void enchereDeuxCinq() {
+        System.out.println("Transition : envoyer proposition enchère.");
         float prix = decision.choixPrix();
-        String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(),
-                prix).toXML();
+        String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), prix).toXML();
         try {
             this.pdmConnectee.ecrire(export);
             this.fenetre.addOutputMessage("proposition enchere");
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-        this.setEtat(attenteRESULTATdeSaVente);
+        } catch (IOException e) { e.printStackTrace(System.err); }
+        this.setEtat(Etat.attenteRESULTATdeSaVente);
     }
-
-    private void enchereTrois() {
-        System.out.println("Transition : envoyer proposition enchÃ¨re.");
+    public void enchereTrois() {
+        System.out.println("Transition : envoyer proposition enchère.");
         float prix2 = decision.choixPrix();
-        String export3 = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(),
-                prix2).toXML();
+        String export3 = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), prix2).toXML();
         try {
             this.pdmConnectee.ecrire(export3);
             this.fenetre.addOutputMessage("proposition enchere");
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-        setEtat(pret);
+        } catch (IOException e) { e.printStackTrace(System.err); }
+        setEtat(Etat.pret);
     }
-
-    /**
-     * MÃ©thode qui Ã©xÃ©cute le code de l'agent.
-     */
-    private synchronized void run() {
+    /** Méthode qui éxécute le code de l'agent.*/
+    public synchronized void run() {
         do {
             this.fenetre.setEnvironnement(getEnvironnement().toString(0));
             System.out.println("Etat       : " + new Etat(getEtat()).toString(0));
-            setEtatSuivant(FIRST_TIME);
+            setEtatSuivant(-1);
             switch (getEtat()) {
-            case quitter:
-                break;
-            case initial:
-                this.getPdmsFromBd();
-                /** etat = 2 */
-                break;
-            case connaitPdms:
-                if (action == bilan)
-                    deconnexionPhysique();
-                else if (memoire.getPdms().aucuneActive()) {
-                    setEtat(initial); // Ã©tat 1.
+                case 0:
+                    break;
+                case 1:
+                    this.getPdmsFromBd(); /** etat = 2 */
+                    break;
+                case 2:
+                    if (getAction() == Action.bilan) deconnexionPhysique();
+                    else if (memoire.getPdms().aucuneActive()) {
+                        setEtat(Etat.initial); // état 1.
+                        try { wait(5000); } catch(java.lang.InterruptedException e) { e.printStackTrace(System.err); }
+                    } else /*if (getAction() == Action.aucune || getAction() == Action.migrer )*/ {
+                        decision.choixPdm();
+                        System.out.println("Transition : choix de la pdm.");
+                    }
+                    break;
+                case 3:
                     try {
-                        wait(5000);
-                    } catch (java.lang.InterruptedException e) {
+                        this.connexionPhysique(this.getCurrentPdm().getAdresse().ipToString(), this.getCurrentPdm().getAdresse().getPort()); // etat = 4
+                    } catch (java.net.ConnectException e) {
+                         // echec de connexion : la pdm est injoignable donc inactive.
+                        System.err.println(e.getLocalizedMessage());
+                        this.getCurrentPdm().setActive(false);
+                        this.setEtat(Etat.connaitPdms);
+                    } catch (java.io.IOException e) {
+                        // echec : la pdm est injoignable donc inactive.
                         e.printStackTrace(System.err);
+                        this.getCurrentPdm().setActive(false);
+                        this.setEtat(Etat.connaitPdms);
                     }
-                } else {
-                    decision.choixPdm();
-                    System.out.println("Transition : choix de la pdm.");
-                }
-                break;
-            case pdmChoisie:
-                try {
-                    this.connexionPhysique(this.getCurrentPdm().getAdresse().ipToString(), this.getCurrentPdm()
-                            .getAdresse().getPort()); // etat = 4
-                } catch (java.net.ConnectException e) {
-                    // echec de connexion : la pdm est injoignable donc inactive.
-                    System.err.println(e.getLocalizedMessage());
-                    this.getCurrentPdm().setActive(false);
-                    this.setEtat(connaitPdms);
-                } catch (java.io.IOException e) {
-                    // echec : la pdm est injoignable donc inactive.
-                    e.printStackTrace(System.err);
-                    this.getCurrentPdm().setActive(false);
-                    this.setEtat(connaitPdms);
-                }
-                break;
-            case connectePhysiquement:
-                this.welcomePdm();
-                break;
-            case attenteRESULTWELCOME:
-                try {
-                    this.wait(decision.timeout());
-                    if (getEtat() == attenteRESULTWELCOME) {
-                        setEtat(connaitPdms);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                    setEtat(pret);
-                }
-                break;
-            case pret:
-                decision.choixAction();
-                // DÃ¨s qu'on fait une action, on doit incrÃ©menter le compteur d'action courante.
-                environnement.setNombreActions(environnement.getNombreActions() + 1);
-                switch (action) {
-                case bilan:
-                case migrer:
-                    byePdm();
                     break;
-                case programme:
-                    demandeProgramme();
+                case 4:
+                    this.welcomePdm();
                     break;
-                case adversaires:
-                    demandeAdversaires();
-                    break;
-                case attenteEnchere:
+                case 5:
                     try {
                         this.wait(decision.timeout());
+                        if (getEtat() == 5) setEtat(Etat.connaitPdms);
                     } catch (InterruptedException e) {
                         e.printStackTrace(System.err);
-                        setEtat(pret);
+                        setEtat(Etat.pret);
                     }
-                }
-                break;
-            case attenteRESULTBYE:
-                try {
-                    this.wait(decision.timeout());
-                    setEtat(pret); // on n'a pas bougÃ© dÃ©tat alors on revient.
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                    setEtat(pret);
-                }
-                break;
-            case nonConnecte:
-                setEtat(quitter);
-                break;
-            case actionChoisie:
-                if (this.decision.venteInteressante()) {
-                    this.proposeVente();
-                } else
-                    setEtat(pret);
-                break;
-            case attentePropositionEnchere:
-                try {
-                    this.wait(decision.timeout());
-                    if (getEtat() == attentePropositionEnchere) {
-                        setEtat(pret); // on n'a pas bougÃ© d'Ã©tat alors on revient.
+                    break;
+                case 6:
+                    decision.choixAction();
+                    /** Dès qu'on fait une action, on doit incrémenter le compteur d'action courante. */
+                    environnement.setNombreActions(environnement.getNombreActions() + 1);
+                    if (this.getAction() == action.aucune) { /** on ne fait rien */ }
+                    else if (this.getAction() == Action.bilan || this.getAction() == Action.migrer) byePdm();
+                 // else if (this.getAction() == Action.vendre) this.proposeVente();
+                    else if (this.getAction() == Action.programme) this.demandeProgramme();
+                    else if (this.getAction() == Action.adversaires) this.demandeAdversaires();
+                    else if (this.getAction() == Action.attenteEnchere)
+                        try {
+                            this.wait(decision.timeout());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace(System.err);
+                            setEtat(Etat.pret);
+                        }
+                    break;
+                case 7:
+                    try {
+                        this.wait(decision.timeout());
+                        setEtat(Etat.pret); // on a pas bougé détat alors on revient.
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(System.err);
+                        setEtat(Etat.pret);
+                    }                   
+                    break;
+                case 8:
+                    setEtat(Etat.quitter);
+                    break;
+                case 9:
+                    /*
+                    this.demandeAdversaires();
+                    this.demandeProgramme();
+                    */
+                    if (this.decision.venteInteressante()) {
+                        this.proposeVente();
+                    } else
+                        setEtat(Etat.pret);
+                    break;
+                case 10:
+                    try {
+                        this.wait(decision.timeout());
+                        if (getEtat() == 10) setEtat(Etat.pret); // on a pas bougé d'état alors on revient.
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(System.err);
+                        setEtat(Etat.pret);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                    setEtat(pret);
-                }
-                break;
-            case attenteDeclenchementEnchere:
-                try {
-                    this.wait(decision.timeout());
-                    if (getEtat() == attenteDeclenchementEnchere) {
-                        setEtat(pret); // on n'a pas bougÃ© d'Ã©tat alors on revient.
+                    break;
+                case 11:
+                    try {
+                        this.wait(decision.timeout());
+                        if (getEtat() == 11) setEtat(Etat.pret); // on a pas bougé d'état alors on revient.
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(System.err);
+                        setEtat(Etat.pret);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                    setEtat(pret);
-                }
-                break;
-            case modeEnchere:
-                System.out.println("\n");
-                boolean interessant = decision.livreInteressant(environnement.getCourante().getLivre(), environnement
-                        .getCourante().getType(), environnement.getCourante().getValeurEnchere());
-                System.out.println("\n");
-                if (interessant) {
-                    this.setEtat(enchereInteressante);
-                } else {
-                    this.setEtat(actionChoisie);
-                }
-                break;
-            case attenteRESULTATdeSaVente:
-                try {
-                    this.wait(decision.timeout());
-                    setEtat(pret);
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                    setEtat(pret);
-                }
-                break;
-            case enchereInteressante:
-                int type = getEnvironnement().getCourante().getType();
-                if (type == 1 || type == 4) {
-                    setEtat(enchereUnOuQuatre);
-                    System.out.println("Transition : Enchere 1 ou 4");
-                } else if (type == 2 || type == 5) {
-                    setEtat(enchereDeuxOuCinq);
-                    System.out.println("Transition : Enchere 2 ou 5");
-                } else if (type == 3) {
-                    setEtat(enchereTrois);
-                    System.out.println("Transition : Enchere 3");
-                }
-                break;
-            case enchereUnOuQuatre:
-                enchereUnOuQuatre();
-                break;
-            case enchereDeuxOuCinq:
-                enchereDeuxCinq();
-                break;
-            case enchereTrois:
-                enchereTrois();
-                break;
-            default:
-                setEtat(quitter);
-                break;
+                    break;
+                case 12:
+                    System.out.println("\n");
+                    boolean interessant = decision.livreInteressant(environnement.getCourante().getLivre(), environnement.getCourante().getType(), environnement.getCourante().getValeurEnchere());
+                    System.out.println("\n");
+                    if (interessant)
+                        this.setEtat(14);
+                    else
+                        this.setEtat(9);
+                    break;
+                case 13:
+                    try {
+                        this.wait(decision.timeout());
+                        setEtat(Etat.pret);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(System.err);
+                        setEtat(Etat.pret);
+                    }
+                    break;
+                case 14:
+                    int type = getEnvironnement().getCourante().getType();
+                    if (type == 1 || type == 4) {
+                        setEtat(Etat.enchereUnOuQuatre);
+                        System.out.println("Transition : Enchere 1 ou 4");
+                    } else if (type == 2 || type == 5) {
+                        setEtat(Etat.enchereDeuxOuCinq);
+                        System.out.println("Transition : Enchere 2 ou 5");
+                    } else if (type == 3) {
+                        setEtat(Etat.enchereTrois);
+                        System.out.println("Transition : Enchere 3");
+                    }
+                    break;
+                case 15:
+                    enchereUnOuQuatre();                   
+                    break;
+                case 16:
+                    enchereDeuxCinq();
+                    break;
+                case 17:
+                    enchereTrois();
+                    break;
+                default:
+                    setEtat(Etat.quitter);
+                    break;
             }
-            if (etatSuivant.getEtat() != FIRST_TIME) {
-                setEtat(etatSuivant.getEtat());
-            }
-        } while (this.getEtat() != quitter);
+            if (getEtatSuivant() != -1)
+                setEtat(getEtatSuivant());
+        } while (this.getEtat() != 0);
     }
-
-    /**
-     * Programme principal.
-     */
+    
+    /** Programme principal. */
     public static void main(String arg[]) {
-        // initialisation
-        final Agent a = new Agent("");
-        a.fenetre.setVisible(true);
-        // on crÃ©e la fenÃªtre de dialogue parente Ã  l'agent et bloquante (modale).
-        final JDialog demarrage = new JDialog(a.fenetre, true);
-
-        JPanel jPanelPrincipal = new JPanel();
-
-        JPanel jPanelAgent = new JPanel();
-        JLabel jLabelNomAgent = new JLabel();
-        final JComboBox jComboBoxNomAgent = new JComboBox();
-        JLabel jLabelControleAgent = new JLabel();
-        final JComboBox jComboBoxControleAgent = new JComboBox();
-
-        JPanel jPanelPdm = new JPanel();
-        JLabel jLabelAdresseIpPdm = new JLabel();
-        final JTextField jTextFieldAdresseIpPdm = new JTextField();
-        JLabel jLabelPortPdm = new JLabel();
-        final JTextField jTextFieldPortPdm = new JTextField();
-        final JCheckBox jCheckBoxVerbose = new JCheckBox();
-
-        JPanel jPanelValidation = new JPanel();
-        JButton jButtonValider = new JButton();
-
-        demarrage.getContentPane().setLayout(new FlowLayout());
-        demarrage.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
+        /** initialisation */
+        final bourse.agent.Agent a = new bourse.agent.Agent("");
+        a.fenetre.show();
+        /** on crée la fenetre de dialogue parente à l'agent et bloquante (modale). */
+        final javax.swing.JDialog demarrage = new javax.swing.JDialog(a.fenetre, true);
+        
+        javax.swing.JPanel jPanelPrincipal = new javax.swing.JPanel();
+        
+        javax.swing.JPanel jPanelAgent = new javax.swing.JPanel();
+        javax.swing.JLabel jLabelNomAgent = new javax.swing.JLabel();
+        final javax.swing.JComboBox jComboBoxNomAgent = new javax.swing.JComboBox();
+        javax.swing.JLabel jLabelControleAgent = new javax.swing.JLabel();
+        final javax.swing.JComboBox jComboBoxControleAgent = new javax.swing.JComboBox();
+        
+        javax.swing.JPanel jPanelPdm = new javax.swing.JPanel();
+        javax.swing.JLabel jLabelAdresseIpPdm = new javax.swing.JLabel();
+        final javax.swing.JTextField jTextFieldAdresseIpPdm = new javax.swing.JTextField();
+        javax.swing.JLabel jLabelPortPdm = new javax.swing.JLabel();
+        final javax.swing.JTextField jTextFieldPortPdm = new javax.swing.JTextField();
+        final javax.swing.JCheckBox jCheckBoxVerbose = new javax.swing.JCheckBox();
+        
+        javax.swing.JPanel jPanelValidation = new javax.swing.JPanel();
+        javax.swing.JButton jButtonValider = new javax.swing.JButton();
+        
+        demarrage.getContentPane().setLayout(new java.awt.FlowLayout());
+        demarrage.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 System.exit(0);
             }
         });
-        jPanelPrincipal.setLayout(new BorderLayout());
-        jPanelAgent.setLayout(new GridLayout(3, 2));
+        jPanelPrincipal.setLayout(new java.awt.BorderLayout());
+        jPanelAgent.setLayout(new java.awt.GridLayout(3, 2));
         jLabelNomAgent.setText("Nom");
         jPanelAgent.add(jLabelNomAgent);
-        final String[] defaultAgentNames = new String[] { "Arnaud", "Barney", "Corie", "Doris", "Eric", "Felicien",
-                "Gatien", "Hortentia", "Icare", "Jerome", "Kholia", "Luther", "Mohamed", "Natacha", "Omer", "Petra",
-                "Quincy", "Rebecca", "Sebastien", "Thadeus", "Ursule", "Vincenzo", "Whitney", "Xena", "Yseult",
-                "Zdzislawa" };
-        jComboBoxNomAgent.setModel(new DefaultComboBoxModel(defaultAgentNames));
-        jComboBoxNomAgent.setSelectedIndex(new Random().nextInt(defaultAgentNames.length));
+        jComboBoxNomAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Arnaud", "Barney", "Corie", "Doris", "Eric", "Felicien", "Gatien", "Hortentia", "Icare", "Jerome", "Kholia", "Luther", "Mohamed", "Natacha", "Omer", "Petra", "Quincy", "Rebecca", "Sebastien", "Thadeus", "Ursule", "Vincenzo", "Whitney", "Xena", "Yseult", "Zdzislawa" }));
+        jComboBoxNomAgent.setSelectedIndex(new java.util.Random().nextInt(26));
         jPanelAgent.add(jComboBoxNomAgent);
         jLabelControleAgent.setText("Contr\u00f4le");
         jPanelAgent.add(jLabelControleAgent);
-        jComboBoxControleAgent.setModel(new DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain",
-                "AlÃ©atoire" }));
+        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "Aléatoire" }));
         jPanelAgent.add(jComboBoxControleAgent);
         jCheckBoxVerbose.setText("Affichage complet");
         jCheckBoxVerbose.setSelected(false);
         jPanelAgent.add(jCheckBoxVerbose);
-        jPanelPrincipal.add(jPanelAgent, BorderLayout.NORTH);
-        jPanelPdm.setLayout(new GridLayout(2, 2));
-        jPanelPdm.setBorder(new TitledBorder("Pdm (facultatif)"));
+        jPanelPrincipal.add(jPanelAgent, java.awt.BorderLayout.NORTH);
+        jPanelPdm.setLayout(new java.awt.GridLayout(2, 2));
+        jPanelPdm.setBorder(new javax.swing.border.TitledBorder("Pdm (facultatif)"));
         jLabelAdresseIpPdm.setText("Adresse Ip");
         jPanelPdm.add(jLabelAdresseIpPdm);
         jPanelPdm.add(jTextFieldAdresseIpPdm);
@@ -797,55 +501,44 @@ public class Agent {
         jPanelPdm.add(jLabelPortPdm);
         jTextFieldPortPdm.setColumns(15);
         jPanelPdm.add(jTextFieldPortPdm);
-        jPanelPrincipal.add(jPanelPdm, BorderLayout.CENTER);
+        jPanelPrincipal.add(jPanelPdm, java.awt.BorderLayout.CENTER);
         jButtonValider.setText("Lancer");
-        // action Ã  rÃ©aliser quand on clique sur le bouton lancer.
-        jButtonValider.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                a.setNom((String) jComboBoxNomAgent.getSelectedItem());
+        /** action à réaliser quand on clique sur le bouton lancer. */
+        jButtonValider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                a.setNom((String)jComboBoxNomAgent.getSelectedItem());
                 switch (jComboBoxControleAgent.getSelectedIndex()) {
-                case 0:
-                    a.decision = new Ia(a);
-                    break;
-                case 1:
-                    a.decision = new Humain(a);
-                    break;
-                case 2:
-                    a.decision = new Aleatoire(a);
-                    break;
+                    case 0 : a.decision = new bourse.agent.ia.Ia(a);        break;
+                    case 1 : a.decision = new bourse.agent.ia.Humain(a);    break;
+                    case 2 : a.decision = new bourse.agent.ia.Aleatoire(a); break;
                 }
                 if (!jTextFieldAdresseIpPdm.getText().equals("") || !jTextFieldPortPdm.getText().equals("")) {
-                    Ip adresse = new Ip(jTextFieldAdresseIpPdm.getText() + ":" + jTextFieldPortPdm.getText());
-                    a.getMemoire()
-                            .getPdms()
-                            .ajouter(
-                                    new PdmMemoire("Par dÃ©faut", adresse.toString(), false, true, new ListeProgramme(),
-                                            0));
-                    a.setEtat(connaitPdms);
-                } else {
-                    a.setEtat(initial);
+                    bourse.reseau.Ip adresse = new bourse.reseau.Ip(jTextFieldAdresseIpPdm.getText()+":"+jTextFieldPortPdm.getText());
+                    a.getMemoire().getPdms().ajouter(new PdmMemoire("Par défaut", adresse.toString(), false, true, new ListeProgramme(),0));
+                    a.setEtat(Etat.connaitPdms);
                 }
+                else a.setEtat(Etat.initial);
                 a.setVerbose(jCheckBoxVerbose.isSelected());
                 demarrage.dispose();
             }
         });
         jPanelValidation.add(jButtonValider);
-        jPanelPrincipal.add(jPanelValidation, BorderLayout.SOUTH);
+        jPanelPrincipal.add(jPanelValidation, java.awt.BorderLayout.SOUTH);
         demarrage.getContentPane().add(jPanelPrincipal);
         demarrage.pack();
         if (arg.length == 0) {
-            // on affiche la fenÃªtre bloquante de choix du nom.
-            demarrage.setVisible(true);
-            // lorsque la fenÃªtre rend la main, (l'utilisateur a voulu dÃ©marrer l'agent), on lance l'agent.
+            /** on affiche la fenêtre bloquante de choix du nom. */
+            demarrage.show();
+            /** lorsque la fenêtre rend la main, (l'utilisateur a voulu démarrer
+             *  l'agent), on lance l'agent. */
         } else {
-            // on initialise l'agent sans l'aide de l'utilisateur.
+            /** on initialise l'agent sans l'aide de l'utilisateur. */
             a.setNom(arg[0]);
-            if (arg.length >= 1) {
-                a.decision = new Ia(a);
-            } else {
-                a.decision = new Aleatoire(a);
-            }
-            a.setEtat(initial);
+            if (arg.length >= 1)
+                a.decision = new bourse.agent.ia.Ia(a);
+            else
+                a.decision = new bourse.agent.ia.Aleatoire(a);
+            a.setEtat(Etat.initial);
             a.setVerbose(false);
         }
         a.run();

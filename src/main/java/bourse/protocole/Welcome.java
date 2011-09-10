@@ -10,6 +10,8 @@ import org.xml.sax.SAXParseException;
 
 import java.io.ByteArrayInputStream;
 
+
+
 public class Welcome extends Protocole {
     
     private String nom;
@@ -18,13 +20,13 @@ public class Welcome extends Protocole {
     public String getNom() { return this.nom; }
     
     public Welcome(String nom, String description) {
-        super(TypeMessage.WELCOME);
+        super(new TypeMessage(TypeMessage.TM_WELCOME));
         this.nom = nom;
         this.description = description;
     }
     
     public Welcome(Element type) {
-        super(TypeMessage.WELCOME);
+        super(new TypeMessage(TypeMessage.TM_WELCOME));
         this.toClass(type);
     }
     
@@ -67,9 +69,10 @@ public class Welcome extends Protocole {
     public static void main(String args[]) {
         String p=new Welcome("essai", "description").toXML();
         System.out.println(p);
+        Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
-        // l'application de se concentrer sur l'analyse sÃ©mantique.
+        // D'après le tutorial JAXP, ces variables fixées à true permettent à
+        // l'application de se concentrer sur l'analyse sémantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -78,7 +81,7 @@ public class Welcome extends Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La dÃ©finition de ErrorHandler est inspirÃ©e de
+            // La définition de ErrorHandler est inspirée de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

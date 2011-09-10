@@ -1,7 +1,5 @@
 package bourse.agent;
 
-import javax.swing.table.DefaultTableModel;
-
 /*
  * Visualisation.java
  *
@@ -14,11 +12,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Visualisation extends javax.swing.JFrame {
     
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8333803126410382931L;
-	/** Creates new form Visualisation */
+    /** Creates new form Visualisation */
     public Visualisation() {
         initComponents();
     }
@@ -105,16 +99,15 @@ public class Visualisation extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.GridLayout(3, 1));
 
         jScrollPane1.setBorder(new javax.swing.border.TitledBorder("Places de march\u00e9"));
-        jTable1.setModel(new DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nom", "Adresse", "Active", "VisitÃ©e", "EnchÃ¨res gÃ©rÃ©es", "Numero du tour"
+                "Nom", "Adresse", "Active", "Visitée", "Enchères gérées", "Numero du tour"
             }
         ) {
-            private static final long serialVersionUID = -4357019175145813446L;
-			boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -132,11 +125,10 @@ public class Visualisation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nom", "CatÃ©gorie", "PrÃ©sent", "FrÃ©quence catÃ©gorie"
+                "Nom", "Catégorie", "Présent", "Fréquence catégorie"
             }
         ) {
-            private static final long serialVersionUID = -6002953943034809280L;
-			boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -154,11 +146,10 @@ public class Visualisation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Id", "PropriÃ©taire", "CatÃ©gorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"
+                "Date", "Id", "Propriétaire", "Catégorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"
             }
         ) {
-            private static final long serialVersionUID = 1271997920689289961L;
-			boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -249,50 +240,50 @@ public class Visualisation extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        new Visualisation().setVisible(true);
+        new Visualisation().show();
     }
     
-    /** AccÃ©der au tableau d'affichage de la liste des pdms de la mÃ©moire */
+    /** Accéder au tableau d'affichage de la liste des pdms de la mémoire */
     public javax.swing.JTable getTableauPdmMemoire() { return this.jTable1; }
-    /** AccÃ©der au tableau d'affichage de la liste des agents de la mÃ©moire */
+    /** Accéder au tableau d'affichage de la liste des agents de la mémoire */
     public javax.swing.JTable getTableauAgentMemoire() { return this.jTable2; }
-    /** AccÃ©der au tableau d'affichage de la liste des possessions de la mÃ©moire */
+    /** Accéder au tableau d'affichage de la liste des possessions de la mémoire */
     public javax.swing.JTable getTableauPossessionMemoire() { return this.jTable3; }
-    /** AccÃ©der au conteneur de la liste des pdms de la mÃ©moire.  */
+    /** Accéder au conteneur de la liste des pdms de la mémoire.  */
     public javax.swing.JScrollPane getJScrollPanePdmMemoire() { return this.jScrollPane1; }
-    /** AccÃ©der au conteneur de la liste des agents de la mÃ©moire.  */
+    /** Accéder au conteneur de la liste des agents de la mémoire.  */
     public javax.swing.JScrollPane getJScrollPaneAgentMemoire() { return this.jScrollPane4; }
-    /** AccÃ©der au conteneur de la liste des possessions de la mÃ©moire.  */
+    /** Accéder au conteneur de la liste des possessions de la mémoire.  */
     public javax.swing.JScrollPane getJScrollPanePossessionMemoire() { return this.jScrollPane5; }
     /** Modifie le nom. */
     public void setNom(String nom) { this.nom.setText(nom); }
     /** Modifie le solde. */
     public void setSolde(String solde) { this.solde.setText(solde); }
-    /** Modifie la catÃ©gorie. */
+    /** Modifie la catégorie. */
     public void setCategorie(String categorie) { this.categorie.setText(categorie); }
-    /** Modifie le nom de l'hÃ´te. */
+    /** Modifie le nom de l'hôte. */
     public void setHote(String hote) { this.hote.setText(hote); }
-    /** Modifie l'Ã©tat. */
+    /** Modifie l'état. */
     public void setEtat(String etat) { this.etat.setText(etat); }
     /** Modifie l'action. */
     public void setAction(String action) { this.action.setText(action); }
-    /** Modifie l'Ã©tat de l'environnement. */
+    /** Modifie l'état de l'environnement. */
     public void setEnvironnement(String env) { this.environnement.setText(env); }
-    /** Ajout d'un message entrant Ã  la fenÃªtre du protocole. */
+    /** Ajout d'un message entrant à la fenêtre du protocole. */
     public void addInputMessage(String m) {
         javax.swing.JLabel l = new javax.swing.JLabel(m + "\n");
         l.setForeground(java.awt.Color.BLUE);
         this.protocole.add(l);
         this.protocole.validate();
     }
-    /** Ajout d'un message sortant Ã  la fenÃªtre de protocole. */
+    /** Ajout d'un message sortant à la fenêtre de protocole. */
     public void addOutputMessage(String m) {
         javax.swing.JLabel l = new javax.swing.JLabel(m + "\n");
         l.setForeground(java.awt.Color.RED);
         this.protocole.add(l);
         this.protocole.validate();
     }
-    /** Affichage des rÃ©sultats. */
+    /** Affichage des résultats. */
     public void setResultat(String resultat) { this.resultat.setText(resultat); }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
