@@ -31,7 +31,7 @@ public class ProposeVenteTest extends SAXTest {
         assertThat(proposeVente.getId()).isEqualTo(12);
         assertThat(proposeVente.getNom()).isEqualTo(1);
         assertThat(proposeVente.getPrix()).isEqualTo(1546);
-        assertThat(proposeVente.getType()).isEqualTo(TypeMessage.TM_PROPOSE_VENTE);
+        assertThat(proposeVente.getType().getValue()).isEqualTo(TypeMessage.TM_PROPOSE_VENTE);
     }
 
     @Test

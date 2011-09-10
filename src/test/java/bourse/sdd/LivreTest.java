@@ -47,7 +47,7 @@ public class LivreTest extends SAXTest {
     public void should_create_book_by_copying_existing_one() {
         Livre book = new Livre(livre);
         assertBook(book);
-        assertThat(book).isEqualTo(livre);
+        assertThat(book.toString()).isEqualTo(livre.toString());
     }
 
     private void assertBook(Livre book) {

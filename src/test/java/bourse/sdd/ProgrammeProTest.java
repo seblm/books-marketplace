@@ -2,14 +2,10 @@ package bourse.sdd;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import bourse.placeDeMarche.enchere.Enchere;
-
-import com.google.common.collect.Sets;
 
 public class ProgrammeProTest {
 
@@ -65,14 +61,6 @@ public class ProgrammeProTest {
     public void with_two_equals_programmePro() {
         ProgrammePro programmePro2 = new ProgrammePro(2, book, Enchere.ENCHERE_UN, 15.0f);
         assertThat(programmePro.equals(programmePro2));
-    }
-
-    @Test
-    public void with_two_equals_programmePro_should_set_only_one_instance_in_a_set() {
-        Set<ProgrammePro> programmePros = Sets.newHashSet();
-        assertThat(programmePros.add(programmePro)).isTrue();
-        ProgrammePro programmePro2 = new ProgrammePro(2, book, Enchere.ENCHERE_UN, 15.0f);
-        assertThat(programmePros.add(programmePro2)).isFalse();
     }
 
 }

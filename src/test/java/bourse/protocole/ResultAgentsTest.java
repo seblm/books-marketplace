@@ -27,7 +27,7 @@ public class ResultAgentsTest extends SAXTest {
         listeAgents.add(3, "groupe-E.protocoleman");
         ResultAgents resultAgents = new ResultAgents(listeAgents);
 
-        assertThat(resultAgents.type).isEqualTo(TypeMessage.TM_RESULT_AGENTS);
+        assertThat(resultAgents.type.getValue()).isEqualTo(TypeMessage.TM_RESULT_AGENTS);
         assertThat(resultAgents.getListeAgents()).containsExactly(listeAgents.toArray());
     }
 

@@ -23,7 +23,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(simpleError.getNom()).isEqualTo("Simple Error");
         assertThat(simpleError.getRaison()).isEmpty();
-        assertThat(simpleError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
+        assertThat(simpleError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = simpleError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -32,17 +32,20 @@ public class ErreurTest extends SAXTest {
         assertThat(xmlLines.next()).isEqualTo("<MSG>");
         assertThat(xmlLines.next()).isEqualTo("<ERREUR NOM=\"Simple Error\">no blabla</ERREUR>");
         assertThat(xmlLines.next()).isEqualTo("</MSG>");
-        assertThat(getErrorFromXml(xml)).isEqualTo(simpleError);
+        Erreur actualErrorFromXml = getErrorFromXml(xml);
+        assertThat(actualErrorFromXml.getNom()).isEqualTo(simpleError.getNom());
+        assertThat(actualErrorFromXml.getRaison()).isEqualTo(simpleError.getRaison());
+        assertThat(actualErrorFromXml.getType().getValue()).isEqualTo(simpleError.getType().getValue());
     }
 
     @Test
-    public final void with_a_zerovente_can_not_produce_xml_message() throws UnsupportedEncodingException, SAXException,
+    public final void with_a_zerovente_can_produce_xml_message() throws UnsupportedEncodingException, SAXException,
             IOException {
         Erreur zeroVenteError = new Erreur("ZEROVENTE", "pas de vente", "aucune raison connue");
 
         assertThat(zeroVenteError.getNom()).isEqualTo("ZEROVENTE");
         assertThat(zeroVenteError.getRaison()).isEqualTo("aucune raison connue");
-        assertThat(zeroVenteError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
+        assertThat(zeroVenteError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = zeroVenteError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -53,8 +56,10 @@ public class ErreurTest extends SAXTest {
                 "<ERREUR NOM=\"ZEROVENTE\">pas de vente<RAISON TYPE=\"aucune raison connue\"/>");
         assertThat(xmlLines.next()).isEqualTo("</ERREUR>");
         assertThat(xmlLines.next()).isEqualTo("</MSG>");
-        assertThat(getErrorFromXml(xml).toString()).isEqualTo(
-                "Erreur{nom=ZEROVENTE, message=pas de vente, pdmnom=, adresse=, raison=aucune raison connue}");
+        Erreur actualErrorFromXml = getErrorFromXml(xml);
+        assertThat(actualErrorFromXml.getNom()).isEqualTo(zeroVenteError.getNom());
+        assertThat(actualErrorFromXml.getRaison()).isEqualTo(zeroVenteError.getRaison());
+        assertThat(actualErrorFromXml.getType().getValue()).isEqualTo(zeroVenteError.getType().getValue());
     }
 
     @Test
@@ -64,7 +69,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(duplicationError.getNom()).isEqualTo("DUPLICATION");
         assertThat(duplicationError.getRaison()).isEmpty();
-        assertThat(duplicationError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
+        assertThat(duplicationError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = duplicationError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -75,7 +80,10 @@ public class ErreurTest extends SAXTest {
                 "<ERREUR NOM=\"DUPLICATION\">en double<PDM ADRESSE=\"5° avenue\" NOM=\"Wall Book\"/>");
         assertThat(xmlLines.next()).isEqualTo("</ERREUR>");
         assertThat(xmlLines.next()).isEqualTo("</MSG>");
-        assertThat(getErrorFromXml(xml)).isEqualTo(duplicationError);
+        Erreur actualErrorFromXml = getErrorFromXml(xml);
+        assertThat(actualErrorFromXml.getNom()).isEqualTo(duplicationError.getNom());
+        assertThat(actualErrorFromXml.getRaison()).isEqualTo(duplicationError.getRaison());
+        assertThat(actualErrorFromXml.getType().getValue()).isEqualTo(duplicationError.getType().getValue());
     }
 
     @Test
@@ -85,7 +93,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(generalError.getNom()).isEqualTo("General Error");
         assertThat(generalError.getRaison()).isEqualTo("trop de blabla");
-        assertThat(generalError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
+        assertThat(generalError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = generalError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -94,7 +102,10 @@ public class ErreurTest extends SAXTest {
         assertThat(xmlLines.next()).isEqualTo("<MSG>");
         assertThat(xmlLines.next()).isEqualTo("<ERREUR NOM=\"General Error\">description</ERREUR>");
         assertThat(xmlLines.next()).isEqualTo("</MSG>");
-        assertThat(getErrorFromXml(xml)).isEqualTo(new Erreur("General Error", "description"));
+        Erreur actualErrorFromXml = getErrorFromXml(xml);
+        assertThat(actualErrorFromXml.getNom()).isEqualTo(generalError.getNom());
+        assertThat(actualErrorFromXml.getRaison()).isEmpty();
+        assertThat(actualErrorFromXml.getType().getValue()).isEqualTo(generalError.getType().getValue());
     }
 
     private Erreur getErrorFromXml(final String xml) throws SAXException, IOException, UnsupportedEncodingException {

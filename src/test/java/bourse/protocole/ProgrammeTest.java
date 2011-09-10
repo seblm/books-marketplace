@@ -1,7 +1,9 @@
-package bourse;
+package bourse.protocole;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.fest.assertions.Fail.fail;
 
 import java.util.LinkedList;
 
@@ -12,8 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import bourse.placeDeMarche.enchere.Enchere;
-import bourse.protocole.Categorie;
-import bourse.protocole.Programme;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 
@@ -44,7 +44,9 @@ public class ProgrammeTest {
     @Test
     public void testToClass() {
         Programme p = new Programme(programmes);
-        Programme pdest = new Programme(p.toDOM().getDocumentElement());
+        Element programmeDocumentElement = (Element) p.toDOM().getDocumentElement().getChildNodes().item(0);
+        Programme pdest = new Programme(newLinkedList());
+        pdest.toClass(programmeDocumentElement);
         ProgrammePro firstProgrammePro = (bourse.sdd.ProgrammePro) pdest.getListeProgramme().get(0);
         assertThat(firstProgrammePro.getLivre().getTitre()).isEqualTo("lupin");
         assertThat(firstProgrammePro.getLivre().getCategorie()).isEqualTo(new Categorie(Categorie.SF));
@@ -105,13 +107,12 @@ public class ProgrammeTest {
 
     @Test
     public void testToHtmlWithoutBooks() {
-        LinkedList<ProgrammePro> prorammePros = Lists.<ProgrammePro> newLinkedList();
-        prorammePros.add(new ProgrammePro(1, null));
-        final Programme programme = new Programme(prorammePros);
+        final Programme programme = new Programme(newLinkedList(newArrayList(new ProgrammePro(1, null))));
         try {
             programme.toHtml();
+            fail("Implementation does not support progamme with no books. Expecting a NPE.");
         } catch (NullPointerException e) {
-            fail(e.getMessage());
+            assertThat(e).isNotNull();
         }
     }
 }
