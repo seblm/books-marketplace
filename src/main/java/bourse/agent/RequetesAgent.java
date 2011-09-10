@@ -2,7 +2,7 @@ package bourse.agent;
 
 import java.sql.*;
 
-/** Génère l'ensemble des requetes nécessaires à l'agent. */
+/** GÃ©nÃ¨re l'ensemble des requetes nÃ©cessaires Ã  l'agent. */
 public class RequetesAgent extends bourse.reseau.Bd {
     /** Constructeur. */
     public RequetesAgent(boolean verbose) throws SQLException, java.lang.ClassNotFoundException, java.lang.InstantiationException, java.lang.IllegalAccessException{
@@ -22,7 +22,7 @@ public class RequetesAgent extends bourse.reseau.Bd {
         ResultSet r = this.resultat("SELECT adresse FROM pdms WHERE nom=" + nom + ";");
         return r.getString("adresse").split(":")[1];
     }
-    /** Le résultat d'un agent. (categorie, id, titre, points, argent) */
+    /** Le rÃ©sultat d'un agent. (categorie, id, titre, points, argent) */
     public ResultSet getResultPerBook(String nomAgent) throws SQLException {
         return this.resultat("SELECT livres.categorie, id, titre, round( prixn * etat / prixachat, 2 ) points, argent FROM livres, items, agents WHERE livres.isbn = items.isbn AND proprio = nomAgent AND livres.categorie = agents.categorie AND nomagent = '" + nomAgent + "' ORDER BY points desc");
     }

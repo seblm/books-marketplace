@@ -20,7 +20,7 @@ public class ProgrammePro {
     private float prixVente;
     /** Creates a new instance of ProgrammePro */
     
-    /** Constructeur appelé lorsque le type de l'enchère n'est pas connue. */
+    /** Constructeur appelÃ© lorsque le type de l'enchÃ¨re n'est pas connue. */
     public ProgrammePro(int num,bourse.sdd.Livre livre) {
         this.numEnchere=num;
         this.livre=livre;
@@ -28,7 +28,7 @@ public class ProgrammePro {
         this.prixVente = (float)0;
     }
     
-    /** Constructeur appelé lorsque l'agent propose une vente. */
+    /** Constructeur appelÃ© lorsque l'agent propose une vente. */
     public ProgrammePro(int num,bourse.sdd.Livre livre, int typeEnchere, float prixVente) {
         this.numEnchere=num;
         this.livre=livre;
@@ -61,11 +61,11 @@ public class ProgrammePro {
     }
     public void decrementerNumEnchere() { numEnchere--; }
     public void incrementerNumEnchere() { numEnchere++; }
-    /** Méthode d'affichage qui décale l'affichage de décalage. */
+    /** MÃ©thode d'affichage qui dÃ©cale l'affichage de dÃ©calage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
-        return delta + "numéro = " + this.numEnchere + ", livre = [ " + this.livre.toString(0) + " ]";
+        return delta + "numÃ©ro = " + this.numEnchere + ", livre = [ " + this.livre.toString(0) + " ]";
     }
     /** Programme principale. */
     public static void main(String argc[]) {

@@ -93,7 +93,7 @@
                 <Component class="javax.swing.JLabel" name="jLabelBaseDeDonnees">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="base de données"/>
+                    <Property name="text" type="java.lang.String" value="base de donnÃ©es"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldBaseDeDonnees">
@@ -185,7 +185,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelSupprimerPdm1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Supprimer la place de marché nommée"/>
+            <Property name="text" type="java.lang.String" value="Supprimer la place de marchÃ© nommÃ©e"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomPdm">
@@ -196,7 +196,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelSupprimerPdm2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="de la base de données"/>
+            <Property name="text" type="java.lang.String" value="de la base de donnÃ©es"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonSupprimerPdm">

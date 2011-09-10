@@ -16,15 +16,15 @@ public class Resultat extends bourse.protocole.Protocole {
     private float enchere ;
     private bourse.sdd.Livre livre;
     
-    /** Obtient le nom de l'acheteur ou du vendeur si la vente n'a pas réussie. */ 
+    /** Obtient le nom de l'acheteur ou du vendeur si la vente n'a pas rÃ©ussie. */ 
     public String getAcheteur() { return nom; } 
     
     public float getEnchere() { return enchere;}
     
     public Livre getLivre() { return livre;}
-    /** Modifie le nom de l'acheteur (cela se produit lorsque la place de marché
-     * a rencontré une erreur lors de la transaction financière sur la base de
-     * données. */
+    /** Modifie le nom de l'acheteur (cela se produit lorsque la place de marchÃ©
+     * a rencontrÃ© une erreur lors de la transaction financiÃ¨re sur la base de
+     * donnÃ©es. */
     public void setAcheteur(String ancienProprietaire) { this.nom = ancienProprietaire; }
     
     public Resultat(bourse.sdd.Livre livre,String nom, float enchere) {
@@ -93,8 +93,8 @@ public class Resultat extends bourse.protocole.Protocole {
         System.out.println(p);
         Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'après le tutorial JAXP, ces variables fixées à true permettent à
-        // l'application de se concentrer sur l'analyse sémantique.
+        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
+        // l'application de se concentrer sur l'analyse sÃ©mantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -103,7 +103,7 @@ public class Resultat extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La définition de ErrorHandler est inspirée de
+            // La dÃ©finition de ErrorHandler est inspirÃ©e de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

@@ -69,8 +69,8 @@ public class ResultWelcome extends bourse.protocole.Protocole {
         System.out.println(p);
         Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'après le tutorial JAXP, ces variables fixées à true permettent à
-        // l'application de se concentrer sur l'analyse sémantique.
+        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
+        // l'application de se concentrer sur l'analyse sÃ©mantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -79,7 +79,7 @@ public class ResultWelcome extends bourse.protocole.Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La définition de ErrorHandler est inspirée de
+            // La dÃ©finition de ErrorHandler est inspirÃ©e de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)

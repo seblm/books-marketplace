@@ -67,7 +67,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelControleAgent">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Contrôle"/>
+                <Property name="text" type="java.lang.String" value="ContrÃ´le"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBoxControleAgent">
@@ -76,7 +76,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Intelligence Artificielle"/>
                     <StringItem index="1" value="Humain"/>
-                    <StringItem index="2" value="Aléatoire"/>
+                    <StringItem index="2" value="AlÃ©atoire"/>
                   </StringArray>
                 </Property>
               </Properties>

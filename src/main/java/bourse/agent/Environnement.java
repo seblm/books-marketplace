@@ -2,21 +2,21 @@ package bourse.agent;
 
 import bourse.agent.sdd.*;
 
-/** Stocke l'environnement courant visible de l'agent. Informations destinées à être mémorisées. */
+/** Stocke l'environnement courant visible de l'agent. Informations destinÃ©es Ã  Ãªtre mÃ©morisÃ©es. */
 public class Environnement {
     
     /** Variables d'instance. */
-    /** L'enchère en cours. */
+    /** L'enchÃ¨re en cours. */
     private Enchere courante;
-    /** Renvoie le type d'enchère demandé. */
+    /** Renvoie le type d'enchÃ¨re demandÃ©. */
     private int typeDemande;
-    /** Renvoie le nombre d'actions réalisées depuis la connexion à la pdm courante. */
+    /** Renvoie le nombre d'actions rÃ©alisÃ©es depuis la connexion Ã  la pdm courante. */
     private int nombreActions;
-    /** Renvoie la date du dernier téléchargement de la liste des agents. */
+    /** Renvoie la date du dernier tÃ©lÃ©chargement de la liste des agents. */
     private long dateListeAgent;
-    /** Renvoie la date du dernier téléchargement de la liste de programmes. */
+    /** Renvoie la date du dernier tÃ©lÃ©chargement de la liste de programmes. */
     private long dateListeProgramme;
-    /** Renvoit l'intérêt porté à l'enchère en cours. */
+    /** Renvoit l'intÃ©rÃªt portÃ© Ã  l'enchÃ¨re en cours. */
     private boolean enchereInteressante;
     
     /** Constructeurs. */
@@ -29,52 +29,52 @@ public class Environnement {
         dateListeProgramme = Long.MAX_VALUE;
         enchereInteressante = false;
     }
-    /** Construit un environnement avec enchère. */
+    /** Construit un environnement avec enchÃ¨re. */
     public Environnement(Enchere courante, int typeDemande, int nombreActions) {
         this.courante = courante;
         this.typeDemande = typeDemande;
         this.nombreActions = nombreActions;
     }
     
-    /** Méthodes. */
-    /** Méthode d'affichage. */
+    /** MÃ©thodes. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
-        return delta + "enchère =\n" + courante.toString(decalage+1) + "\n"
-             + delta + "typeEnchèreDemandée = " + typeDemande + " "
+        return delta + "enchÃ¨re =\n" + courante.toString(decalage+1) + "\n"
+             + delta + "typeEnchÃ¨reDemandÃ©e = " + typeDemande + " "
              + delta + "nombreActions = " + nombreActions + " "
              + delta + "dateListeAgent = " + dateListeAgent + " "
              + delta + "dateListeProgramme = " + dateListeProgramme + " "
-             + delta + "enchèreInteressante = " + enchereInteressante;
+             + delta + "enchÃ¨reInteressante = " + enchereInteressante;
     }
-    /** Renvoie le type d'enchère choisi au tour précédent par l'agent. */
+    /** Renvoie le type d'enchÃ¨re choisi au tour prÃ©cÃ©dent par l'agent. */
     public int getTypeDemande() { return this.typeDemande; }
-    /** Renvoie l'enchère courante. */
+    /** Renvoie l'enchÃ¨re courante. */
     public Enchere getCourante(){return this.courante;}
-    /** Met à jour l'enchère courante. */
+    /** Met Ã  jour l'enchÃ¨re courante. */
     public void setCourante(Enchere e){this.courante = new Enchere(e); }
-    /** Renvoit le nombre d'actions réalisées sur la pdm courante. */
+    /** Renvoit le nombre d'actions rÃ©alisÃ©es sur la pdm courante. */
     public int getNombreActions() { return nombreActions; }
-    /** Met à jour le nombre d'actions réalisées sur la pdm courante. */
+    /** Met Ã  jour le nombre d'actions rÃ©alisÃ©es sur la pdm courante. */
     public void setNombreActions(int _nombreActions) { this.nombreActions = _nombreActions; }
-    /** Renvoie la date du dernier téléchargement de la liste des agents. */
+    /** Renvoie la date du dernier tÃ©lÃ©chargement de la liste des agents. */
     public long getDateListeAgent() { return dateListeAgent; }
-    /** Met à jour la date du dernier téléchargement de la liste des agents. */
+    /** Met Ã  jour la date du dernier tÃ©lÃ©chargement de la liste des agents. */
     public void setDateListeAgent(long _date) { dateListeAgent = _date; }
-    /** Met à jour la date du dernier téléchargement de la liste des agents avec
+    /** Met Ã  jour la date du dernier tÃ©lÃ©chargement de la liste des agents avec
      *  la date actuelle. */
     public void setDateListeAgent() { dateListeAgent = new java.util.Date().getTime(); }
-    /** Renvoie la date du dernier téléchargement de la liste des programmes. */
+    /** Renvoie la date du dernier tÃ©lÃ©chargement de la liste des programmes. */
     public long getDateListeProgramme() { return dateListeProgramme; }
-    /** Met à jour la date du dernier téléchargement de la liste des programmes. */
+    /** Met Ã  jour la date du dernier tÃ©lÃ©chargement de la liste des programmes. */
     public void setDateListeProgramme(long _date) { dateListeProgramme = _date; }
-    /** Met à jour la date du dernier téléchargement de la liste des programmes
+    /** Met Ã  jour la date du dernier tÃ©lÃ©chargement de la liste des programmes
      *  avec la date actuelle. */
     public void setDateListeProgramme() { dateListeProgramme = new java.util.Date().getTime(); }
-    /** Renvoie l'intérêt porté au livre. */
+    /** Renvoie l'intÃ©rÃªt portÃ© au livre. */
     public boolean getEnchereInteressante() { return enchereInteressante; }
-    /** Modifie l'intérêt porté au livre. */
+    /** Modifie l'intÃ©rÃªt portÃ© au livre. */
     public void setEnchereInteressante(boolean interet) { enchereInteressante = interet; }
     /** Programme principal. */
     public static void main(String argc[]) {

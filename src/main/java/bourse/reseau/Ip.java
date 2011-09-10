@@ -4,20 +4,20 @@ package bourse.reseau;
 public class Ip {
     
     /** Variables d'instance. */
-    /** Le tableau d'entier représentant l'ip. */
+    /** Le tableau d'entier reprÃ©sentant l'ip. */
     private int[] adresse = new int[4];
     /** Le port de communication. */
     private int port = 0;
     
     /** Constructeurs. */
-    /** Constructeur par défaut, renvoie à HOME. */
+    /** Constructeur par dÃ©faut, renvoie Ã  HOME. */
     public Ip() { for (int i=0; i<4; i++) this.adresse[i] = 0; }
     /** Constructeur explicite. */
     public Ip(int a, int b, int c, int d, int port) {
         this.adresse[0] = a; this.adresse[1] = b; this.adresse[2] = c; this.adresse[3] = d;
         this.port = port;
     }
-    /** Constructeur à partir d'une String. */
+    /** Constructeur Ã  partir d'une String. */
     public Ip(String ip) {
         java.util.StringTokenizer st;
         try {
@@ -29,7 +29,7 @@ public class Ip {
         } catch (Exception e) { }
     }
     
-    /** Méthodes. */
+    /** MÃ©thodes. */
     /** L'ip en string. */
     public int[] getIp() { return this.adresse; }
     /** Retourne le port de communication. */
@@ -41,9 +41,9 @@ public class Ip {
         for (int i=1; i<4; i++) { output += "." + this.adresse[i]; }
         return output;
     }
-    /** Méthode d'affichage brute de la forme : "X.X.X.X:YYYY". */
+    /** MÃ©thode d'affichage brute de la forme : "X.X.X.X:YYYY". */
     public String toString() { return this.ipToString() + ":" + this.port; }
-    /** Méthode d'affichage de la forme : "ip = X.X.X.X, port = YYYY". */
+    /** MÃ©thode d'affichage de la forme : "ip = X.X.X.X, port = YYYY". */
     public String toString(int decalage) { 
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";

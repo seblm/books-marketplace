@@ -3,27 +3,27 @@ package bourse.agent.sdd;
 import bourse.sdd.*;
 import java.util.*;
 
-/** Cette classe stocke les donnÈes relatives aux possessions. */
+/** Cette classe stocke les donn√©es relatives aux possessions. */
 public class Possession {
 
     /** Variables d'instance. */
     /** Le Livre en question. */
     private Livre livre;
-    /** La date de la vente en temps systeme (0 si le livre appartient ‡ une pdm). */
+    /** La date de la vente en temps systeme (0 si le livre appartient √† une pdm). */
     private long date;
     /** En instance de vente */
     private boolean instanceDeVente = false;
      
     /** Constructeur. */
-    /** Construit une nouvelle possession d'agent gr‚ce ‡ un livre. */
+    /** Construit une nouvelle possession d'agent gr√¢ce √† un livre. */
     public Possession(Livre li) {
         livre = li; date = new java.util.Date().getTime(); instanceDeVente = false;
     }
-    /** Construit une nouvelle possession d'agent gr‚ce ‡ un livre et une date. */
+    /** Construit une nouvelle possession d'agent gr√¢ce √† un livre et une date. */
     public Possession(Livre li, long date) {
         this.livre = li; this.date = date;
     }
-    /** MÈthode d'affichage. */
+    /** M√©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
@@ -33,13 +33,13 @@ public class Possession {
     }
     /** Renvoie le livre de la possession. */
     public Livre getLivre() { return this.livre; }
-    /** Renvoie la date systËme. */
+    /** Renvoie la date syst√®me. */
     public long getdate() { return this.date;}
     /** Renvoie vrai si le bouquin est en vente. */
     public boolean getInstanceDeVente() { return instanceDeVente; }
     /** Modifie la vente du bouquin. */
     public void setInstanceDeVente(boolean _instanceDeVente) { instanceDeVente = _instanceDeVente; }
-    /** MÈthode d'affichage dans un javax.swing.JTable */
+    /** M√©thode d'affichage dans un javax.swing.JTable */
     public void toRow(javax.swing.JTable tableau, int numeroLigne) {
         tableau.setValueAt(String.valueOf(getdate()), numeroLigne, 0);
         tableau.setValueAt(String.valueOf(getLivre().getId()), numeroLigne, 1);
@@ -55,13 +55,13 @@ public class Possession {
         tableau.setValueAt(getLivre().getFormat(), numeroLigne, 11);
         tableau.setValueAt(getLivre().getIsbn(), numeroLigne, 12);
     }
-    /** La mÈthode main de test. */
+    /** La m√©thode main de test. */
     public static void main(String[] argc) {
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
         visu.show();
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
-            new String [] {"Date", "Id", "PropriÈtaire", "CatÈgorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"},
+            new String [] {"Date", "Id", "Propri√©taire", "Cat√©gorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"},
             3
         );
         javax.swing.JTable tableau = new javax.swing.JTable(tm);

@@ -112,12 +112,12 @@ public class MoniteurPdm extends javax.swing.JFrame {
             java.io.PrintWriter out = new java.io.PrintWriter(socket.getOutputStream(), true);
             out.println("<MSG><ADMIN REQUETE=\"terminer\"/></MSG>");
         } catch (java.net.UnknownHostException e) {
-            labelStatut.setText("L'hôte " + this.champHote.getText() + " est inconnu");
+            labelStatut.setText("L'hÃ´te " + this.champHote.getText() + " est inconnu");
         } catch (java.io.IOException e) {
-            labelStatut.setText("Erreur d'entrée/sortie");
+            labelStatut.setText("Erreur d'entrÃ©e/sortie");
             e.printStackTrace(System.err);
         } catch (NumberFormatException e) {
-            labelStatut.setText("Le port doit-être un entier");
+            labelStatut.setText("Le port doit-Ãªtre un entier");
         }
     }//GEN-LAST:event_bouttonTerminerMouseClicked
 
@@ -131,7 +131,7 @@ public class MoniteurPdm extends javax.swing.JFrame {
             String buffer = "";
             int nombreTentatives = 10;
             int attenteParTentative = 1000;
-            // nombreTentatives * attenteParTentative = nombre de milisecondes avant que n'échoue l'écoute.
+            // nombreTentatives * attenteParTentative = nombre de milisecondes avant que n'Ã©choue l'Ã©coute.
             int numeroTentative = 0;
             synchronized (this) {
                 while (numeroTentative < 5 && socket.getInputStream().available() == 0) {
@@ -140,7 +140,7 @@ public class MoniteurPdm extends javax.swing.JFrame {
                 }
             }
             if (socket.getInputStream().available() != 0) {
-                // Il y a quelquechose à lire sur la socket.
+                // Il y a quelquechose Ã  lire sur la socket.
                 while (buffer.lastIndexOf("</html>") == -1) {
                     buffer = in.readLine();
                     reception += buffer;
@@ -150,21 +150,21 @@ public class MoniteurPdm extends javax.swing.JFrame {
                 sortieFichier.write(reception);
                 sortieFichier.close();
                 editorPaneVisualisation.setPage("file://" + fichierCache.getCanonicalPath());
-                labelStatut.setText("Envoi terminé");
+                labelStatut.setText("Envoi terminÃ©");
             } else
-                labelStatut.setText("Aucune réponse de la part de " + champHote.getText() + " depuis " + (nombreTentatives * attenteParTentative) + "ms.");
+                labelStatut.setText("Aucune rÃ©ponse de la part de " + champHote.getText() + " depuis " + (nombreTentatives * attenteParTentative) + "ms.");
             in.close();
             out.close();
             socket.close();
         } catch (java.net.UnknownHostException e) {
-            labelStatut.setText("L'hôte " + this.champHote.getText() + " est inconnu");
+            labelStatut.setText("L'hÃ´te " + this.champHote.getText() + " est inconnu");
         } catch (java.io.UnsupportedEncodingException e) {
-            labelStatut.setText("UTF-8 n'est pas supporté");
+            labelStatut.setText("UTF-8 n'est pas supportÃ©");
         } catch (java.io.IOException e) {
-            labelStatut.setText("Erreur d'entrée/sortie");
+            labelStatut.setText("Erreur d'entrÃ©e/sortie");
             e.printStackTrace(System.err);
         } catch (NumberFormatException e) {
-            labelStatut.setText("Le port doit-être un entier");
+            labelStatut.setText("Le port doit-Ãªtre un entier");
         }
     }//GEN-LAST:event_bouttonActualiserMouseClicked
     

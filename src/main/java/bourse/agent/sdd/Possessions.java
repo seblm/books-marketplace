@@ -9,7 +9,7 @@ public class Possessions {
        
     /** Variables d'instances. */
     private Memoire pere;
-    /** Donne la liste des possessions indexées par le numéro identifiant l'item (le livre). */
+    /** Donne la liste des possessions indexÃ©es par le numÃ©ro identifiant l'item (le livre). */
     private HashMap liste;
     /** Lien vers la fenetre centrale. */
     private bourse.agent.Visualisation fenetre;
@@ -22,17 +22,17 @@ public class Possessions {
         this.pere = memoire;
     }
     
-    /** Méthodes. */
-    /** Récupérer une possession à partir de la clé du livre. */
+    /** MÃ©thodes. */
+    /** RÃ©cupÃ©rer une possession Ã  partir de la clÃ© du livre. */
     public Possession get(int id) { return (Possession)(this.liste.get(new Integer(id))); }
-    /** Récupérer une possession à partir du livre. */
+    /** RÃ©cupÃ©rer une possession Ã  partir du livre. */
     public Possession get(Livre l) { return (Possession)(this.liste.get(new Integer(l.getId()))); }
     /** Rafraichir l'affichage de la liste. */
     public void refresh() {
         int numeroLigne = 0;
-        // Réinstanciation du JTable pour que sa taille soit celle de la mémoire.
+        // RÃ©instanciation du JTable pour que sa taille soit celle de la mÃ©moire.
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
-            new String [] {"Date", "Id", "Propriétaire", "Catégorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"},
+            new String [] {"Date", "Id", "PropriÃ©taire", "CatÃ©gorie", "Prix", "Etat", "Prix d'achat", "Titre", "Auteur", "Date de parution", "Editeur", "Format", "ISBN"},
             liste.size()
         );
         javax.swing.JTable tableau = new javax.swing.JTable(tm);
@@ -43,26 +43,26 @@ public class Possessions {
         }
         fenetre.getJScrollPanePossessionMemoire().remove(fenetre.getTableauPossessionMemoire());
         fenetre.getJScrollPanePossessionMemoire().setViewportView(tableau);
-        /** En même temps, mise à jour des stats sur la catégorie. */
+        /** En mÃªme temps, mise Ã  jour des stats sur la catÃ©gorie. */
         this.pere.getAgents().refresh();
     }
-    /** Ajouter un livre à la date actuelle. Attention, écrase l'ancienne
-     *  posséssion. Car si on ne précise pas la date, c'est que le livre est
-     *  plus récent. */
+    /** Ajouter un livre Ã  la date actuelle. Attention, Ã©crase l'ancienne
+     *  possÃ©ssion. Car si on ne prÃ©cise pas la date, c'est que le livre est
+     *  plus rÃ©cent. */
     public void ajouter(bourse.sdd.Livre l) {
         this.liste.put(new java.lang.Integer(l.getId()),new Possession(l));
         refresh();
     }
-    /** Ajouter une possession c'est-à-dire le livre et la date spécifiée. */
+    /** Ajouter une possession c'est-Ã -dire le livre et la date spÃ©cifiÃ©e. */
     public void ajouter(Possession t) {
-        // si le livre est déjà connu.
+        // si le livre est dÃ©jÃ  connu.
         if (liste.containsKey(new Integer(t.getLivre().getId()))) {
             Possession existante = get(t.getLivre());
             // comparer les dates
             if (t.getdate() > existante.getdate())
-                // l'objet à ajouter est plus récent : on doit l'ajouter.
+                // l'objet Ã  ajouter est plus rÃ©cent : on doit l'ajouter.
                 liste.put(new Integer(t.getLivre().getId()), t);
-            // sinon, on garde la posséssion la plus récente.
+            // sinon, on garde la possÃ©ssion la plus rÃ©cente.
         }
         // sinon, on l'ajoute.
         else liste.put(new Integer(t.getLivre().getId()), t);
@@ -70,9 +70,9 @@ public class Possessions {
     }
     /** retire une possession de la liste. */
     public void supprimer(bourse.sdd.Livre l) { this.liste.remove(new java.lang.Integer(l.getId())); }
-    /** retire une possession de la liste d'après l'id du livre. */
+    /** retire une possession de la liste d'aprÃ¨s l'id du livre. */
     public void supprimer(int id) { this.liste.remove(new java.lang.Integer(id)); }
-    /** renvoie la liste des livres possédés par le propriétaire (agent ou pdm). */
+    /** renvoie la liste des livres possÃ©dÃ©s par le propriÃ©taire (agent ou pdm). */
     public ListeLivre possede(String nom) {
         ListeLivre li = new ListeLivre();
         Possession t;
@@ -83,7 +83,7 @@ public class Possessions {
         } return li;
     }    
     public Collection getValues() { return this.liste.values(); }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
@@ -93,7 +93,7 @@ public class Possessions {
         if (output.length() == 0) return output;
         else return output.substring(0, output.length()-1);
     }
-    /** Méthode de test. */
+    /** MÃ©thode de test. */
     public static void main(String argc[]) {
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
@@ -110,11 +110,11 @@ public class Possessions {
         l.refresh();
         bourse.sdd.Livre l5 = new bourse.sdd.Livre(l1);
         l5.setPrixAchat((float)50.5);
-        l.ajouter(new Possession(l1, (new java.util.Date().getTime())-3600)); // c'est comme si on voulait ajouter le livre acheté à 50.5 il y a une heure. On ne garde que le livre acheté à 40 acheté maintenant.
+        l.ajouter(new Possession(l1, (new java.util.Date().getTime())-3600)); // c'est comme si on voulait ajouter le livre achetÃ© Ã  50.5 il y a une heure. On ne garde que le livre achetÃ© Ã  40 achetÃ© maintenant.
         System.out.println(l.toString(10));
         l.refresh();
-        System.out.println("les livres possédes par protocoleman = \n" + l.possede("protocoleman").toString(0));
-        System.out.println("les livres possédes par Eric = \n" + l.possede("Eric").toString(0));
+        System.out.println("les livres possÃ©des par protocoleman = \n" + l.possede("protocoleman").toString(0));
+        System.out.println("les livres possÃ©des par Eric = \n" + l.possede("Eric").toString(0));
         System.out.println(l.toString(5));
         l.supprimer(l2);
         System.out.println(l.toString(2));

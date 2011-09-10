@@ -2,16 +2,16 @@ package bourse.agent.sdd;
 
 import bourse.protocole.*;
 
-/** Stocke les données relatives aux agents concurrents.
- *  Par exemple lors de la récupération de la liste des agents.*/
+/** Stocke les donnÃ©es relatives aux agents concurrents.
+ *  Par exemple lors de la rÃ©cupÃ©ration de la liste des agents.*/
 public class AgentMemoire extends Agent {
     
     /** Variables d'instance. */
-    /** La catégorie présumée de cette agent. */
+    /** La catÃ©gorie prÃ©sumÃ©e de cette agent. */
     private Categorie categorie;
     /** Si l'agent est present sur la pdm*/
     private boolean present; 
-    /** Stocke les statistiques associées à chaque catégories. */
+    /** Stocke les statistiques associÃ©es Ã  chaque catÃ©gories. */
     private float[] statsCategorie = new float[5]; 
     
     public Categorie getCategorie() { return this.categorie;}
@@ -28,7 +28,7 @@ public class AgentMemoire extends Agent {
         for (int i=0; i<5; i++) statsCategorie[i] = _statsCategorie[i];
     }
     
-    /** Construit un nouvel agent à stocker. */
+    /** Construit un nouvel agent Ã  stocker. */
     public AgentMemoire(String nom, Categorie cat, boolean pres) {
         super(nom); this.categorie = cat; this.present = pres;
         for (int i=0; i<5; i++) { statsCategorie[i] = 0; }
@@ -36,11 +36,11 @@ public class AgentMemoire extends Agent {
     /** Affichage. */
     public String toString(int decalage) {
         return super.toString(decalage)
-           + ", catégorie = " + this.categorie.toString(0)
+           + ", catÃ©gorie = " + this.categorie.toString(0)
            + ", present = " + this.present
            + ", stats = " + statsCategorie[0] + ", " + statsCategorie[1] + ", " + statsCategorie[2] + ", " + statsCategorie[3] + ", " + statsCategorie[4];
     }
-    /** Méthode d'affichage dans un javax.swing.JTable */
+    /** MÃ©thode d'affichage dans un javax.swing.JTable */
     public void toRow(javax.swing.JTable tableau, int numeroLigne) {
         tableau.setValueAt(getNom().toString(), numeroLigne, 0);
         tableau.setValueAt(getCategorie().toString(), numeroLigne, 1);
@@ -49,17 +49,17 @@ public class AgentMemoire extends Agent {
         for (int i=0; i<5; i++) { output += (float)((float)Math.round((float)statsCategorie[i] * 10000)/(float)100) + "% "; }
         tableau.setValueAt(output, numeroLigne, 3);
     }
-    /** Méthode de test de la classe. */
+    /** MÃ©thode de test de la classe. */
     public static void main(String argc[]) {
         bourse.agent.Visualisation visu = new bourse.agent.Visualisation();
         visu.show();
         javax.swing.table.DefaultTableModel tm = new javax.swing.table.DefaultTableModel(
-            new String [] {"Nom", "Categorie", "Présent", "Fréquence des Catégories"},
+            new String [] {"Nom", "Categorie", "PrÃ©sent", "FrÃ©quence des CatÃ©gories"},
             4
         );
         javax.swing.JTable tableau = new javax.swing.JTable(tm);
         AgentMemoire a1 = new AgentMemoire("Arnaud", new Categorie(Categorie.SF), true);
-        AgentMemoire a2 = new AgentMemoire("Sébastien", new Categorie(Categorie.BD), false);
+        AgentMemoire a2 = new AgentMemoire("SÃ©bastien", new Categorie(Categorie.BD), false);
         AgentMemoire a3 = new AgentMemoire("Protocoleman", new Categorie(Categorie.ROMAN), true);
         AgentMemoire a4 = new AgentMemoire("Eric", new Categorie(Categorie.SCIENCE), false);
         System.out.println(a1.toString(5)); a1.toRow(tableau, 0);

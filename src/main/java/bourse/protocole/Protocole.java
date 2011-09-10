@@ -4,7 +4,7 @@ package bourse.protocole;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-// utilisé pour exporter du xml
+// utilisÃ© pour exporter du xml
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.TransformerFactory;
@@ -12,22 +12,22 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.dom.DOMSource;
 
-// nécessaire pour la méthode Transformer.transform()...
+// nÃ©cessaire pour la mÃ©thode Transformer.transform()...
 import java.io.StringWriter;
 import java.io.ByteArrayInputStream;
 
-// la définition d'un DOM par le w3c
+// la dÃ©finition d'un DOM par le w3c
 import org.w3c.dom.*;
 
-// les exceptions levées lors de la validation
+// les exceptions levÃ©es lors de la validation
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
  * Abstrait le protocole en permettant :
  *  - de stocker des constantes relatives au protocole
- *  - d'instancier une classe de message à partir d'un document XML 
- *  - de générer un document XML à partir de sa représentation DOM
+ *  - d'instancier une classe de message Ã  partir d'un document XML 
+ *  - de gÃ©nÃ©rer un document XML Ã  partir de sa reprÃ©sentation DOM
  */
 public abstract class Protocole {
 
@@ -49,10 +49,10 @@ public abstract class Protocole {
     public static final String MOTIF_FIN_FICHIER_XML = "</MSG";
     public static final String BASE_DTD = "file://" + new java.io.File("").getAbsolutePath() + "/";
     public static final String URI_DTD = "MSG.dtd";
-    /** Classe sérialisée et commune pour tout les utilisateurs de Bd. */
+    /** Classe sÃ©rialisÃ©e et commune pour tout les utilisateurs de Bd. */
     public static final bourse.reseau.ParametresBd parametresBd = new bourse.reseau.ParametresBd();
 
-    // Constructeurs (inutiles car la classe est abstract mais appellées par les classes filles - super(...); )
+    // Constructeurs (inutiles car la classe est abstract mais appellÃ©es par les classes filles - super(...); )
     protected Protocole(TypeMessage type) { this.type = type; }
     protected Protocole(Element type) { this.toClass(type); };
 
@@ -60,7 +60,7 @@ public abstract class Protocole {
     
     public TypeMessage getType() { return this.type; }
     
-    // Méthodes à hériter
+    // MÃ©thodes Ã  hÃ©riter
     protected abstract void toClass(Element type);
     public abstract Document toDOM();
 /*    
@@ -77,8 +77,8 @@ public abstract class Protocole {
     public static final Protocole newInstance(String fichierXML) {
         Protocole message = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // D'après le tutorial JAXP, ces variables fixées à true permettent à
-        // l'application de se concentrer sur l'analyse sémantique.
+        // D'aprÃ¨s le tutorial JAXP, ces variables fixÃ©es Ã  true permettent Ã 
+        // l'application de se concentrer sur l'analyse sÃ©mantique.
         factory.setCoalescing(true);
         factory.setExpandEntityReferences(true);
         factory.setIgnoringComments(true);
@@ -87,7 +87,7 @@ public abstract class Protocole {
             // factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             
-            // La définition de ErrorHandler est inspirée de
+            // La dÃ©finition de ErrorHandler est inspirÃ©e de
             // http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JAXPDOM3.html#wp64106
             builder.setErrorHandler(new org.xml.sax.ErrorHandler() {
                 // ignore fatal errors (an exception is guaranteed)
@@ -130,13 +130,13 @@ public abstract class Protocole {
                 case TypeMessage.TM_RESULTAT          : message = new Resultat(typeDOME); break;
                 case TypeMessage.TM_RESULT_BYE        : message = new ResultBye(typeDOME); break;
                 case TypeMessage.TM_ADMIN             : message = new Admin(typeDOME); break;
-                default : message = new Erreur("Malformation", "Le type du message n'a pas pu être reconnu."); break;
+                default : message = new Erreur("Malformation", "Le type du message n'a pas pu Ãªtre reconnu."); break;
                 
             }
         } catch (Exception e) {
             System.err.print("Protocole: ");
             e.printStackTrace(System.err);
-            message = new Erreur("Malformation", "Le type du message n'a pas pu être reconnu.");
+            message = new Erreur("Malformation", "Le type du message n'a pas pu Ãªtre reconnu.");
         }
         return message;
     }

@@ -1,35 +1,35 @@
 package bourse.protocole;
 
-/** Répertorie toutes les catégories du protocole. */
+/** RÃ©pertorie toutes les catÃ©gories du protocole. */
 public class Categorie {
     
     // Variables d'instance
 
-    // Constantes utilisées pour l'échange et le stockage des catégories.
+    // Constantes utilisÃ©es pour l'Ã©change et le stockage des catÃ©gories.
     public static final String SF = "Science fiction";
-    public static final String BD = "Bandes Dessinées";
+    public static final String BD = "Bandes DessinÃ©es";
     public static final String SCIENCE = "Science";
     public static final String ROMAN = "Romans Policiers";
     public static final String INFO = "Informatique";
     public static final String AUCUNE = "Aucune";
-    // Constantes utilisées pour le stockage dans la Base de données.
+    // Constantes utilisÃ©es pour le stockage dans la Base de donnÃ©es.
     private static final String _SF = "Science fiction";
     private static final String _SCIENCE = "Science";
     private static final String _ROMAN = "Romans Policiers";
-    private static final String _BD = "Bandes dessinées";
+    private static final String _BD = "Bandes dessinÃ©es";
     private static final String _INFO = "Informatique";
-    /** Classe utilisée pour génerer des catégories aléatoires */
+    /** Classe utilisÃ©e pour gÃ©nerer des catÃ©gories alÃ©atoires */
     private static final java.util.Random generateurAleatoire = new java.util.Random();
     
-    /** La catégorie courante */
+    /** La catÃ©gorie courante */
     private int categorie;
     
     // Constructeurs.
-    /** Construit une catégorie au hasard. */
+    /** Construit une catÃ©gorie au hasard. */
     public Categorie() { this.categorie = generateurAleatoire.nextInt(5); }
-    /** Construit une catégorie à partir de son code. */
+    /** Construit une catÃ©gorie Ã  partir de son code. */
     public Categorie(int c) { this.categorie = c; }
-    /** Construit une catégorie à partir d'une string. */
+    /** Construit une catÃ©gorie Ã  partir d'une string. */
     public Categorie(String c) {
         if ((c.startsWith("s") || c.startsWith("S")) && c.length() > 11) this.categorie = 0;
         else if (c.startsWith("b") || c.startsWith("B")) this.categorie = 1;
@@ -39,13 +39,13 @@ public class Categorie {
         else if (c.equalsIgnoreCase(this.AUCUNE)) this.categorie = 5;
         else this.categorie = 5;
     }
-    /** Construit une catégorie à partir d'une autre catégorie (constructeur par
+    /** Construit une catÃ©gorie Ã  partir d'une autre catÃ©gorie (constructeur par
      * recopie. */
     public Categorie(Categorie c) {
         this.categorie = c.getCode();
     }
-    /** Cette méthode génère une catégorie à partir d'une chaîne stocquée dans la
-     * base de données, donc libérée de tout caractère folklorique et autre URLEncode. */
+    /** Cette mÃ©thode gÃ©nÃ¨re une catÃ©gorie Ã  partir d'une chaÃ®ne stocquÃ©e dans la
+     * base de donnÃ©es, donc libÃ©rÃ©e de tout caractÃ¨re folklorique et autre URLEncode. */
     public static Categorie newCategorieFromBd(String c) {
         if (c.equalsIgnoreCase(_SF)) return new Categorie(SF);
         else if (c.equalsIgnoreCase(_SCIENCE)) return new Categorie(SCIENCE);
@@ -55,8 +55,8 @@ public class Categorie {
         else return new Categorie(AUCUNE);
     }
         
-    /** Méthodes. */
-    /** Accéder à la catégorie. */
+    /** MÃ©thodes. */
+    /** AccÃ©der Ã  la catÃ©gorie. */
     public String getCategorie() {
         String output;
         switch (this.categorie) {
@@ -69,29 +69,29 @@ public class Categorie {
             default: output = this.AUCUNE; break;
         } return output;
     }
-    /** Modifier la catégorie en donnant une string. */
+    /** Modifier la catÃ©gorie en donnant une string. */
     public void setCategorie(String categorie) { this.categorie = new Categorie(categorie).getCode();} 
-    /** Accéder au code de la catégorie. */
+    /** AccÃ©der au code de la catÃ©gorie. */
     public int getCode() { return this.categorie; }
-    /** Modifier la catégorie en donnant son code. */
+    /** Modifier la catÃ©gorie en donnant son code. */
     public void setCategorie(int categorie) { this.categorie = categorie; }
-    /** Méthode de comparaison standard */
+    /** MÃ©thode de comparaison standard */
     public boolean equals(Object o) {
         if (o instanceof Categorie)
             return ((Categorie)o).getCode() == this.categorie;
         else
             return false;
     }
-    /** Méthode d'affichage. */
+    /** MÃ©thode d'affichage. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
         return delta + this.getCode() + " (" + this.getCategorie() + ")"; }
-    /** Méthode d'affichage par défaut. */
+    /** MÃ©thode d'affichage par dÃ©faut. */
     public String toString() {
         return getCategorie();
     }
-    /** Méthode publique. */
+    /** MÃ©thode publique. */
     public static void main(String argc[]) {
         Categorie c = new Categorie();
         System.out.println(c.getCategorie());
@@ -102,7 +102,7 @@ public class Categorie {
         System.out.println(c.toString(0));
         c = Categorie.newCategorieFromBd("Science fiction");
         System.out.println(c.toString(0));
-        c = Categorie.newCategorieFromBd("Bandes dessinées");
+        c = Categorie.newCategorieFromBd("Bandes dessinÃ©es");
         System.out.println(c.toString(0));
         c = Categorie.newCategorieFromBd("Science");
         System.out.println(c.toString(0));

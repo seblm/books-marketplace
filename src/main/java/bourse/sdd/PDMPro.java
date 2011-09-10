@@ -7,9 +7,9 @@
 package bourse.sdd;
 
 /**
- * Cette classe est spécialement étudiée pour stoquer la liste des places de marché
- * et de leur adresse respective, lorsqu'un agent se déconnecte d'une place de
- * marché.
+ * Cette classe est spÃ©cialement Ã©tudiÃ©e pour stoquer la liste des places de marchÃ©
+ * et de leur adresse respective, lorsqu'un agent se dÃ©connecte d'une place de
+ * marchÃ©.
  * @author  pechot
  */
 public class PDMPro {

@@ -21,7 +21,7 @@ public abstract class EnchereReponseUnique extends Enchere {
     public abstract Resultat resolution();
     public abstract PropositionEnchereP annonce();
     
-    /** Utilisé lorsqu'un agent se connecte "au milieu" d'une enchère   */
+    /** UtilisÃ© lorsqu'un agent se connecte "au milieu" d'une enchÃ¨re   */
     public PropositionEnchereP reAnnonce() {
         return this.annonce();
     }

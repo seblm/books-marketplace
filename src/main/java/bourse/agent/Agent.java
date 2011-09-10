@@ -5,7 +5,7 @@ import bourse.agent.sdd.*;
 import bourse.agent.ia.*;
 import bourse.protocole.*;
 
-/** Gère l'agent courtier. */
+/** GÃ¨re l'agent courtier. */
 public class Agent {
     
     /** Variables d'instances. */
@@ -13,21 +13,21 @@ public class Agent {
     private static boolean verbose;
     /** Variables de l'action de l'agent. */
     private Action action;  
-    /** Pour accéder à la liste des pdms actives à l'initialisation de l'agent. */
+    /** Pour accÃ©der Ã  la liste des pdms actives Ã  l'initialisation de l'agent. */
     private RequetesAgent bd;
-    /** Le numéro de la catégorie attribuée. */
+    /** Le numÃ©ro de la catÃ©gorie attribuÃ©e. */
     private Categorie categorie;
     /** L'environnement actuel de l'agent. */
     private Environnement environnement;
-    /** Variables de l'état courant de l'agent. */
+    /** Variables de l'Ã©tat courant de l'agent. */
     private Etat etat;
-    /** Variable de l'état suivant de l'agent. */
+    /** Variable de l'Ã©tat suivant de l'agent. */
     private Etat etatSuivant;
     /** Le nom du groupe. */
     private static final String groupe = "Groupe-E";
-    /** Le nom de la pdm hôte. */
+    /** Le nom de la pdm hÃ´te. */
     private String hote;
-    /** La mémoire : ce qui est sûr. */
+    /** La mÃ©moire : ce qui est sÃ»r. */
     private Memoire memoire;
     /** Le nom de l'Agent. */
     private String nom;
@@ -37,13 +37,13 @@ public class Agent {
     private float portefeuille;
     /** Le centre de decision. */
     private Decision decision;
-    /** Expérimentation */
+    /** ExpÃ©rimentation */
     private Visualisation fenetre;
     /** Le serveur pour attendre les communications d'autres agents. */
     /** Le client pour contacter d'autres agents. */
     
     /** Constructeurs. */
-    /** Constructeur d'agent par défaut. */
+    /** Constructeur d'agent par dÃ©faut. */
     public Agent(String nom) {
         this.fenetre = new Visualisation();
         setWallet(0);
@@ -65,56 +65,56 @@ public class Agent {
     /** Assesseurs, modifieurs. */
     /** Renvoie l'etat de l'agent. */
     public int getEtat() { return this.etat.getEtat(); }
-    /** Met à jour l'état de l'agent et ordonne à la boucle qu'il y a eu un changement et met à jour cette valeur dans l'inteface.. */
+    /** Met Ã  jour l'Ã©tat de l'agent et ordonne Ã  la boucle qu'il y a eu un changement et met Ã  jour cette valeur dans l'inteface.. */
     public void setEtat(int e) { this.etat = new Etat(e); this.fenetre.setEtat(new Etat(e).toString(0)); }
-    /** Renvoie l'état suivant de l'agent modifié par le thread de réception des messages. */
+    /** Renvoie l'Ã©tat suivant de l'agent modifiÃ© par le thread de rÃ©ception des messages. */
     public int getEtatSuivant() { return etatSuivant.getEtat(); }
-    /** Modifie l'état suivant de l'agent. */
+    /** Modifie l'Ã©tat suivant de l'agent. */
     public void setEtatSuivant(int _etatSuivant) { etatSuivant = new Etat(_etatSuivant); }
-    /** Renvoie la pdm à laquelle il est connectée et met à jour cette valeur dans l'inteface. */
+    /** Renvoie la pdm Ã  laquelle il est connectÃ©e et met Ã  jour cette valeur dans l'inteface. */
     public PdmMemoire getCurrentPdm() { return this.memoire.getPdms().acceder(this.hote); }
     /**Retourne la valeur du portefeuille. */
     public float getWallet(){return this.portefeuille;}
-    /** Met à jour la somme d'argent et met à jour cette valeur dans l'inteface. */
+    /** Met Ã  jour la somme d'argent et met Ã  jour cette valeur dans l'inteface. */
     public void setWallet(float somme) { this.portefeuille = somme; this.fenetre.setSolde(String.valueOf(somme)); }
     /**retourne la categorie courante*/
     public Categorie getCategorie() { return this.categorie; }
-    /** Met à jour la catégorie et met à jour cette valeur dans l'inteface. */
+    /** Met Ã  jour la catÃ©gorie et met Ã  jour cette valeur dans l'inteface. */
     public void setCategorie(Categorie categorie) { this.categorie = categorie; this.fenetre.setCategorie(categorie.toString()); }
     /** Renvoie l'action. */
     public int getAction() { return this.action.getAction(); }
-    /** Met à jour l'action et met à jour cette valeur dans l'inteface. */
+    /** Met Ã  jour l'action et met Ã  jour cette valeur dans l'inteface. */
     public void setAction(Action a) { this.action = a; this.fenetre.setAction(a.toString(0)); }
     /** Renvoie l'environnement courant. */
     public Environnement getEnvironnement() { return this.environnement; }
-    /** Modifie l'environnement courant et met à jour cette valeur dans l'inteface. */
+    /** Modifie l'environnement courant et met Ã  jour cette valeur dans l'inteface. */
     public void setEnvironnement(Environnement e) { this.environnement = e; this.fenetre.setEnvironnement(e.toString(0)); }
-    /** Renvoie la mémoire actuelle. */
+    /** Renvoie la mÃ©moire actuelle. */
     public Memoire getMemoire() { return this.memoire; }
-    /** Modifie la mémoire de l'agent. */
+    /** Modifie la mÃ©moire de l'agent. */
     public void setMemoire(Memoire m) { this.memoire = m; }
     /** Modifie le nom de la pdm actuelle. */
     public void setHote(String nom) { this.hote = nom; this.fenetre.setHote(nom); }
     /** Modifie le nom de l'agent. */
     public void setNom(String nom) { this.nom = this.groupe + "-" + nom; this.fenetre.setNom(this.nom); }
-    /** Renvoie le nom de l'agent sous la forme Groupe-E-xxx où xxx est le prénom de l'agent. */
+    /** Renvoie le nom de l'agent sous la forme Groupe-E-xxx oÃ¹ xxx est le prÃ©nom de l'agent. */
     public String getNom() { return this.nom; }
-    /** Renvoie la fenêtre. */
+    /** Renvoie la fenÃªtre. */
     public Visualisation getFenetre() { return this.fenetre; }
     /** Modifie lengthmode verbeux. */
     public void setVerbose(boolean verbose) { this.verbose = verbose; }
     public void setDecision(bourse.agent.ia.Decision _decision) { this.decision = _decision; }
     public Decision getDecision() { return decision; }
         
-    /** Méthodes. */
-    /** Méthode d'affichage qui présente de facon lisible l'objet. */
+    /** MÃ©thodes. */
+    /** MÃ©thode d'affichage qui prÃ©sente de facon lisible l'objet. */
     public String toString(int decalage) {
         String delta = "";
         for (int i=0; i<decalage; i++) delta += " ";
         return delta + "Nom = " + nom + "\n"
              + delta + "Solde = " + portefeuille + "\n"
              + delta + "Decision = " + decision + "\n"
-             + delta + "Catégorie = " + categorie.toString(0) + "\n"
+             + delta + "CatÃ©gorie = " + categorie.toString(0) + "\n"
              + delta + "Etat = " + etat.toString(0)+ "\n"
              + delta + "Action = " + action.toString(0) + "\n"
              + delta + "Memoire =\n" + memoire.toString(decalage+1) + "\n"
@@ -124,7 +124,7 @@ public class Agent {
     /** Cherche la liste des adresses des pdms depuis la bd. */
     public void getPdmsFromBd() {
         if (getEtat() == Etat.initial) {
-            System.out.println("Transition : Récupération les pdms déclarées dans la bd.");
+            System.out.println("Transition : RÃ©cupÃ©ration les pdms dÃ©clarÃ©es dans la bd.");
             try {
                 java.sql.ResultSet r = bd.getPdMs();
                 ListePdm l = new ListePdm();
@@ -137,7 +137,7 @@ public class Agent {
             setEtat(Etat.connaitPdms);
         }
     }
-    /** Affiche les résultats de l'agent dans l'onglet. */
+    /** Affiche les rÃ©sultats de l'agent dans l'onglet. */
     public void showResults() { // cat, id, titre, points, argent
         if (new Etat(getEtat()).acceptAsynchronus()) {
             String output = "";
@@ -149,14 +149,14 @@ public class Agent {
                     output += "Titre = " + r.getString("titre")
                             + " Id = " + r.getString("id")
                             + " Points = " + r.getFloat("points")
-                            + " Catégorie = " + r.getString("categorie") + "\n";
+                            + " CatÃ©gorie = " + r.getString("categorie") + "\n";
                     sommePoints += r.getFloat("points");
                 }
                 while (r.next()) {
                     output += "Titre = " + r.getString("titre")
                             + " Id = " + r.getString("id")
                             + " Points = " + r.getFloat("points")
-                            + " Catégorie = " + r.getString("categorie") + "\n";
+                            + " CatÃ©gorie = " + r.getString("categorie") + "\n";
                     sommePoints += r.getFloat("points");
                 }
                 output += "Total des points = " + sommePoints;
@@ -167,28 +167,28 @@ public class Agent {
             System.out.println(output);
         }
     }
-    /** Déconnexion physique. */
+    /** DÃ©connexion physique. */
     public void deconnexionPhysique() {
         if (getEtat() == Etat.connaitPdms) {
-            System.out.println("Transition : déconnexion physique.");
+            System.out.println("Transition : dÃ©connexion physique.");
             this.showResults();
             pdmConnectee.deconnecter();
-            try { bd.deconnexion(); } catch (java.sql.SQLException e) { System.out.println("Impossible de se déconnecter de la bd."); }
-            setEtat(Etat.nonConnecte); // état 8.
+            try { bd.deconnexion(); } catch (java.sql.SQLException e) { System.out.println("Impossible de se dÃ©connecter de la bd."); }
+            setEtat(Etat.nonConnecte); // Ã©tat 8.
         }
     }
-    /** Connexion physique à la pdm. */
+    /** Connexion physique Ã  la pdm. */
     public void connexionPhysique(String ip, int port) throws java.net.ConnectException, java.io.IOException {
         if (this.getEtat() == Etat.pdmChoisie) {
             if (this.pdmConnectee != null) this.pdmConnectee.deconnecter();
-            System.out.println("Transition : connexion physique à : " + this.getCurrentPdm().getAdresse().toString());
+            System.out.println("Transition : connexion physique Ã  : " + this.getCurrentPdm().getAdresse().toString());
             this.pdmConnectee = new ConnexionPdm(this, verbose);
             this.pdmConnectee.start();
             this.setEtat(Etat.connectePhysiquement);
         } else
             System.err.println("Transition : echec de la connexion vers " + this.getCurrentPdm().getAdresse().toString());
     }
-    /** Connexion à la PdM via le protocole. */
+    /** Connexion Ã  la PdM via le protocole. */
     public void welcomePdm() {
         if (this.getEtat() == Etat.connectePhysiquement) {
             System.out.println("Transition : envoyer welcome.");
@@ -200,7 +200,7 @@ public class Agent {
             this.setEtat(Etat.attenteRESULTWELCOME);
         }
     }
-    /** Déconnexion à la PdM via le protocole. */
+    /** DÃ©connexion Ã  la PdM via le protocole. */
     public void byePdm() {
         if (this.getEtat() == Etat.pret) {
             System.out.println("Transition : envoyer bye.");
@@ -217,14 +217,14 @@ public class Agent {
         if (getEtat() == Etat.actionChoisie) {
             System.out.println("Transition : envoyer propose vente.");
             ListeLivre l = this.memoire.getPossessions().possede(this.nom);
-            System.out.println("livres possédés par " + this.nom + ":" + l.toString(10));
+            System.out.println("livres possÃ©dÃ©s par " + this.nom + ":" + l.toString(10));
             try {
                 String export = this.decision.choixLivreAVendre(l).toXML();
                 try {
                     this.pdmConnectee.ecrire(export);
                     this.fenetre.addOutputMessage("propose vente");
                 } catch (IOException e) { e.printStackTrace(System.err); }
-            } catch (java.lang.NullPointerException e) { /** on a pas trouvé de livre. */ }
+            } catch (java.lang.NullPointerException e) { /** on a pas trouvÃ© de livre. */ }
             if (getEtat() == Etat.actionChoisie) this.setEtat(Etat.attentePropositionEnchere);;
         }
     }
@@ -237,14 +237,14 @@ public class Agent {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("requete programme");
             } catch (IOException e) { e.printStackTrace(System.err); }
-            /** mise à jour de la date de téléchargement de la liste des agents
-             *  connéctés */
+            /** mise Ã  jour de la date de tÃ©lÃ©chargement de la liste des agents
+             *  connÃ©ctÃ©s */
             environnement.setDateListeProgramme();
             while (this.environnement.getNombreActions() <= 1)
                 try { this.wait(100); } catch (InterruptedException e) { }
         }
     }
-    /** Envoi d'une demande d'agents connectés. */
+    /** Envoi d'une demande d'agents connectÃ©s. */
     public void demandeAdversaires() {
         if (this.getEtat() == Etat.pret || getEtat() == Etat.actionChoisie) {
             System.out.println("Transition : envoi d'une requete agents.");
@@ -253,16 +253,16 @@ public class Agent {
                 this.pdmConnectee.ecrire(export);
                 this.fenetre.addOutputMessage("requete agents");
             } catch (IOException e) { e.printStackTrace(System.err); }
-            /** mise à jour de la date de téléchargement de la liste des agents
-             *  connéctés */
+            /** mise Ã  jour de la date de tÃ©lÃ©chargement de la liste des agents
+             *  connÃ©ctÃ©s */
             environnement.setDateListeAgent();
         }
     }
-    /** Fait un notifyAll à l'interieur de l'agent (évite au thread de l'appeller directement). */
+    /** Fait un notifyAll Ã  l'interieur de l'agent (Ã©vite au thread de l'appeller directement). */
     public synchronized void synchroniser() { this.notifyAll(); }
-    /** Traitement de l'enchère à prendre ou à laisser. */
+    /** Traitement de l'enchÃ¨re Ã  prendre ou Ã  laisser. */
     public void enchereUnOuQuatre() {
-        System.out.println("Transition : envoyer proposition enchère.");
+        System.out.println("Transition : envoyer proposition enchÃ¨re.");
         String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), getEnvironnement().getCourante().getValeurEnchere()).toXML();
         try {
             this.pdmConnectee.ecrire(export);
@@ -271,7 +271,7 @@ public class Agent {
         this.setEtat(Etat.attenteRESULTATdeSaVente);
     }
     public void enchereDeuxCinq() {
-        System.out.println("Transition : envoyer proposition enchère.");
+        System.out.println("Transition : envoyer proposition enchÃ¨re.");
         float prix = decision.choixPrix();
         String export = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), prix).toXML();
         try {
@@ -281,7 +281,7 @@ public class Agent {
         this.setEtat(Etat.attenteRESULTATdeSaVente);
     }
     public void enchereTrois() {
-        System.out.println("Transition : envoyer proposition enchère.");
+        System.out.println("Transition : envoyer proposition enchÃ¨re.");
         float prix2 = decision.choixPrix();
         String export3 = new bourse.protocole.PropositionEnchereA(getEnvironnement().getCourante().getNumeroEnchere(), prix2).toXML();
         try {
@@ -290,7 +290,7 @@ public class Agent {
         } catch (IOException e) { e.printStackTrace(System.err); }
         setEtat(Etat.pret);
     }
-    /** Méthode qui éxécute le code de l'agent.*/
+    /** MÃ©thode qui Ã©xÃ©cute le code de l'agent.*/
     public synchronized void run() {
         do {
             this.fenetre.setEnvironnement(getEnvironnement().toString(0));
@@ -305,7 +305,7 @@ public class Agent {
                 case 2:
                     if (getAction() == Action.bilan) deconnexionPhysique();
                     else if (memoire.getPdms().aucuneActive()) {
-                        setEtat(Etat.initial); // état 1.
+                        setEtat(Etat.initial); // Ã©tat 1.
                         try { wait(5000); } catch(java.lang.InterruptedException e) { e.printStackTrace(System.err); }
                     } else /*if (getAction() == Action.aucune || getAction() == Action.migrer )*/ {
                         decision.choixPdm();
@@ -341,7 +341,7 @@ public class Agent {
                     break;
                 case 6:
                     decision.choixAction();
-                    /** Dès qu'on fait une action, on doit incrémenter le compteur d'action courante. */
+                    /** DÃ¨s qu'on fait une action, on doit incrÃ©menter le compteur d'action courante. */
                     environnement.setNombreActions(environnement.getNombreActions() + 1);
                     if (this.getAction() == action.aucune) { /** on ne fait rien */ }
                     else if (this.getAction() == Action.bilan || this.getAction() == Action.migrer) byePdm();
@@ -359,7 +359,7 @@ public class Agent {
                 case 7:
                     try {
                         this.wait(decision.timeout());
-                        setEtat(Etat.pret); // on a pas bougé détat alors on revient.
+                        setEtat(Etat.pret); // on a pas bougÃ© dÃ©tat alors on revient.
                     } catch (InterruptedException e) {
                         e.printStackTrace(System.err);
                         setEtat(Etat.pret);
@@ -381,7 +381,7 @@ public class Agent {
                 case 10:
                     try {
                         this.wait(decision.timeout());
-                        if (getEtat() == 10) setEtat(Etat.pret); // on a pas bougé d'état alors on revient.
+                        if (getEtat() == 10) setEtat(Etat.pret); // on a pas bougÃ© d'Ã©tat alors on revient.
                     } catch (InterruptedException e) {
                         e.printStackTrace(System.err);
                         setEtat(Etat.pret);
@@ -390,7 +390,7 @@ public class Agent {
                 case 11:
                     try {
                         this.wait(decision.timeout());
-                        if (getEtat() == 11) setEtat(Etat.pret); // on a pas bougé d'état alors on revient.
+                        if (getEtat() == 11) setEtat(Etat.pret); // on a pas bougÃ© d'Ã©tat alors on revient.
                     } catch (InterruptedException e) {
                         e.printStackTrace(System.err);
                         setEtat(Etat.pret);
@@ -450,7 +450,7 @@ public class Agent {
         /** initialisation */
         final bourse.agent.Agent a = new bourse.agent.Agent("");
         a.fenetre.show();
-        /** on crée la fenetre de dialogue parente à l'agent et bloquante (modale). */
+        /** on crÃ©e la fenetre de dialogue parente Ã  l'agent et bloquante (modale). */
         final javax.swing.JDialog demarrage = new javax.swing.JDialog(a.fenetre, true);
         
         javax.swing.JPanel jPanelPrincipal = new javax.swing.JPanel();
@@ -486,7 +486,7 @@ public class Agent {
         jPanelAgent.add(jComboBoxNomAgent);
         jLabelControleAgent.setText("Contr\u00f4le");
         jPanelAgent.add(jLabelControleAgent);
-        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "Aléatoire" }));
+        jComboBoxControleAgent.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Intelligence Artificielle", "Humain", "AlÃ©atoire" }));
         jPanelAgent.add(jComboBoxControleAgent);
         jCheckBoxVerbose.setText("Affichage complet");
         jCheckBoxVerbose.setSelected(false);
@@ -503,7 +503,7 @@ public class Agent {
         jPanelPdm.add(jTextFieldPortPdm);
         jPanelPrincipal.add(jPanelPdm, java.awt.BorderLayout.CENTER);
         jButtonValider.setText("Lancer");
-        /** action à réaliser quand on clique sur le bouton lancer. */
+        /** action Ã  rÃ©aliser quand on clique sur le bouton lancer. */
         jButtonValider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 a.setNom((String)jComboBoxNomAgent.getSelectedItem());
@@ -514,7 +514,7 @@ public class Agent {
                 }
                 if (!jTextFieldAdresseIpPdm.getText().equals("") || !jTextFieldPortPdm.getText().equals("")) {
                     bourse.reseau.Ip adresse = new bourse.reseau.Ip(jTextFieldAdresseIpPdm.getText()+":"+jTextFieldPortPdm.getText());
-                    a.getMemoire().getPdms().ajouter(new PdmMemoire("Par défaut", adresse.toString(), false, true, new ListeProgramme(),0));
+                    a.getMemoire().getPdms().ajouter(new PdmMemoire("Par dÃ©faut", adresse.toString(), false, true, new ListeProgramme(),0));
                     a.setEtat(Etat.connaitPdms);
                 }
                 else a.setEtat(Etat.initial);
@@ -527,9 +527,9 @@ public class Agent {
         demarrage.getContentPane().add(jPanelPrincipal);
         demarrage.pack();
         if (arg.length == 0) {
-            /** on affiche la fenêtre bloquante de choix du nom. */
+            /** on affiche la fenÃªtre bloquante de choix du nom. */
             demarrage.show();
-            /** lorsque la fenêtre rend la main, (l'utilisateur a voulu démarrer
+            /** lorsque la fenÃªtre rend la main, (l'utilisateur a voulu dÃ©marrer
              *  l'agent), on lance l'agent. */
         } else {
             /** on initialise l'agent sans l'aide de l'utilisateur. */

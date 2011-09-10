@@ -16,25 +16,25 @@ public class Requetes extends bourse.reseau.Bd {
         this.random = new Random();
     }
     
-// Requètes concernant la place de marché
+// RequÃ¨tes concernant la place de marchÃ©
     
-    /** Déclare la création de la place de marché sur la base de données. */
+    /** DÃ©clare la crÃ©ation de la place de marchÃ© sur la base de donnÃ©es. */
     public final synchronized void declarationPlaceDeMarche(String nom) {
         String hoteLocal = "";
         try {
             hoteLocal = this.pdm.getPdmServeur().getSocketServeur().getInetAddress().getLocalHost().getHostAddress() + ":" + pdm.getPort();
         } catch (java.net.UnknownHostException e) {
-            // Le système ne connait pas son propre hôte, ce qui paraît plutôt étrange.
-            // Cela n'empêche pas le fait que ce soit une erreure fatale (une pdm sans
-            // ip valide ne pourra jamais être contactée).
-            if (verbose) System.err.println("Requetes: L'adresse ip locale ne peut pas être déterminée.");
+            // Le systÃ¨me ne connait pas son propre hÃ´te, ce qui paraÃ®t plutÃ´t Ã©trange.
+            // Cela n'empÃªche pas le fait que ce soit une erreure fatale (une pdm sans
+            // ip valide ne pourra jamais Ãªtre contactÃ©e).
+            if (verbose) System.err.println("Requetes: L'adresse ip locale ne peut pas Ãªtre dÃ©terminÃ©e.");
             System.exit(1);
         }
         String requete = "INSERT INTO pdms (nom, adresse) VALUES ('" + nom + "', '" + hoteLocal + "');";
         try {
             if (this.requete(requete) == 0) {
-                // Aucune ligne a été affectée par la requête : rien ne sert de continuer.
-                if (verbose) System.err.println("Requetes: impossible d'ajouter la place de marché dans la table pdms.");
+                // Aucune ligne a Ã©tÃ© affectÃ©e par la requÃªte : rien ne sert de continuer.
+                if (verbose) System.err.println("Requetes: impossible d'ajouter la place de marchÃ© dans la table pdms.");
                 System.exit(1);
             }
         } catch (SQLException e) {
@@ -46,7 +46,7 @@ public class Requetes extends bourse.reseau.Bd {
         if (verbose) System.out.println(requete);
     }
 
-    /** Récuppère les informations d'un livre.
+    /** RÃ©cuppÃ¨re les informations d'un livre.
      * @return une instance de Livre. Attention : peut retourner null si l'id est
      * inconnu. */
     public Livre getLivre(final int id) {
@@ -60,8 +60,8 @@ public class Requetes extends bourse.reseau.Bd {
         return livre;
     }
 
-    /** Lorsque la place de marché arrête d'accepter de nouveaux agents, on doit
-     * se désincrire de la base de données. */
+    /** Lorsque la place de marchÃ© arrÃªte d'accepter de nouveaux agents, on doit
+     * se dÃ©sincrire de la base de donnÃ©es. */
     public final synchronized void suppressionPlaceDeMarche(String nom) {
         try {
             String requete = "DELETE FROM pdms WHERE nom = '" + nom + "'";
@@ -73,8 +73,8 @@ public class Requetes extends bourse.reseau.Bd {
         } catch (SQLException e) { if (verbose) System.err.println("Requetes: " + e); }
     }
 
-    /** Choisit un livre au hasard dans la table des livres et crée un nouvel
-     * item correspondant à l'acquisition par la place de marché du livre. */
+    /** Choisit un livre au hasard dans la table des livres et crÃ©e un nouvel
+     * item correspondant Ã  l'acquisition par la place de marchÃ© du livre. */
     public final synchronized Livre creerItem() {
         Livre livre = null;
         try {
@@ -102,7 +102,7 @@ public class Requetes extends bourse.reseau.Bd {
                 requete = "INSERT INTO items (ID, ISBN, Etat, Proprio, PrixAchat) VALUES ('', '" + isbn + "', '" + etat + "', '" + pdm.getNom() + "', '" + prixAchat + "');";
                 this.requete(requete);
                 if (verbose) System.out.println(requete);
-                // Essaie de retrouver l'id précédemment inséré (last_insert_id :( )
+                // Essaie de retrouver l'id prÃ©cÃ©demment insÃ©rÃ© (last_insert_id :( )
                 requete = "SELECT ID from items WHERE ISBN = '" + isbn + "' AND Proprio = '" + pdm.getNom() + "' ORDER BY ID DESC LIMIT 0, 1;";
                 r = this.resultat(requete);
                 if (verbose) System.out.println(requete);
@@ -115,7 +115,7 @@ public class Requetes extends bourse.reseau.Bd {
 
 // Requetes concernant les livres
     
-    /** Récuppère depuis la base de données le prix d'achat d'un livre, sachant
+    /** RÃ©cuppÃ¨re depuis la base de donnÃ©es le prix d'achat d'un livre, sachant
      * son id. */
     public float getPrixAchat(int id) {
         float prixAchat = 0;
@@ -139,9 +139,9 @@ public class Requetes extends bourse.reseau.Bd {
     
 // Requetes concernant l'agent
 
-    /** Vérifie si l'agent est déjà connu dans la base de données. Pour cela, la
-     * méthode regarde le nom de l'agent grâce à la méthode getNomAgent().
-     * Si oui, l'agent récuppérera automatiquement ses valeurs depuis la base. */
+    /** VÃ©rifie si l'agent est dÃ©jÃ  connu dans la base de donnÃ©es. Pour cela, la
+     * mÃ©thode regarde le nom de l'agent grÃ¢ce Ã  la mÃ©thode getNomAgent().
+     * Si oui, l'agent rÃ©cuppÃ©rera automatiquement ses valeurs depuis la base. */
     public final synchronized boolean agentPresentDansBaseDeDonnees(Agent agent) {
         boolean existe = false;
         try {
@@ -155,7 +155,7 @@ public class Requetes extends bourse.reseau.Bd {
         return existe;
     }
     
-    /** Vérifie que l'agent possède bien le livre donné. */
+    /** VÃ©rifie que l'agent possÃ¨de bien le livre donnÃ©. */
     public final synchronized boolean agentPossede(Agent agent, Livre livre) {
         boolean possede = false;
         try {
@@ -167,8 +167,8 @@ public class Requetes extends bourse.reseau.Bd {
         return possede;
     }
 
-    /** Insère ou modifie le tuple contenant l'agent passé en paramètre et
-     * identifié par sa méthode getNomAgent() */
+    /** InsÃ¨re ou modifie le tuple contenant l'agent passÃ© en paramÃ¨tre et
+     * identifiÃ© par sa mÃ©thode getNomAgent() */
     public void inscrireAgent(Agent agent) {
         String requete;
         try {
@@ -188,19 +188,19 @@ public class Requetes extends bourse.reseau.Bd {
         }
     }
     
-    /** Modifie le champ nomPDM pour désinscrire l'agent de la place de marché.
-     * L'agent est identifié dans la table grâce à son nom, récuppéré par la 
-     * méthode getNomAgent(). */
+    /** Modifie le champ nomPDM pour dÃ©sinscrire l'agent de la place de marchÃ©.
+     * L'agent est identifiÃ© dans la table grÃ¢ce Ã  son nom, rÃ©cuppÃ©rÃ© par la 
+     * mÃ©thode getNomAgent(). */
     public void desinscrireAgent(Agent agent) {
         try {
-            // Si l'agent n'est pas présent dans la base, la requete renverra échouera, et c'est très bien comme ça ;)
+            // Si l'agent n'est pas prÃ©sent dans la base, la requete renverra Ã©chouera, et c'est trÃ¨s bien comme Ã§a ;)
             String requete = "UPDATE agents SET nomPDM = 'HOME' WHERE nomAgent = '" + agent.getNomAgent() + "';";
             this.requete(requete);
             if (verbose) System.out.println(requete);
         } catch (SQLException e) { System.err.println(e); }
     }
     
-    /** Effectue la transaction effective d'un livre entre deux entités. */
+    /** Effectue la transaction effective d'un livre entre deux entitÃ©s. */
     public final synchronized boolean transaction(int id, String vendeur, String acheteur, float prixVente) {
         boolean succes = false;
         try {
@@ -209,7 +209,7 @@ public class Requetes extends bourse.reseau.Bd {
             succes = (this.requete(requete) == 1);
             if (verbose) System.out.println(requete);
             if (succes) {
-                // Retrait et débit des sommes d'argents sur les agents. Remarque : si le vendeur est une place de marché, la requête ne modifiera rien.
+                // Retrait et dÃ©bit des sommes d'argents sur les agents. Remarque : si le vendeur est une place de marchÃ©, la requÃªte ne modifiera rien.
                 requete = "UPDATE agents SET argent = argent + " + prixVente + " WHERE nomAgent = '" + vendeur +"';";
                 this.requete(requete);
                 if (verbose) System.out.println(requete);
@@ -221,9 +221,9 @@ public class Requetes extends bourse.reseau.Bd {
         return succes;
     }
 
-    /** Récuppère l'adresse d'une place de marché.
-     * @return l'adresse de cette place de marché; ou une chaine vide si la place
-     * de marché n'existe pas dans la table. */
+    /** RÃ©cuppÃ¨re l'adresse d'une place de marchÃ©.
+     * @return l'adresse de cette place de marchÃ©; ou une chaine vide si la place
+     * de marchÃ© n'existe pas dans la table. */
     public final synchronized String getAdressePdm(String nomPdm) {
         String resultat = "";
         try {
@@ -236,8 +236,8 @@ public class Requetes extends bourse.reseau.Bd {
         return resultat;
     }
     
-    /** Récuppère les adresses de toutes les places de marché déclarées dans la
-     * base de données.
+    /** RÃ©cuppÃ¨re les adresses de toutes les places de marchÃ© dÃ©clarÃ©es dans la
+     * base de donnÃ©es.
      * @return une LinkedList remplie de PDMPro. */
     public final synchronized LinkedList getAdressesPdm() {
         LinkedList liste = new LinkedList();
@@ -251,9 +251,9 @@ public class Requetes extends bourse.reseau.Bd {
         return liste;
     }
 
-    /** @return le solde de départ d'un agent, calcul basé sur la moyenne du prix
-     * neuf des livres du marché multiplié par un nombre de livres théoriquement
-     * acquéris par chaque agent. */
+    /** @return le solde de dÃ©part d'un agent, calcul basÃ© sur la moyenne du prix
+     * neuf des livres du marchÃ© multipliÃ© par un nombre de livres thÃ©oriquement
+     * acquÃ©ris par chaque agent. */
     public float soldeDeDepart(){
         float argentInitial = 1;
         try {

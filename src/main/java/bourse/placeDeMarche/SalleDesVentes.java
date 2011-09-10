@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.io.IOException;
 
-/** Gère l'enregistrement et le départ des agents. */
+/** GÃ¨re l'enregistrement et le dÃ©part des agents. */
 public class SalleDesVentes {
     
     private LinkedList agentsIdentifies;
@@ -15,7 +15,7 @@ public class SalleDesVentes {
         this.placeDeMarche = placeDeMarche;
     }
     
-    /** Retourne la connexion de l'agent identifié par le nom de l'agent. */
+    /** Retourne la connexion de l'agent identifiÃ© par le nom de l'agent. */
     public ConnexionAgent getConnexionAgent(String nomAgent) {
         ConnexionAgent agent = null;
         ListIterator i = agentsIdentifies.listIterator();
@@ -39,26 +39,26 @@ public class SalleDesVentes {
             supprimerAgent((ConnexionAgent)i.next());
     }
     
-    /** Indentifie l'agent et réveille le commissaire priseur afin qu'il démarre
-     * une enchère si le nombre d'agents identifiés n'était pas suffisant jusqu'à
+    /** Indentifie l'agent et rÃ©veille le commissaire priseur afin qu'il dÃ©marre
+     * une enchÃ¨re si le nombre d'agents identifiÃ©s n'Ã©tait pas suffisant jusqu'Ã 
      * maintenant. */
     public synchronized void identifierAgent(ConnexionAgent agent) {
         this.agentsIdentifies.add(agent);
         placeDeMarche.getCommissairePriseur().reveilleToi();
     }
     
-    /** Libère tous les agents bloqués */
+    /** LibÃ¨re tous les agents bloquÃ©s */
     public synchronized void libererAgents() {
         ListIterator parcours = this.agentsIdentifies.listIterator();
         while (parcours.hasNext())
             ((ConnexionAgent)parcours.next()).getAgent().setBloque(false);
     }
     
-    /** @return true si le nombre d'agents identifies est supérieur ou égal à 3. */
+    /** @return true si le nombre d'agents identifies est supÃ©rieur ou Ã©gal Ã  3. */
     public synchronized boolean plusDeTroisAgentsIdentifies() { return agentsIdentifies.size() >= 3; }
     
-    /** @return Vrai si au moins 3 agents autre que l'agent donné en paramètre
-     * sont identifiés sur la place de marché.
+    /** @return Vrai si au moins 3 agents autre que l'agent donnÃ© en paramÃ¨tre
+     * sont identifiÃ©s sur la place de marchÃ©.
      */
     public synchronized boolean plusDeTroisAgentsIdentifies(Agent agentVendeur) {
         int borne = 3;
@@ -67,13 +67,13 @@ public class SalleDesVentes {
         return (agentsIdentifies.size() >= borne);
     }
     
-    /** Détermine si un agent est identifié dans la salle des ventes. Cette méthode
-     * est une approximation de résultat sur la vraie structure de données stockant
-     * les agents connectés car elle ne compare l'existence que sur le nom de l'agent
-     * alors que le vrai test inclue aussi un numéro de port. Cependant, on s'est
-     * assuré lors de l'enregistrement de l'agent que la connexion vers un nom d'agent
+    /** DÃ©termine si un agent est identifiÃ© dans la salle des ventes. Cette mÃ©thode
+     * est une approximation de rÃ©sultat sur la vraie structure de donnÃ©es stockant
+     * les agents connectÃ©s car elle ne compare l'existence que sur le nom de l'agent
+     * alors que le vrai test inclue aussi un numÃ©ro de port. Cependant, on s'est
+     * assurÃ© lors de l'enregistrement de l'agent que la connexion vers un nom d'agent
      * est unique.
-     * @return true si l'agent est identifié, false sinon.
+     * @return true si l'agent est identifiÃ©, false sinon.
      */
     public boolean estIdentifie(String nomAgent) {
         ListIterator parcours = this.agentsIdentifies.listIterator();
@@ -83,10 +83,10 @@ public class SalleDesVentes {
         return trouve;
     }
     
-    /** Détermine si un agent est identifié dans la salle des ventes. Utilise la
-     * méthode bourse.placeDeMarche.Agent.equals(Agent) qui compare à la fois le
+    /** DÃ©termine si un agent est identifiÃ© dans la salle des ventes. Utilise la
+     * mÃ©thode bourse.placeDeMarche.Agent.equals(Agent) qui compare Ã  la fois le
      * nom de l'agent et son port de connexion.
-     * @return true si l'agent est identifié, false sinon.
+     * @return true si l'agent est identifiÃ©, false sinon.
      */  
     public synchronized boolean estIdentifie(Agent agent) {
         ListIterator parcours = this.agentsIdentifies.listIterator();
@@ -96,8 +96,8 @@ public class SalleDesVentes {
         return trouve;
     }
     
-    /** Détermine si une connexion identifiée par son port communique avec un agent
-     * qui est identifié.
+    /** DÃ©termine si une connexion identifiÃ©e par son port communique avec un agent
+     * qui est identifiÃ©.
      */
     public boolean estIdentifie(int port) {
         ListIterator parcours = agentsIdentifies.listIterator();
@@ -107,16 +107,16 @@ public class SalleDesVentes {
         return trouve;
     }
 
-    /** Envoie un message à tous les agents identifiés dans la salle des ventes. */
+    /** Envoie un message Ã  tous les agents identifiÃ©s dans la salle des ventes. */
     public synchronized void envoyerIdentifies(String message) {
         ListIterator parcours = agentsIdentifies.listIterator();
         while (parcours.hasNext())
             try { ((ConnexionAgent)parcours.next()).ecrire(message); } catch (java.io.IOException e) { e.printStackTrace(System.err); }
     }
     
-    /** Récuppère la liste des agents identifiés à la place de marché. Utile notamment
-     * pour génerer une requête contenant la liste des agents connectés.
-     * @return une liste chaînée remplie de chaînes de caractères et représentant
+    /** RÃ©cuppÃ¨re la liste des agents identifiÃ©s Ã  la place de marchÃ©. Utile notamment
+     * pour gÃ©nerer une requÃªte contenant la liste des agents connectÃ©s.
+     * @return une liste chaÃ®nÃ©e remplie de chaÃ®nes de caractÃ¨res et reprÃ©sentant
      * les noms des agents. */
     public synchronized LinkedList agentsToListeDeNoms() {
         LinkedList resultat = new LinkedList();

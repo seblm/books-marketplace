@@ -8,7 +8,7 @@ public class Requetes extends bourse.reseau.Bd {
     
     public Requetes(boolean verbose) throws Exception { super(verbose); }
     
-    /** Récuppère les informations d'un livre.
+    /** RÃ©cuppÃ¨re les informations d'un livre.
      * @return une instance de Livre. Attention : peut retourner null si l'id est
      * inconnu. */
     public Livre getLivre(final int id) {
@@ -22,7 +22,7 @@ public class Requetes extends bourse.reseau.Bd {
         return livre;
     }
     
-    /** Récuppère depuis la base de données le propriétaire d'un livre, sachant
+    /** RÃ©cuppÃ¨re depuis la base de donnÃ©es le propriÃ©taire d'un livre, sachant
      * son id. */
     public String getProprietaire(int id) {
         String proprietaire = "";
