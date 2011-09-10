@@ -11,13 +11,12 @@ public class EnchereTest {
 
     @Test
     public final void instantiationAndToString() {
-        Livre l1 = new Livre("l1", "a2", new Categorie(), "poche", "O'reilly",
-                50.65f, 0.45f, "2004-01-01", "222222222", 1, "Seb", 65f);
-        Livre l2 = new Livre("l2", "a1", new Categorie(), "poche", "Casterman",
-                40.75f, 0.85f, "1954-04-12", "222XX2254", 2, "protocoleman",
-                50f);
-        Livre l3 = new Livre("l2", "a1", new Categorie(), "poche", "Casterman",
-                40.75f, 0.27f, "1954-04-12", "222XX2254", 3, "arno", 12f);
+        Livre l1 = new Livre("l1", "a2", new Categorie(), "poche", "O'reilly", 50.65f, 0.45f, "2004-01-01",
+                "222222222", 1, "Seb", 65f);
+        Livre l2 = new Livre("l2", "a1", new Categorie(), "poche", "Casterman", 40.75f, 0.85f, "1954-04-12",
+                "222XX2254", 2, "protocoleman", 50f);
+        Livre l3 = new Livre("l2", "a1", new Categorie(), "poche", "Casterman", 40.75f, 0.27f, "1954-04-12",
+                "222XX2254", 3, "arno", 12f);
         Enchere e2 = new Enchere(2, l2, 20f, 13, 1.2f, 3, "a1");
         Enchere e1 = new Enchere(1, l1, 19.81f, 12, 1.2f, 3, "a1");
         Enchere e3 = new Enchere(3, l3, 10.01f, 14, 1.2f, 3, "a1");

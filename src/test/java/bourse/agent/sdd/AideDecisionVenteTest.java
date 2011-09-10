@@ -49,10 +49,8 @@ public class AideDecisionVenteTest {
         aideDecisionVente.miseAJourQVente();
 
         float expectedQVente = 42f * 25f;
-        assertThat(aideDecisionVente.getSommeQVente())
-                .isEqualTo(expectedQVente);
-        assertThat(aideDecisionVente.getQVenteActuel()).isEqualTo(
-                expectedQVente);
+        assertThat(aideDecisionVente.getSommeQVente()).isEqualTo(expectedQVente);
+        assertThat(aideDecisionVente.getQVenteActuel()).isEqualTo(expectedQVente);
         assertThat(aideDecisionVente.getNbQVenteCalcules()).isEqualTo(1);
     }
 

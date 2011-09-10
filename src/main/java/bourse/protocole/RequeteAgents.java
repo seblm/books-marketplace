@@ -7,29 +7,29 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
 public final class RequeteAgents extends bourse.protocole.Protocole {
-    
+
     private String commentaire;
-    
+
     /** Crée une nouvelle instance du type de message Bye. */
     public RequeteAgents(String commentaire) {
         super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
         this.commentaire = commentaire;
     }
-    
+
     public RequeteAgents() {
         super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
-        this.commentaire ="";
+        this.commentaire = "";
     }
-    
+
     public RequeteAgents(Element type) {
         super(new TypeMessage(TypeMessage.TM_REQUETE_AGENTS));
         this.toClass(type);
     }
-    
+
     protected final void toClass(Element type) {
-        this.commentaire = ((Text)type.getChildNodes().item(0)).getNodeValue();
+        this.commentaire = ((Text) type.getChildNodes().item(0)).getNodeValue();
     }
-    
+
     public final Document toDOM() {
         Document document = null;
         try {
@@ -38,11 +38,11 @@ public final class RequeteAgents extends bourse.protocole.Protocole {
             document = builder.newDocument();
             Element root = document.createElement("MSG");
             Element type = document.createElement("REQUETEAGENTS");
-            if(this.commentaire.equalsIgnoreCase(""))
+            if (this.commentaire.equalsIgnoreCase(""))
                 type.appendChild(document.createTextNode(this.commentaire));
             else
                 type.appendChild(document.createTextNode(this.commentaire));
-            //type.appendChild(document.createCDATASection("Au revoir !"));
+            // type.appendChild(document.createCDATASection("Au revoir !"));
             root.appendChild(type);
             document.appendChild(root);
         } catch (Exception e) {
@@ -50,9 +50,9 @@ public final class RequeteAgents extends bourse.protocole.Protocole {
         }
         return document;
     }
-    
+
     public String toXML() {
         return super.toXML(this.toDOM());
     }
-    
+
 }

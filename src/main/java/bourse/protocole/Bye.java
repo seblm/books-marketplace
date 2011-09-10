@@ -7,32 +7,32 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
 public final class Bye extends bourse.protocole.Protocole {
-    
+
     private String commentaire;
-    
+
     /** Crée une nouvelle instance du type de message Bye. */
     public Bye(String commentaire) {
         super(new TypeMessage(TypeMessage.TM_BYE));
         this.commentaire = commentaire;
     }
-    
+
     public Bye() {
         super(new TypeMessage(TypeMessage.TM_BYE));
         this.commentaire = "";
     }
-    
+
     public Bye(Element type) {
         super(new TypeMessage(TypeMessage.TM_BYE));
         this.toClass(type);
     }
-    
+
     protected final void toClass(Element type) {
         if (type.hasChildNodes())
-            this.commentaire = ((Text)type.getChildNodes().item(0)).getNodeValue();
+            this.commentaire = ((Text) type.getChildNodes().item(0)).getNodeValue();
         else
-            this.commentaire="";
+            this.commentaire = "";
     }
-    
+
     public final Document toDOM() {
         Document document = null;
         try {
@@ -42,7 +42,7 @@ public final class Bye extends bourse.protocole.Protocole {
             Element root = document.createElement("MSG");
             Element type = document.createElement("BYE");
             type.appendChild(document.createTextNode(this.commentaire));
-            //type.appendChild(document.createCDATASection("Au revoir !"));
+            // type.appendChild(document.createCDATASection("Au revoir !"));
             root.appendChild(type);
             document.appendChild(root);
         } catch (Exception e) {
@@ -50,9 +50,9 @@ public final class Bye extends bourse.protocole.Protocole {
         }
         return document;
     }
-    
+
     public String toXML() {
         return super.toXML(this.toDOM());
     }
-    
+
 }
