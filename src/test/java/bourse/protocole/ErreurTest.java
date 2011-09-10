@@ -23,7 +23,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(simpleError.getNom()).isEqualTo("Simple Error");
         assertThat(simpleError.getRaison()).isEmpty();
-        assertThat(simpleError.getType()).isEqualTo(TypeMessage.ERREUR);
+        assertThat(simpleError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = simpleError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -42,7 +42,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(zeroVenteError.getNom()).isEqualTo("ZEROVENTE");
         assertThat(zeroVenteError.getRaison()).isEqualTo("aucune raison connue");
-        assertThat(zeroVenteError.getType()).isEqualTo(TypeMessage.ERREUR);
+        assertThat(zeroVenteError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = zeroVenteError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -64,7 +64,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(duplicationError.getNom()).isEqualTo("DUPLICATION");
         assertThat(duplicationError.getRaison()).isEmpty();
-        assertThat(duplicationError.getType()).isEqualTo(TypeMessage.ERREUR);
+        assertThat(duplicationError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = duplicationError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));
@@ -85,7 +85,7 @@ public class ErreurTest extends SAXTest {
 
         assertThat(generalError.getNom()).isEqualTo("General Error");
         assertThat(generalError.getRaison()).isEqualTo("trop de blabla");
-        assertThat(generalError.getType()).isEqualTo(TypeMessage.ERREUR);
+        assertThat(generalError.getType()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = generalError.toXML();
         Iterator<String> xmlLines = forArray(xml.split("\n"));

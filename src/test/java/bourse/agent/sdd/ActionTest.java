@@ -11,13 +11,13 @@ public class ActionTest {
 
     @Test
     public final void testNominal() {
-        Action action = aucune;
-        assertThat(action).isEqualTo(aucune);
-        assertThat(action.toString()).isEqualTo("aucune action séléctionnée");
-        action = vendre;
-        assertThat(action.toString()).isEqualTo("vendre son bouquin");
-        action = attenteEnchere;
-        assertThat(action.toString()).isEqualTo("attente d'une proposition enchère");
+        Action action = new Action(aucune);
+        assertThat(action.getAction()).isEqualTo(aucune);
+        assertThat(action.toString(0)).isEqualTo("0 (aucune action séléctionnée)");
+        action = new Action(vendre);
+        assertThat(action.toString(0)).isEqualTo("1 (vendre son bouquin)");
+        action = new Action(attenteEnchere);
+        assertThat(action.toString(0)).isEqualTo("6 (attente d'une proposition enchère)");
     }
 
 }

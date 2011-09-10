@@ -2,9 +2,8 @@ package bourse;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.LinkedList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,15 +17,17 @@ import bourse.protocole.Programme;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 
+import com.google.common.collect.Lists;
+
 public class ProgrammeTest {
 
-    private List<ProgrammePro> programmes;
+    private LinkedList<ProgrammePro> programmes;
 
     private Livre livre;
 
     @Before
     public void initialize() {
-        programmes = new ArrayList<ProgrammePro>(3);
+        programmes = Lists.<ProgrammePro> newLinkedList();
         float prix = 0;
         float etat = 0.4f;
         this.livre = new Livre("lupin", "leblanc", new Categorie(Categorie.SF), "poch", "belin", prix, etat,
@@ -44,11 +45,11 @@ public class ProgrammeTest {
     public void testToClass() {
         Programme p = new Programme(programmes);
         Programme pdest = new Programme(p.toDOM().getDocumentElement());
-        System.out.println(pdest.getListeProgramme().get(0).getLivre());
-        assertThat(pdest.getListeProgramme().get(0).getLivre().getTitre()).isEqualTo("lupin");
-        assertThat(pdest.getListeProgramme().get(0).getLivre().getCategorie()).isEqualTo(new Categorie(Categorie.SF));
-        assertThat(pdest.getListeProgramme().get(0).getLivre().getEtat()).isEqualTo(0.4f);
-        assertThat(pdest.getListeProgramme().get(0).getLivre().getTitre()).isEqualTo("lupin");
+        ProgrammePro firstProgrammePro = (bourse.sdd.ProgrammePro) pdest.getListeProgramme().get(0);
+        assertThat(firstProgrammePro.getLivre().getTitre()).isEqualTo("lupin");
+        assertThat(firstProgrammePro.getLivre().getCategorie()).isEqualTo(new Categorie(Categorie.SF));
+        assertThat(firstProgrammePro.getLivre().getEtat()).isEqualTo(0.4f);
+        assertThat(firstProgrammePro.getLivre().getTitre()).isEqualTo("lupin");
     }
 
     @Test
@@ -104,12 +105,13 @@ public class ProgrammeTest {
 
     @Test
     public void testToHtmlWithoutBooks() {
-        final Programme programme = new Programme(Arrays.asList(new ProgrammePro(1, null)));
+        LinkedList<ProgrammePro> prorammePros = Lists.<ProgrammePro> newLinkedList();
+        prorammePros.add(new ProgrammePro(1, null));
+        final Programme programme = new Programme(prorammePros);
         try {
             programme.toHtml();
         } catch (NullPointerException e) {
             fail(e.getMessage());
         }
     }
-
 }

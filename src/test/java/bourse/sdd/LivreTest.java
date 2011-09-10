@@ -1,5 +1,8 @@
 package bourse.sdd;
 
+import static bourse.protocole.Categorie.AUCUNE;
+import static bourse.protocole.Categorie.SCIENCE;
+import static bourse.protocole.TypeMessage.TM_PROPOSE_VENTE;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.IOException;
@@ -50,7 +53,7 @@ public class LivreTest extends SAXTest {
     private void assertBook(Livre book) {
         assertThat(book.getTitre()).isEqualTo("lupin");
         assertThat(book.getAuteur()).isEqualTo("leblanc");
-        assertThat(book.getCategorie().getCategorie()).isEqualTo(Categorie.SCIENCE);
+        assertThat(book.getCategorie().getCategorie()).isEqualTo(SCIENCE);
         assertThat(book.getFormat()).isEqualTo("poch");
         assertThat(book.getEditeur()).isEqualTo("belin");
         assertThat(book.getPrix()).isEqualTo(153f);
@@ -92,7 +95,7 @@ public class LivreTest extends SAXTest {
         Livre book = new Livre(root);
 
         assertThat(book.getAuteur()).isEqualTo("");
-        assertThat(book.getCategorie()).isEqualTo(new Categorie(Categorie.AUCUNE));
+        assertThat(book.getCategorie()).isEqualTo(new Categorie(AUCUNE));
         assertThat(book.getDateParu()).isEqualTo("");
         assertThat(book.getEditeur()).isEqualTo("");
         assertThat(book.getEtat()).isEqualTo(0.0f);
@@ -110,7 +113,7 @@ public class LivreTest extends SAXTest {
         Document document = documentBuilder.newDocument();
         Element root = document.createElement("root");
 
-        livre.addElement(root, TypeMessage.PROPOSEVENTE);
+        livre.addElement(root, new TypeMessage(TM_PROPOSE_VENTE));
 
         assertThat(root.hasChildNodes()).isTrue();
         Node bookNode = root.getChildNodes().item(0);
