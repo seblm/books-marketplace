@@ -36,6 +36,15 @@ public class ProgrammeProTest {
     }
 
     @Test
+    public void should_set_values_of_a_programmePro() {
+        programmePro.setLivre(TestFactory.createLivre());
+        assertThat(programmePro.getLivre()).isNotEqualTo(book);
+
+        programmePro.setNumEnchere(42);
+        assertThat(programmePro.getNum()).isEqualTo(42);
+    }
+
+    @Test
     public void should_increase_bid_to_a_programmePro() {
         assertThat(programmePro.getNum()).isEqualTo(2);
         programmePro.incrementerNumEnchere();
@@ -61,6 +70,11 @@ public class ProgrammeProTest {
     public void with_two_equals_programmePro() {
         ProgrammePro programmePro2 = new ProgrammePro(2, book, Enchere.ENCHERE_UN, 15.0f);
         assertThat(programmePro.equals(programmePro2));
+    }
+
+    @Test
+    public void should_launch_main() {
+        ProgrammePro.main(null);
     }
 
 }

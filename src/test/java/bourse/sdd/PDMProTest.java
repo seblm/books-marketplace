@@ -1,6 +1,7 @@
 package bourse.sdd;
 
-import org.fest.assertions.Assertions;
+import static org.fest.assertions.Assertions.assertThat;
+
 import org.junit.Test;
 
 public class PDMProTest {
@@ -8,14 +9,23 @@ public class PDMProTest {
     @Test
     public void should_create_a_default_PDMPro() {
         PDMPro pdmPro = new PDMPro();
-        Assertions.assertThat(pdmPro.getNom()).isNull();
-        Assertions.assertThat(pdmPro.getAdresse()).isNull();
+        assertThat(pdmPro.getNom()).isNull();
+        assertThat(pdmPro.getAdresse()).isNull();
     }
 
     @Test
     public void should_create_a_PDMPro() {
         PDMPro pdmPro = new PDMPro("myPDMPro", "myAddress");
-        Assertions.assertThat(pdmPro.getNom()).isEqualTo("myPDMPro");
-        Assertions.assertThat(pdmPro.getAdresse()).isEqualTo("myAddress");
+        assertThat(pdmPro.getNom()).isEqualTo("myPDMPro");
+        assertThat(pdmPro.getAdresse()).isEqualTo("myAddress");
+    }
+
+    @Test
+    public void should_set_values_of_a_PDMPro() {
+        PDMPro pdmPro = new PDMPro();
+        pdmPro.setNom("myPDMPro");
+        assertThat(pdmPro.getNom()).isEqualTo("myPDMPro");
+        pdmPro.setAdresse("myAddress");
+        assertThat(pdmPro.getAdresse()).isEqualTo("myAddress");
     }
 }

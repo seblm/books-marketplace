@@ -94,22 +94,33 @@ public class LivreTest extends SAXTest {
 
         Livre book = new Livre(root);
 
-        assertThat(book.getAuteur()).isEqualTo("");
+        assertBookEmpty(book);
         assertThat(book.getCategorie()).isEqualTo(new Categorie(AUCUNE));
-        assertThat(book.getDateParu()).isEqualTo("");
-        assertThat(book.getEditeur()).isEqualTo("");
+    }
+
+    private void assertBookEmpty(Livre book) {
+        assertThat(book.getAuteur()).isEmpty();
+        assertThat(book.getDateParu()).isEmpty();
+        assertThat(book.getEditeur()).isEmpty();
         assertThat(book.getEtat()).isEqualTo(0.0f);
-        assertThat(book.getFormat()).isEqualTo("");
+        assertThat(book.getFormat()).isEmpty();
         assertThat(book.getId()).isEqualTo(0);
-        assertThat(book.getIsbn()).isEqualTo("");
+        assertThat(book.getIsbn()).isEmpty();
         assertThat(book.getPrix()).isEqualTo(0.0f);
         assertThat(book.getPrixAchat()).isEqualTo(0.0f);
-        assertThat(book.getProprietaire()).isEqualTo("");
-        assertThat(book.getTitre()).isEqualTo("");
+        assertThat(book.getProprietaire()).isEmpty();
+        assertThat(book.getTitre()).isEmpty();
     }
 
     @Test
-    public void with_should_generate_dom() throws UnsupportedEncodingException, SAXException, IOException {
+    public void should_create_empty_book() {
+        @SuppressWarnings("deprecation")
+        Livre book = new Livre();
+        assertBookEmpty(book);
+    }
+
+    @Test
+    public void with_proposevente_should_generate_dom() throws UnsupportedEncodingException, SAXException, IOException {
         Document document = documentBuilder.newDocument();
         Element root = document.createElement("root");
 
@@ -117,8 +128,79 @@ public class LivreTest extends SAXTest {
 
         assertThat(root.hasChildNodes()).isTrue();
         Node bookNode = root.getChildNodes().item(0);
+        assertThat(root.getChildNodes().getLength()).isEqualTo(1);
         assertThat(bookNode.getNodeName()).isEqualTo("LIVRE");
+        assertThat(bookNode.getAttributes().getLength()).isEqualTo(1);
         assertThat(bookNode.getAttributes().getNamedItem("ID").getNodeValue()).isEqualTo("12");
         assertThat(bookNode.hasChildNodes()).isFalse();
+    }
+
+    @Test
+    public void with_resultat_should_generate_dom() throws UnsupportedEncodingException, SAXException, IOException {
+        Document document = documentBuilder.newDocument();
+        Element root = document.createElement("root");
+
+        livre.addElement(root, new TypeMessage(TypeMessage.TM_RESULTAT));
+
+        assertThat(root.hasChildNodes()).isTrue();
+        assertThat(root.getChildNodes().getLength()).isEqualTo(1);
+        Node bookNode = root.getChildNodes().item(0);
+        assertThat(bookNode.getNodeName()).isEqualTo("LIVRE");
+        assertThat(bookNode.getAttributes().getLength()).isEqualTo(11);
+        assertThat(bookNode.getAttributes().getNamedItem("AUTEUR").getNodeValue()).isEqualTo("leblanc");
+        assertThat(bookNode.getAttributes().getNamedItem("CATEGORIE").getNodeValue()).isEqualTo("Science");
+        assertThat(bookNode.getAttributes().getNamedItem("DATEPAR").getNodeValue()).isEqualTo("15/11/00");
+        assertThat(bookNode.getAttributes().getNamedItem("ETAT").getNodeValue()).isEqualTo("0.4");
+        assertThat(bookNode.getAttributes().getNamedItem("FORMAT").getNodeValue()).isEqualTo("poch");
+        assertThat(bookNode.getAttributes().getNamedItem("ID").getNodeValue()).isEqualTo("12");
+        assertThat(bookNode.getAttributes().getNamedItem("ISBN").getNodeValue()).isEqualTo("yetet");
+        assertThat(bookNode.getAttributes().getNamedItem("PRIX").getNodeValue()).isEqualTo("153.0");
+        assertThat(bookNode.getAttributes().getNamedItem("PROPRIETAIRE").getNodeValue()).isEqualTo("protocoleman");
+        assertThat(bookNode.getAttributes().getNamedItem("TITRE").getNodeValue()).isEqualTo("lupin");
+        assertThat(bookNode.hasChildNodes()).isFalse();
+    }
+
+    @Test
+    public void book_attributes_can_be_set() {
+        livre.setAuteur("author");
+        assertThat(livre.getAuteur()).isEqualTo("author");
+
+        livre.setCategorie(new Categorie(Categorie.INFO));
+        assertThat(livre.getCategorie().getCategorie()).isEqualTo(Categorie.INFO);
+
+        livre.setDateParu("24/12/1981");
+        assertThat(livre.getDateParu()).isEqualTo("24/12/1981");
+
+        livre.setEditeur("editor");
+        assertThat(livre.getEditeur()).isEqualTo("editor");
+
+        livre.setEtat(1.2f);
+        assertThat(livre.getEtat()).isEqualTo(1.2f);
+
+        livre.setFormat("format");
+        assertThat(livre.getFormat()).isEqualTo("format");
+
+        livre.setId(42);
+        assertThat(livre.getId()).isEqualTo(42);
+
+        livre.setIsbn("I.S.B.N.");
+        assertThat(livre.getIsbn()).isEqualTo("I.S.B.N.");
+
+        livre.setPrix(2.3f);
+        assertThat(livre.getPrix()).isEqualTo(2.3f);
+
+        livre.setPrixAchat(3.4f);
+        assertThat(livre.getPrixAchat()).isEqualTo(3.4f);
+
+        livre.setProprietaire("owner");
+        assertThat(livre.getProprietaire()).isEqualTo("owner");
+
+        livre.setTitre("title");
+        assertThat(livre.getTitre()).isEqualTo("title");
+    }
+
+    @Test
+    public void should_launch_main() {
+        Livre.main(null);
     }
 }
