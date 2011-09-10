@@ -1,10 +1,13 @@
 package bourse.protocole;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +18,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.google.common.collect.Iterators;
 
 public class ResultAgentsTest extends SAXTest {
 
@@ -50,13 +55,19 @@ public class ResultAgentsTest extends SAXTest {
 
     @Test
     public final void testToXML() {
-        LinkedList<String> listeAgents = new LinkedList<String>();
-        listeAgents.add(0, "groupe-E.seb");
-        listeAgents.add(1, "groupe-E.eric");
-        listeAgents.add(2, "groupe-E.arnaud");
-        listeAgents.add(3, "groupe-E.protocoleman");
-        String p = new ResultAgents(listeAgents).toXML();
-        System.out.println(p);
+        String p = new ResultAgents(newLinkedList(newArrayList("groupe-E.seb", "groupe-E.eric", "groupe-E.arnaud",
+                "groupe-E.protocoleman"))).toXML();
+        Iterator<String> xml = Iterators.forArray(p.split("\n"));
+        assertThat(xml.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        assertThat(xml.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
+        assertThat(xml.next()).isEqualTo("<MSG>");
+        assertThat(xml.next()).isEqualTo("<RESULTAGENTS>");
+        assertThat(xml.next()).isEqualTo("<AGENT NOM=\"groupe-E.seb\"/>");
+        assertThat(xml.next()).isEqualTo("<AGENT NOM=\"groupe-E.eric\"/>");
+        assertThat(xml.next()).isEqualTo("<AGENT NOM=\"groupe-E.arnaud\"/>");
+        assertThat(xml.next()).isEqualTo("<AGENT NOM=\"groupe-E.protocoleman\"/>");
+        assertThat(xml.next()).isEqualTo("</RESULTAGENTS>");
+        assertThat(xml.next()).isEqualTo("</MSG>");
     }
 
 }
