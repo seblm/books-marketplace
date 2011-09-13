@@ -11,7 +11,20 @@ import bourse.sdd.Livre;
 public class EnvironnementTest {
 
     @Test
-    public void test() {
+    public void should_create_Environment() {
+        Environnement e = new Environnement();
+        assertThat(e.toString(0))
+                .startsWith(
+                        "enchère =\n"
+                                + " tour = 1, type = 0, temps = 0, pas = 0.0, enchérisseur = null, prix = 0.0, prix maximum = 0.0, livre = \n"
+                                + "  , Catégorie = ")
+                .endsWith(
+                        "\n"
+                                + "typeEnchèreDemandée = 0 nombreActions = 0 dateListeAgent = 9223372036854775807 dateListeProgramme = 9223372036854775807 enchèreInteressante = false");
+    }
+
+    @Test
+    public void should_create_Environment_with_stuff() {
         final Categorie categorie = new Categorie(Categorie.SF);
         Livre l1 = new bourse.sdd.Livre("l1", "a2", categorie, "poche", "O'reilly", (float) 50.65, (float) 0.45,
                 "2004-01-01", "222222222", 1, "arno", (float) 12);
