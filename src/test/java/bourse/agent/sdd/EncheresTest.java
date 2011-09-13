@@ -1,6 +1,7 @@
 package bourse.agent.sdd;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -25,5 +26,31 @@ public class EncheresTest {
                 .isEqualTo(
                         "     tour = 42, type = 3, temps = 3, pas = 3.0, enchérisseur = 34, prix = 4.0, prix maximum = 0.0, livre = \n"
                                 + "      Auteur = auteur, Catégorie = Romans Policiers, Date Parution = 24/12/1981, Editeur = editeur, Format = format, Id = 42, Isbn = 3A61EF7, Titre = titre, Proprietaire = propriétaire, PrixAchat = 0.1");
+    }
+
+    @Test
+    public void should_get_any_enchere() {
+        final Encheres encheres = new Encheres();
+        final Enchere enchere = new Enchere(42, new Livre("titre", "auteur", new Categorie(Categorie.ROMAN), "format",
+                "editeur", 0f, 0f, "24/12/1981", "3A61EF7", 42, "propriétaire", 0.1f), 4f, 3, 3f, 3, "34");
+        encheres.ajouter(enchere);
+
+        final Enchere firstEnchere = encheres.get(0);
+
+        assertThat(firstEnchere.getAgent()).isEqualTo(enchere.getAgent());
+        assertThat(firstEnchere.getLivre()).isSameAs(enchere.getLivre());
+        assertThat(firstEnchere.getNumeroEnchere()).isEqualTo(enchere.getNumeroEnchere());
+        assertThat(firstEnchere.getPas()).isEqualTo(enchere.getPas());
+        assertThat(firstEnchere.getPrixMaximum()).isEqualTo(enchere.getPrixMaximum());
+        assertThat(firstEnchere.getTemps()).isEqualTo(enchere.getTemps());
+        assertThat(firstEnchere.getType()).isEqualTo(enchere.getType());
+        assertThat(firstEnchere.getValeurEnchere()).isEqualTo(enchere.getValeurEnchere());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void should_not_get_non_existent_enchere() {
+        new Encheres().get(0);
+
+        fail();
     }
 }
