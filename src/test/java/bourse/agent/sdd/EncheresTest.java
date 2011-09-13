@@ -51,6 +51,29 @@ public class EncheresTest {
     public void should_not_get_non_existent_enchere() {
         new Encheres().get(0);
 
-        fail();
+        fail("should throws an IndexOutOfBoundsException");
+    }
+    
+    @Test
+    public void when_encheres_is_empty_should_call_nettoyer() {
+        try {
+            new Encheres().nettoyer();
+        } catch (IllegalStateException e) {
+            fail(e.getMessage());
+        }
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void should_not_call_method_nettoyer() {
+        final Encheres encheres = new Encheres();
+        final Enchere enchere = new Enchere(42, new Livre("titre", "auteur", new Categorie(Categorie.ROMAN), "format",
+                "editeur", 0f, 0f, "24/12/1981", "3A61EF7", 42, "propriétaire", 0.1f), 4f, 3, 3f, 3, "34");
+        encheres.ajouter(enchere);
+
+        assertThat(encheres.get(0)).isNotNull();
+        
+        encheres.nettoyer();
+        
+        fail("should throws an IllegalStateException");
     }
 }
