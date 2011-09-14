@@ -53,7 +53,7 @@ public class EncheresTest {
 
         fail("should throws an IndexOutOfBoundsException");
     }
-    
+
     @Test
     public void when_encheres_is_empty_should_call_nettoyer() {
         try {
@@ -62,7 +62,7 @@ public class EncheresTest {
             fail(e.getMessage());
         }
     }
-    
+
     @Test(expected = IllegalStateException.class)
     public void should_not_call_method_nettoyer() {
         final Encheres encheres = new Encheres();
@@ -71,9 +71,9 @@ public class EncheresTest {
         encheres.ajouter(enchere);
 
         assertThat(encheres.get(0)).isNotNull();
-        
+
         encheres.nettoyer();
-        
+
         fail("should throws an IllegalStateException");
     }
 }
