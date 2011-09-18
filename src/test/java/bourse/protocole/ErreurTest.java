@@ -108,6 +108,11 @@ public class ErreurTest extends SAXTest {
         assertThat(actualErrorFromXml.getType().getValue()).isEqualTo(generalError.getType().getValue());
     }
 
+    @Test
+    public final void should_launch_main_program() {
+        Erreur.main(null);
+    }
+
     private Erreur getErrorFromXml(final String xml) throws SAXException, IOException, UnsupportedEncodingException {
         Document document = documentBuilder.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
         Element root = document.getDocumentElement();

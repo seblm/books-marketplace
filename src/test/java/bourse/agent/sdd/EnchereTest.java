@@ -1,7 +1,15 @@
 package bourse.agent.sdd;
 
 import static bourse.agent.sdd.Enchere.enchereToCode;
+import static bourse.agent.sdd.Enchere.main;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyFloat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Test;
@@ -18,6 +26,9 @@ public class EnchereTest {
 
     @Mock
     private Livre livre;
+
+    @Mock
+    private Enchere enchere;
 
     @Test
     public final void instantiationAndToString() {
@@ -81,6 +92,29 @@ public class EnchereTest {
         assertThat(destinationEnchere.getLivre()).isSameAs(sourceLivre);
         assertThat(destinationEnchere.getValeurEnchere()).isEqualTo(5.3f);
         assertThat(destinationEnchere.getPrixMaximum()).isEqualTo(0f);
+    }
+
+    @Test
+    public final void should_set_prix_maximum() {
+        Enchere enchere = new Enchere();
+        assertThat(enchere.getPrixMaximum()).isEqualTo(0f);
+
+        enchere.setPrixMaximum(42.42f);
+
+        assertThat(enchere.getPrixMaximum()).isEqualTo(42.42f);
+    }
+
+    @Test
+    @PrepareForTest({ Livre.class, Enchere.class })
+    public final void should_launch_main_program() throws Exception {
+        whenNew(Livre.class).withArguments(anyString(), anyString(), any(Categorie.class), anyString(), anyString(),
+                anyFloat(), anyFloat(), anyString(), anyString(), anyInt(), anyString(), anyFloat()).thenReturn(livre);
+        whenNew(Enchere.class).withArguments(anyInt(), eq(livre), anyFloat(), anyInt(), anyFloat(), anyInt(),
+                anyString()).thenReturn(enchere);
+
+        main(null);
+
+        verify(enchere, times(3)).toString(4);
     }
 
 }
