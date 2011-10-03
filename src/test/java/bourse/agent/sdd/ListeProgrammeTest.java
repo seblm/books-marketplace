@@ -1,14 +1,14 @@
 package bourse.agent.sdd;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +20,8 @@ import bourse.protocole.Categorie;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 
+import com.google.common.collect.Lists;
+
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ListeProgramme.class)
 public class ListeProgrammeTest {
@@ -27,18 +29,16 @@ public class ListeProgrammeTest {
     private ProgrammePro program;
 
     @Before
-    public final void initProgramList() {
+    public final void createProgramPro() {
         program = new ProgrammePro(1, new Livre("title", "author", new Categorie(Categorie.AUCUNE), "format", "editor",
                 1f, 1f, "1981-12-24", "ISBN-NUM", 2, "owner", 2f));
     }
 
     @Test
     public final void new_ListeProgramme_should_be_constructed_by_LinkedList() {
-        final List<ProgrammePro> programsLinkedList = new LinkedList<ProgrammePro>();
-        programsLinkedList.add(program);
+        final LinkedList<ProgrammePro> programsLinkedList = Lists.<ProgrammePro> newLinkedList(newArrayList(program));
 
-        @SuppressWarnings("rawtypes")
-        ListeProgramme programsList = new ListeProgramme((LinkedList) programsLinkedList);
+        ListeProgramme programsList = new ListeProgramme(programsLinkedList);
 
         assertThat(programsList.getIeme(1)).isSameAs(program);
     }
@@ -70,7 +70,7 @@ public class ListeProgrammeTest {
         whenNew(ListeProgramme.class).withNoArguments().thenReturn(listeProgramme);
 
         ListeProgramme.main(null);
-        
+
         verifyNew(ListeProgramme.class, times(2)).withNoArguments();
         verify(listeProgramme, times(3)).toString(0);
     }

@@ -24,12 +24,10 @@ import com.google.common.collect.Iterators;
 public class ResultAgentsTest extends SAXTest {
 
     @Test
-    public final void testResultAgentsLinkedListOfString() {
-        LinkedList<String> listeAgents = new LinkedList<String>();
-        listeAgents.add(0, "groupe-E.seb");
-        listeAgents.add(1, "groupe-E.eric");
-        listeAgents.add(2, "groupe-E.arnaud");
-        listeAgents.add(3, "groupe-E.protocoleman");
+    public final void should_create_ResultAgents_with_a_LinkedList_of_String() {
+        LinkedList<String> listeAgents = newLinkedList(newArrayList("groupe-E.seb", "groupe-E.eric", "groupe-E.arnaud",
+                "groupe-E.protocoleman"));
+
         ResultAgents resultAgents = new ResultAgents(listeAgents);
 
         assertThat(resultAgents.type.getValue()).isEqualTo(TypeMessage.TM_RESULT_AGENTS);
@@ -49,7 +47,9 @@ public class ResultAgentsTest extends SAXTest {
         Node typeDOM = noeuds.item(0);
         assertThat(typeDOM.getNodeName()).isEqualTo("RESULTAGENTS");
         Element typeDOME = (Element) typeDOM;
+
         final ResultAgents resultAgents = new ResultAgents(typeDOME);
+
         assertThat(resultAgents.getListeAgents().size()).isEqualTo(4);
     }
 
@@ -57,6 +57,7 @@ public class ResultAgentsTest extends SAXTest {
     public final void testToXML() {
         String p = new ResultAgents(newLinkedList(newArrayList("groupe-E.seb", "groupe-E.eric", "groupe-E.arnaud",
                 "groupe-E.protocoleman"))).toXML();
+
         Iterator<String> xml = Iterators.forArray(p.split("\n"));
         assertThat(xml.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         assertThat(xml.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
@@ -68,6 +69,7 @@ public class ResultAgentsTest extends SAXTest {
         assertThat(xml.next()).isEqualTo("<AGENT NOM=\"groupe-E.protocoleman\"/>");
         assertThat(xml.next()).isEqualTo("</RESULTAGENTS>");
         assertThat(xml.next()).isEqualTo("</MSG>");
+        assertThat(xml.hasNext()).isFalse();
     }
 
 }
