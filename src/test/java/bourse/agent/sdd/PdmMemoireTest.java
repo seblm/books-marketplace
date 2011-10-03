@@ -1,9 +1,13 @@
 package bourse.agent.sdd;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import bourse.agent.Visualisation;
 
 public class PdmMemoireTest {
 
@@ -20,7 +24,7 @@ public class PdmMemoireTest {
         pdmMemoire.setNonEnchereGeree(4);
         final boolean[] unhandledBids = pdmMemoire.getEnchereGeree();
 
-        assertThat(unhandledBids).isEqualTo(new boolean[] { true, false, true, false, true });
+        assertThat(unhandledBids).containsOnly(true, false, true, false, true);
     }
 
     @Test
@@ -31,7 +35,7 @@ public class PdmMemoireTest {
     }
 
     @Test
-    public final void testSetProgramme() {
+    public final void should_set_programme() {
         final ListeProgramme programList = new ListeProgramme();
 
         pdmMemoire.setProgramme(programList);
@@ -40,10 +44,18 @@ public class PdmMemoireTest {
     }
 
     @Test
-    public final void testSetNumeroDernierTour() {
+    public final void should_set_numeroDernierTour() {
         pdmMemoire.setNumeroDernierTour(42);
 
         assertThat(pdmMemoire.getNumeroDernierTour()).isEqualTo(42);
+    }
+
+    @Test
+    public void should_run_main_program() throws Exception {
+        Visualisation visu = mock(Visualisation.class);
+        whenNew(Visualisation.class).withNoArguments().thenReturn(visu);
+
+        PdmMemoire.main(null);
     }
 
 }
