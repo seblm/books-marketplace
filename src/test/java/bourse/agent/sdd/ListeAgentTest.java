@@ -1,95 +1,77 @@
 package bourse.agent.sdd;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
-
-import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(ListeAgent.class)
 public class ListeAgentTest {
 
-    private ListeAgent agentsList;
+    private ListeAgent listeAgent;
+
+    @Mock
+    private Agent agent;
 
     @Before
-    public final void initNewAgentsList() {
-        agentsList = new ListeAgent();
+    public void create_liste_agent() {
+        listeAgent = new ListeAgent();
     }
 
     @Test
-    public final void should_add_new_agent() {
-        agentsList.ajouter(new Agent("new agent"));
-
-        assertThat(agentsList.contient("new agent")).isTrue();
+    public void should_create_liste_agent() {
+        assertThat(listeAgent.toString(4)).isEqualTo("");
     }
 
     @Test
-    public final void should_tell_it_has_agent_if_it_really_has_one() {
-        agentsList.ajouter(new Agent("new agent"));
+    public void should_add_and_retrieve_agent() {
+        listeAgent.ajouter(agent);
 
-        final boolean hasAgentNamedNewAgent = agentsList.contient("new agent");
-
-        assertThat(hasAgentNamedNewAgent).isTrue();
+        assertThat(listeAgent.valeurs()).containsOnly(agent);
     }
 
     @Test
-    public final void should_tell_it_has_not_agent() {
-        final boolean hasAgentNamedNewAgent = agentsList.contient("new agent");
+    public void should_expose_as_simple_string() {
+        Agent agent = new Agent("junit agent");
 
-        assertThat(hasAgentNamedNewAgent).isFalse();
+        listeAgent.ajouter(agent);
+
+        assertThat(listeAgent.toString(3)).isEqualTo("   nom = junit agent");
     }
 
     @Test
-    public final void should_be_transformed_to_a_human_readable_string() {
-        agentsList.ajouter(new Agent("first agent"));
-        agentsList.ajouter(new Agent("second agent"));
+    public void should_find_added_agent() {
+        when(agent.getNom()).thenReturn("junit agent");
+        listeAgent.ajouter(agent);
 
-        final String stringRepresentation = agentsList.toString(3);
-
-        assertThat(stringRepresentation).isEqualTo("   nom = first agent\n   nom = second agent");
+        assertThat(listeAgent.contient("junit agent")).isTrue();
     }
 
     @Test
-    public final void empty_instance_should_be_transformed_to_empty_string() {
-        final String stringRepresentation = agentsList.toString(0);
+    @PrepareForTest({ ListeAgent.class, Agent.class })
+    public void should_execute_main_program() throws Exception {
+        ListeAgent listeAgentMocked = mock(ListeAgent.class);
+        whenNew(ListeAgent.class).withNoArguments().thenReturn(listeAgentMocked);
+        Agent agentMocked = mock(Agent.class);
+        whenNew(Agent.class).withArguments(anyString()).thenReturn(agentMocked);
 
-        assertThat(stringRepresentation).hasSize(0);
-    }
+        ListeAgent.main(null);
 
-    @Test
-    public final void testValeurs() {
-        final Agent firstAgent = new Agent("first agent");
-        agentsList.ajouter(firstAgent);
-        final Agent secondAgent = new Agent("second agent");
-        agentsList.ajouter(secondAgent);
-
-        @SuppressWarnings("rawtypes")
-        final Collection values = agentsList.valeurs();
-
-        assertThat(values).containsOnly(firstAgent, secondAgent);
-    }
-
-    @Test
-    public final void testMain() throws Exception {
-        final ListeAgent agentsList = mock(ListeAgent.class);
-        whenNew(ListeAgent.class).withNoArguments().thenReturn(agentsList);
-
-        ListeAgent.main(new String[0]);
-
-        verifyNew(ListeAgent.class, times(1)).withNoArguments();
-        verify(agentsList, times(3)).ajouter(any(Agent.class));
-        verify(agentsList, times(1)).toString(5);
+        verifyNew(ListeAgent.class).withNoArguments();
+        verifyNew(Agent.class).withArguments("a1");
+        verifyNew(Agent.class).withArguments("a2");
+        verifyNew(Agent.class).withArguments("a3");
+        verify(listeAgentMocked).toString(5);
     }
 
 }
