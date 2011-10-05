@@ -2,12 +2,23 @@ package bourse.agent.sdd;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.verifyNew;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import bourse.protocole.Categorie;
 import bourse.sdd.Livre;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Encheres.class)
 public class EncheresTest {
 
     @Test
@@ -75,5 +86,17 @@ public class EncheresTest {
         encheres.nettoyer();
 
         fail("should throws an IllegalStateException");
+    }
+
+    @Test
+    public void should_be_executable() throws Exception {
+        Encheres encheres = mock(Encheres.class);
+        whenNew(Encheres.class).withNoArguments().thenReturn(encheres);
+
+        Encheres.main(new String[0]);
+
+        verifyNew(Encheres.class, times(1)).withNoArguments();
+        verify(encheres, times(3)).ajouter(any(Enchere.class));
+        verify(encheres, times(1)).toString(0);
     }
 }
