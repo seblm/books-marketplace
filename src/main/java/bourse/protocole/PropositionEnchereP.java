@@ -1,14 +1,19 @@
 package bourse.protocole;
 
-import org.w3c.dom.*;
-import bourse.sdd.*;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
+import java.io.ByteArrayInputStream;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import java.io.ByteArrayInputStream;
+import bourse.sdd.Livre;
 
 /**
  * C'est le message envoyé à chaque étape d'enchère par la place de marché vers
@@ -127,38 +132,25 @@ public class PropositionEnchereP extends bourse.protocole.Protocole {
         this.nom = type.getAttribute("NOM");
         this.numero = Integer.parseInt(type.getAttribute("NUMERO"));
         this.temps = Integer.parseInt(type.getAttribute("TEMPS"));
+        this.pas = 0;
         if (this.nom.equalsIgnoreCase("ENCHERETROIS")
                 || (this.nom.equalsIgnoreCase("ENCHEREQUATRE") && type.hasAttribute("PAS")))
             this.pas = Float.parseFloat(type.getAttribute("PAS"));
-        else
-            this.pas = 0;
         NodeList noeuds = type.getChildNodes();
         Element livrend = (Element) noeuds.item(0);
         this.livre = new Livre(livrend);
+        this.enchere = 0;
+        this.nomagent = "";
         // test si enchere2
         System.out.println(noeuds.getLength());
-        if (noeuds.getLength() == 1) {
-            /*
-             * Element enchere = (Element)noeuds.item(1); Text
-             * noeud=(Text)enchere.getFirstChild(); this.enchere =
-             * Float.parseFloat(noeud.getNodeValue());
-             */
-            this.enchere = 0;
+        if (noeuds.getLength() > 1) {
+            Element enchere = (Element) noeuds.item(1);
+            Text noeud = (Text) enchere.getFirstChild();
+            this.enchere = Float.parseFloat(noeud.getNodeValue());
             this.nomagent = "";
-
-        } else {
-            if (noeuds.getLength() == 2) {
-                Element enchere = (Element) noeuds.item(1);
-                Text noeud = (Text) enchere.getFirstChild();
-                this.enchere = Float.parseFloat(noeud.getNodeValue());
-                this.nomagent = "";
-            } else {
-                Element enchere = (Element) noeuds.item(1);
-                Text noeud = (Text) enchere.getFirstChild();
-                this.enchere = Float.parseFloat(noeud.getNodeValue());
+            if (noeuds.getLength() > 2) {
                 Element agent = (Element) noeuds.item(2);
                 this.nomagent = agent.getAttribute("NOM");
-                ;
                 System.out.println(this.nomagent);
             }
         }

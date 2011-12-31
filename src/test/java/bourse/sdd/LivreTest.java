@@ -30,7 +30,7 @@ public class LivreTest extends SAXTest {
 
     @Test
     public void should_create_a_book() {
-        assertBook(livre);
+        assertLupinBook(livre);
         assertThat(livre.toString(3))
                 .isEqualTo(
                         "   Auteur = leblanc, Catégorie = Science, Date Parution = 15/11/00, Editeur = belin, Etat = 0.4, Format = poch, Id = 12, Isbn = yetet, Prix = 153.0, Titre = lupin, Proprietaire = protocoleman, PrixAchat = 50.95");
@@ -46,23 +46,31 @@ public class LivreTest extends SAXTest {
     @Test
     public void should_create_book_by_copying_existing_one() {
         Livre book = new Livre(livre);
-        assertBook(book);
+        assertLupinBook(book);
         assertThat(book.toString()).isEqualTo(livre.toString());
     }
 
-    private void assertBook(Livre book) {
-        assertThat(book.getTitre()).isEqualTo("lupin");
-        assertThat(book.getAuteur()).isEqualTo("leblanc");
-        assertThat(book.getCategorie().getCategorie()).isEqualTo(SCIENCE);
-        assertThat(book.getFormat()).isEqualTo("poch");
-        assertThat(book.getEditeur()).isEqualTo("belin");
-        assertThat(book.getPrix()).isEqualTo(153f);
-        assertThat(book.getEtat()).isEqualTo(0.4f);
-        assertThat(book.getDateParu()).isEqualTo("15/11/00");
-        assertThat(book.getIsbn()).isEqualTo("yetet");
-        assertThat(book.getId()).isEqualTo(12);
-        assertThat(book.getProprietaire()).isEqualTo("protocoleman");
-        assertThat(book.getPrixAchat()).isEqualTo(50.95f);
+    private void assertLupinBook(Livre book) {
+        assertBook(book, "leblanc", SCIENCE, "15/11/00", "belin", 0.4f, "poch", 12, "yetet", 153f, 50.95f,
+                "protocoleman", "lupin");
+    }
+
+    public static void assertBook(Livre actualBook, String expectedAuthor, String expectedCategory,
+            String expectedPublicationDate, String expectedEditor, float expectedState, String expectedFormat,
+            int expectedId, String expectedIsbn, float expectedPrice, float expectedBuyPrice, String expectedOwner,
+            String expectedTitle) {
+        assertThat(actualBook.getAuteur()).isEqualTo(expectedAuthor);
+        assertThat(actualBook.getCategorie().getCategorie()).isEqualTo(expectedCategory);
+        assertThat(actualBook.getDateParu()).isEqualTo(expectedPublicationDate);
+        assertThat(actualBook.getEditeur()).isEqualTo(expectedEditor);
+        assertThat(actualBook.getEtat()).isEqualTo(expectedState);
+        assertThat(actualBook.getFormat()).isEqualTo(expectedFormat);
+        assertThat(actualBook.getId()).isEqualTo(expectedId);
+        assertThat(actualBook.getIsbn()).isEqualTo(expectedIsbn);
+        assertThat(actualBook.getPrix()).isEqualTo(expectedPrice);
+        assertThat(actualBook.getPrixAchat()).isEqualTo(expectedBuyPrice);
+        assertThat(actualBook.getProprietaire()).isEqualTo(expectedOwner);
+        assertThat(actualBook.getTitre()).isEqualTo(expectedTitle);
     }
 
     @Test
@@ -84,7 +92,7 @@ public class LivreTest extends SAXTest {
 
         Livre book = new Livre(root);
 
-        assertBook(book);
+        assertLupinBook(book);
     }
 
     @Test
