@@ -1,9 +1,7 @@
 package bourse.agent.sdd;
 
-import static com.google.common.collect.Iterators.forArray;
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.Before;
@@ -99,11 +97,10 @@ public class ListePdmMemoireTest {
 
         final String[] humanReadableString = pdmList.toString(1).split("\n");
 
-        Iterator<String> lines = forArray(humanReadableString);
-        assertThat(lines.next())
+        assertThat(humanReadableString[0])
                 .isEqualTo(
                         " nom = pdmName, adresse = [ip = 127.0.0.1, port = 1981], visitée = false, active = false, programme = ");
-        assertThat(lines.next()).startsWith("  date = ").endsWith(", liste = ");
+        assertThat(humanReadableString[1]).startsWith("  date = ").endsWith(", liste = ");
     }
     
     @Test

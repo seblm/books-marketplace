@@ -65,9 +65,9 @@ public class PropositionEncherePTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<PROPOSITIONENCHERE NOM=\"name\" NUMERO=\"42\" TEMPS=\"24\">\n");
-        xmlBuilder.append(LIVRE_XML);
-        xmlBuilder.append("</PROPOSITIONENCHERE>\n");
+        xmlBuilder.append("    <PROPOSITIONENCHERE NOM=\"name\" NUMERO=\"42\" TEMPS=\"24\">\n");
+        xmlBuilder.append("        " + LIVRE_XML);
+        xmlBuilder.append("    </PROPOSITIONENCHERE>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = PropositionEnchereP.newInstance(xmlBuilder.toString());
 
@@ -85,10 +85,10 @@ public class PropositionEncherePTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<PROPOSITIONENCHERE NOM=\"ENCHERETROIS\" NUMERO=\"42\" PAS=\"2.0\" TEMPS=\"24\">\n");
-        xmlBuilder.append(LIVRE_XML);
-        xmlBuilder.append("<ENCHERE>24.0</ENCHERE>\n");
-        xmlBuilder.append("</PROPOSITIONENCHERE>\n");
+        xmlBuilder.append("    <PROPOSITIONENCHERE NOM=\"ENCHERETROIS\" NUMERO=\"42\" PAS=\"2.0\" TEMPS=\"24\">\n");
+        xmlBuilder.append("        " + LIVRE_XML);
+        xmlBuilder.append("        <ENCHERE>24.0</ENCHERE>\n");
+        xmlBuilder.append("    </PROPOSITIONENCHERE>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = PropositionEnchereP.newInstance(xmlBuilder.toString());
 
@@ -106,11 +106,11 @@ public class PropositionEncherePTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<PROPOSITIONENCHERE NOM=\"ENCHERETROIS\" NUMERO=\"42\" PAS=\"2.0\" TEMPS=\"24\">\n");
-        xmlBuilder.append(LIVRE_XML);
-        xmlBuilder.append("<ENCHERE>24.0</ENCHERE>\n");
-        xmlBuilder.append("<AGENT NOM=\"007\"/>\n");
-        xmlBuilder.append("</PROPOSITIONENCHERE>\n");
+        xmlBuilder.append("    <PROPOSITIONENCHERE NOM=\"ENCHERETROIS\" NUMERO=\"42\" PAS=\"2.0\" TEMPS=\"24\">\n");
+        xmlBuilder.append("        " + LIVRE_XML);
+        xmlBuilder.append("        <ENCHERE>24.0</ENCHERE>\n");
+        xmlBuilder.append("        <AGENT NOM=\"007\"/>\n");
+        xmlBuilder.append("    </PROPOSITIONENCHERE>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = PropositionEnchereP.newInstance(xmlBuilder.toString());
 

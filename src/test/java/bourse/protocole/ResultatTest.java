@@ -27,12 +27,12 @@ public class ResultatTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<RESULTAT>\n");
+        xmlBuilder.append("    <RESULTAT>\n");
         xmlBuilder
-                .append("<LIVRE AUTEUR=\"author\" CATEGORIE=\"Aucune\" DATEPAR=\"publicationDate\" EDITEUR=\"editor\" ETAT=\"42.0\" FORMAT=\"format\" ID=\"42\" ISBN=\"isbn\" PRIX=\"42.0\" PROPRIETAIRE=\"owner\" TITRE=\"title\"/>\n");
-        xmlBuilder.append("<AGENT NOM=\"foo\"/>\n");
-        xmlBuilder.append("<ENCHERE>42.0</ENCHERE>\n");
-        xmlBuilder.append("</RESULTAT>\n");
+                .append("        <LIVRE AUTEUR=\"author\" CATEGORIE=\"Aucune\" DATEPAR=\"publicationDate\" EDITEUR=\"editor\" ETAT=\"42.0\" FORMAT=\"format\" ID=\"42\" ISBN=\"isbn\" PRIX=\"42.0\" PROPRIETAIRE=\"owner\" TITRE=\"title\"/>\n");
+        xmlBuilder.append("        <AGENT NOM=\"foo\"/>\n");
+        xmlBuilder.append("        <ENCHERE>42.0</ENCHERE>\n");
+        xmlBuilder.append("    </RESULTAT>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = Resultat.newInstance(xmlBuilder.toString());
 

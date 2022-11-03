@@ -22,9 +22,9 @@ public class PropositionEnchereATest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<PROPOSITIONENCHERE NUMERO=\"42\">\n");
-        xmlBuilder.append("<ENCHERE>24.0</ENCHERE>\n");
-        xmlBuilder.append("</PROPOSITIONENCHERE>\n");
+        xmlBuilder.append("    <PROPOSITIONENCHERE NUMERO=\"42\">\n");
+        xmlBuilder.append("        <ENCHERE>24.0</ENCHERE>\n");
+        xmlBuilder.append("    </PROPOSITIONENCHERE>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = PropositionEnchereA.newInstance(xmlBuilder.toString());
 

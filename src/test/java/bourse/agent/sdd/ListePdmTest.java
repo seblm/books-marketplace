@@ -1,6 +1,5 @@
 package bourse.agent.sdd;
 
-import static com.google.common.collect.Iterators.forArray;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
 import static org.mockito.Matchers.any;
@@ -10,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,10 +59,10 @@ public class ListePdmTest {
         marketPlaces.ajouter(new Pdm("name", "127.0.0.1:8080"));
         marketPlaces.ajouter(new Pdm("secondName", "192.168.0.1:21"));
 
-        Iterator<String> lines = forArray(marketPlaces.toString().split("\n"));
-        assertThat(lines.next()).isEqualTo("[nom = secondName, adresse = [ip = 192.168.0.1, port = 21];");
-        assertThat(lines.next()).isEqualTo(" nom = name, adresse = [ip = 127.0.0.1, port = 8080];]");
-        assertThat(lines.hasNext()).isFalse();
+        String[] lines = marketPlaces.toString().split("\n");
+        assertThat(lines[0]).isEqualTo("[nom = secondName, adresse = [ip = 192.168.0.1, port = 21];");
+        assertThat(lines[1]).isEqualTo(" nom = name, adresse = [ip = 127.0.0.1, port = 8080];]");
+        assertThat(lines).hasSize(2);
     }
 
     @Test

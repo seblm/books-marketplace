@@ -1,12 +1,10 @@
 package bourse.protocole;
 
-import static com.google.common.collect.Iterators.forArray;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -26,12 +24,12 @@ public class ErreurTest extends SAXTest {
         assertThat(simpleError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = simpleError.toXML();
-        Iterator<String> xmlLines = forArray(xml.split("\n"));
-        assertThat(xmlLines.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        assertThat(xmlLines.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
-        assertThat(xmlLines.next()).isEqualTo("<MSG>");
-        assertThat(xmlLines.next()).isEqualTo("<ERREUR NOM=\"Simple Error\">no blabla</ERREUR>");
-        assertThat(xmlLines.next()).isEqualTo("</MSG>");
+        String[] xmlLines = xml.split("\n");
+        assertThat(xmlLines[0]).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        assertThat(xmlLines[1]).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
+        assertThat(xmlLines[2]).isEqualTo("<MSG>");
+        assertThat(xmlLines[3]).isEqualTo("    <ERREUR NOM=\"Simple Error\">no blabla</ERREUR>");
+        assertThat(xmlLines[4]).isEqualTo("</MSG>");
         Erreur actualErrorFromXml = getErrorFromXml(xml);
         assertThat(actualErrorFromXml.getNom()).isEqualTo(simpleError.getNom());
         assertThat(actualErrorFromXml.getRaison()).isEqualTo(simpleError.getRaison());
@@ -48,14 +46,15 @@ public class ErreurTest extends SAXTest {
         assertThat(zeroVenteError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = zeroVenteError.toXML();
-        Iterator<String> xmlLines = forArray(xml.split("\n"));
-        assertThat(xmlLines.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        assertThat(xmlLines.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
-        assertThat(xmlLines.next()).isEqualTo("<MSG>");
-        assertThat(xmlLines.next()).isEqualTo(
-                "<ERREUR NOM=\"ZEROVENTE\">pas de vente<RAISON TYPE=\"aucune raison connue\"/>");
-        assertThat(xmlLines.next()).isEqualTo("</ERREUR>");
-        assertThat(xmlLines.next()).isEqualTo("</MSG>");
+        String[] xmlLines = xml.split("\n");
+        assertThat(xmlLines[0]).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        assertThat(xmlLines[1]).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
+        assertThat(xmlLines[2]).isEqualTo("<MSG>");
+        assertThat(xmlLines[3]).isEqualTo("    <ERREUR NOM=\"ZEROVENTE\">");
+        assertThat(xmlLines[4]).isEqualTo("        pas de vente");
+        assertThat(xmlLines[5]).isEqualTo("        <RAISON TYPE=\"aucune raison connue\"/>");
+        assertThat(xmlLines[6]).isEqualTo("    </ERREUR>");
+        assertThat(xmlLines[7]).isEqualTo("</MSG>");
         Erreur actualErrorFromXml = getErrorFromXml(xml);
         assertThat(actualErrorFromXml.getNom()).isEqualTo(zeroVenteError.getNom());
         assertThat(actualErrorFromXml.getRaison()).isEqualTo(zeroVenteError.getRaison());
@@ -72,14 +71,15 @@ public class ErreurTest extends SAXTest {
         assertThat(duplicationError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = duplicationError.toXML();
-        Iterator<String> xmlLines = forArray(xml.split("\n"));
-        assertThat(xmlLines.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        assertThat(xmlLines.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
-        assertThat(xmlLines.next()).isEqualTo("<MSG>");
-        assertThat(xmlLines.next()).isEqualTo(
-                "<ERREUR NOM=\"DUPLICATION\">en double<PDM ADRESSE=\"5° avenue\" NOM=\"Wall Book\"/>");
-        assertThat(xmlLines.next()).isEqualTo("</ERREUR>");
-        assertThat(xmlLines.next()).isEqualTo("</MSG>");
+        String[] xmlLines = xml.split("\n");
+        assertThat(xmlLines[0]).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        assertThat(xmlLines[1]).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
+        assertThat(xmlLines[2]).isEqualTo("<MSG>");
+        assertThat(xmlLines[3]).isEqualTo("    <ERREUR NOM=\"DUPLICATION\">");
+        assertThat(xmlLines[4]).isEqualTo("        en double");
+        assertThat(xmlLines[5]).isEqualTo("        <PDM ADRESSE=\"5° avenue\" NOM=\"Wall Book\"/>");
+        assertThat(xmlLines[6]).isEqualTo("    </ERREUR>");
+        assertThat(xmlLines[7]).isEqualTo("</MSG>");
         Erreur actualErrorFromXml = getErrorFromXml(xml);
         assertThat(actualErrorFromXml.getNom()).isEqualTo(duplicationError.getNom());
         assertThat(actualErrorFromXml.getRaison()).isEqualTo(duplicationError.getRaison());
@@ -96,12 +96,12 @@ public class ErreurTest extends SAXTest {
         assertThat(generalError.getType().getValue()).isEqualTo(TypeMessage.TM_ERREUR);
 
         String xml = generalError.toXML();
-        Iterator<String> xmlLines = forArray(xml.split("\n"));
-        assertThat(xmlLines.next()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        assertThat(xmlLines.next()).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
-        assertThat(xmlLines.next()).isEqualTo("<MSG>");
-        assertThat(xmlLines.next()).isEqualTo("<ERREUR NOM=\"General Error\">description</ERREUR>");
-        assertThat(xmlLines.next()).isEqualTo("</MSG>");
+        String[] xmlLines = xml.split("\n");
+        assertThat(xmlLines[0]).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        assertThat(xmlLines[1]).isEqualTo("<!DOCTYPE MSG SYSTEM \"MSG.dtd\">");
+        assertThat(xmlLines[2]).isEqualTo("<MSG>");
+        assertThat(xmlLines[3]).isEqualTo("    <ERREUR NOM=\"General Error\">description</ERREUR>");
+        assertThat(xmlLines[4]).isEqualTo("</MSG>");
         Erreur actualErrorFromXml = getErrorFromXml(xml);
         assertThat(actualErrorFromXml.getNom()).isEqualTo(generalError.getNom());
         assertThat(actualErrorFromXml.getRaison()).isEmpty();

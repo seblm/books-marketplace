@@ -39,8 +39,11 @@ public class ProposeVenteTest extends SAXTest {
         ProposeVente proposeVente = new ProposeVente("Montante", 1546, 12);
         assertThat(proposeVente.toXML()).isEqualTo(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE MSG SYSTEM \"MSG.dtd\">\n<MSG>\n"
-                        + "<PROPOSEVENTE NOM=\"Montante\">\n<LIVRE ID=\"12\"/>\n<ENCHERE>1546.0</ENCHERE>\n"
-                        + "</PROPOSEVENTE>\n</MSG>\n");
+                        + "    <PROPOSEVENTE NOM=\"Montante\">\n"
+                        + "        <LIVRE ID=\"12\"/>\n"
+                        + "        <ENCHERE>1546.0</ENCHERE>\n"
+                        + "    </PROPOSEVENTE>\n"
+                        + "</MSG>\n");
     }
 
 }

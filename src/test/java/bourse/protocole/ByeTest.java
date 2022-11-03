@@ -20,7 +20,7 @@ public class ByeTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<BYE/>\n");
+        xmlBuilder.append("    <BYE/>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = Bye.newInstance(xmlBuilder.toString());
 

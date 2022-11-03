@@ -1,6 +1,6 @@
 package bourse.agent.sdd;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Collections.singletonList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -20,8 +20,6 @@ import bourse.protocole.Categorie;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 
-import com.google.common.collect.Lists;
-
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ListeProgramme.class)
 public class ListeProgrammeTest {
@@ -36,7 +34,7 @@ public class ListeProgrammeTest {
 
     @Test
     public final void new_ListeProgramme_should_be_constructed_by_LinkedList() {
-        final LinkedList<ProgrammePro> programsLinkedList = Lists.<ProgrammePro> newLinkedList(newArrayList(program));
+        final LinkedList<ProgrammePro> programsLinkedList = new LinkedList<>(singletonList(program));
 
         ListeProgramme programsList = new ListeProgramme(programsLinkedList);
 

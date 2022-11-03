@@ -1,6 +1,5 @@
 package bourse.agent;
 
-import static com.google.common.collect.Iterators.forArray;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -9,7 +8,6 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import java.sql.ResultSet;
-import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -74,32 +72,31 @@ public class AgentTest {
         agent.setDecision(new Aleatoire(agent));
 
         final String[] agentString = agent.toString(1).split("\n");
-        Iterator<String> lines = forArray(agentString);
-        assertThat(lines.next()).isEqualTo(" Nom = Groupe-E-test");
-        assertThat(lines.next()).isEqualTo(" Solde = 0.0");
-        assertThat(lines.next()).startsWith(" Decision = bourse.agent.ia.Aleatoire@");
-        assertThat(lines.next()).isEqualTo(" Catégorie = 5 (Aucune)");
-        assertThat(lines.next()).isEqualTo(" Etat = 1 (initialisé)");
-        assertThat(lines.next()).isEqualTo(" Action = 0 (aucune action séléctionnée)");
-        assertThat(lines.next()).isEqualTo(" Memoire =");
-        assertThat(lines.next()).isEqualTo("  pdms :");
-        assertThat(lines.next()).isEqualTo("");
-        assertThat(lines.next()).isEqualTo("  agents :");
-        assertThat(lines.next()).isEqualTo("");
-        assertThat(lines.next()).isEqualTo("  possessions :");
-        assertThat(lines.next()).isEqualTo("");
-        assertThat(lines.next()).isEqualTo("  temps :");
-        assertThat(lines.next()).isEqualTo("0");
-        assertThat(lines.next()).isEqualTo(" Environnement =");
-        assertThat(lines.next()).isEqualTo("  enchère =");
-        assertThat(lines.next())
+        assertThat(agentString[0]).isEqualTo(" Nom = Groupe-E-test");
+        assertThat(agentString[1]).isEqualTo(" Solde = 0.0");
+        assertThat(agentString[2]).startsWith(" Decision = bourse.agent.ia.Aleatoire@");
+        assertThat(agentString[3]).isEqualTo(" Catégorie = 5 (Aucune)");
+        assertThat(agentString[4]).isEqualTo(" Etat = 1 (initialisé)");
+        assertThat(agentString[5]).isEqualTo(" Action = 0 (aucune action séléctionnée)");
+        assertThat(agentString[6]).isEqualTo(" Memoire =");
+        assertThat(agentString[7]).isEqualTo("  pdms :");
+        assertThat(agentString[8]).isEqualTo("");
+        assertThat(agentString[9]).isEqualTo("  agents :");
+        assertThat(agentString[10]).isEqualTo("");
+        assertThat(agentString[11]).isEqualTo("  possessions :");
+        assertThat(agentString[12]).isEqualTo("");
+        assertThat(agentString[13]).isEqualTo("  temps :");
+        assertThat(agentString[14]).isEqualTo("0");
+        assertThat(agentString[15]).isEqualTo(" Environnement =");
+        assertThat(agentString[16]).isEqualTo("  enchère =");
+        assertThat(agentString[17])
                 .isEqualTo(
                         "   tour = 1, type = 0, temps = 0, pas = 0.0, enchérisseur = null, prix = 0.0, prix maximum = 0.0, livre = ");
-        assertThat(lines.next()).startsWith("    , Catégorie = ");
-        assertThat(lines.next())
+        assertThat(agentString[18]).startsWith("    , Catégorie = ");
+        assertThat(agentString[19])
                 .isEqualTo(
                         "  typeEnchèreDemandée = 0   nombreActions = 0   dateListeAgent = 9223372036854775807   dateListeProgramme = 9223372036854775807   enchèreInteressante = false");
-        assertThat(lines.next()).isEqualTo(" Hote = localhost");
+        assertThat(agentString[20]).isEqualTo(" Hote = localhost");
     }
 
     @Test

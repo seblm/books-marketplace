@@ -24,10 +24,10 @@ public class ResultWelcomeTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<RESULTWELCOME>\n");
-        xmlBuilder.append("<SOLDE>42.0</SOLDE>\n");
-        xmlBuilder.append("<CATEGORIE>Aucune</CATEGORIE>\n");
-        xmlBuilder.append("</RESULTWELCOME>\n");
+        xmlBuilder.append("    <RESULTWELCOME>\n");
+        xmlBuilder.append("        <SOLDE>42.0</SOLDE>\n");
+        xmlBuilder.append("        <CATEGORIE>Aucune</CATEGORIE>\n");
+        xmlBuilder.append("    </RESULTWELCOME>\n");
         xmlBuilder.append("</MSG>\n");
         Protocole newInstance = ResultWelcome.newInstance(xmlBuilder.toString());
 

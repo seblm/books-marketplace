@@ -1,7 +1,6 @@
 package bourse.protocole;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
+import static java.util.Collections.singletonList;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.Fail.fail;
 
@@ -17,8 +16,6 @@ import bourse.placeDeMarche.enchere.Enchere;
 import bourse.sdd.Livre;
 import bourse.sdd.ProgrammePro;
 
-import com.google.common.collect.Lists;
-
 public class ProgrammeTest {
 
     private LinkedList<ProgrammePro> programmes;
@@ -27,7 +24,7 @@ public class ProgrammeTest {
 
     @Before
     public void initialize() {
-        programmes = Lists.<ProgrammePro> newLinkedList();
+        programmes = new LinkedList<>();
         float prix = 0;
         float etat = 0.4f;
         this.livre = new Livre("lupin", "leblanc", new Categorie(Categorie.SF), "poch", "belin", prix, etat,
@@ -45,7 +42,7 @@ public class ProgrammeTest {
     public void testToClass() {
         Programme p = new Programme(programmes);
         Element programmeDocumentElement = (Element) p.toDOM().getDocumentElement().getChildNodes().item(0);
-        Programme pdest = new Programme(newLinkedList());
+        Programme pdest = new Programme(new LinkedList<>());
         pdest.toClass(programmeDocumentElement);
         ProgrammePro firstProgrammePro = (bourse.sdd.ProgrammePro) pdest.getListeProgramme().get(0);
         assertThat(firstProgrammePro.getLivre().getTitre()).isEqualTo("lupin");
@@ -107,7 +104,7 @@ public class ProgrammeTest {
 
     @Test
     public void testToHtmlWithoutBooks() {
-        final Programme programme = new Programme(newLinkedList(newArrayList(new ProgrammePro(1, null))));
+        final Programme programme = new Programme(new LinkedList<>(singletonList(new ProgrammePro(1, null))));
         try {
             programme.toHtml();
             fail("Implementation does not support progamme with no books. Expecting a NPE.");

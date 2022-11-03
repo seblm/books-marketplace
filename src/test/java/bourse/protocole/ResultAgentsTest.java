@@ -1,7 +1,6 @@
 package bourse.protocole;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class ResultAgentsTest extends SAXTest {
 
     @Test
     public final void should_create_ResultAgents_with_a_LinkedList_of_String() {
-        LinkedList<String> listeAgents = newLinkedList(newArrayList("groupe-E.seb", "groupe-E.eric", "groupe-E.arnaud",
+        LinkedList<String> listeAgents = new LinkedList<>(asList("groupe-E.seb", "groupe-E.eric", "groupe-E.arnaud",
                 "groupe-E.protocoleman"));
 
         ResultAgents resultAgents = new ResultAgents(listeAgents);
@@ -33,12 +32,12 @@ public class ResultAgentsTest extends SAXTest {
         xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         xmlBuilder.append("<!DOCTYPE MSG SYSTEM \"src/main/resources/MSG.dtd\">\n");
         xmlBuilder.append("<MSG>\n");
-        xmlBuilder.append("<RESULTAGENTS>\n");
-        xmlBuilder.append("<AGENT NOM=\"groupe-E.seb\"/>\n");
-        xmlBuilder.append("<AGENT NOM=\"groupe-E.eric\"/>\n");
-        xmlBuilder.append("<AGENT NOM=\"groupe-E.arnaud\"/>\n");
-        xmlBuilder.append("<AGENT NOM=\"groupe-E.protocoleman\"/>\n");
-        xmlBuilder.append("</RESULTAGENTS>\n");
+        xmlBuilder.append("    <RESULTAGENTS>\n");
+        xmlBuilder.append("        <AGENT NOM=\"groupe-E.seb\"/>\n");
+        xmlBuilder.append("        <AGENT NOM=\"groupe-E.eric\"/>\n");
+        xmlBuilder.append("        <AGENT NOM=\"groupe-E.arnaud\"/>\n");
+        xmlBuilder.append("        <AGENT NOM=\"groupe-E.protocoleman\"/>\n");
+        xmlBuilder.append("    </RESULTAGENTS>\n");
         xmlBuilder.append("</MSG>\n");
         final Protocole resultAgents = ResultAgents.newInstance(xmlBuilder.toString());
 
